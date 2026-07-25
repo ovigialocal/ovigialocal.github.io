@@ -2,6 +2,22 @@
 
 // Base de dados inicial de matérias publicadas geradas pelo motor autônomo
 const sampleArticles = [
+{
+    "id": "art-rfb-004",
+    "title": "Nova panificacao de grande porte registra abertura no bairro Nova Porto Velho",
+    "excerpt": "Dados abertos da Receita Federal indicam cadastro ativo para empreendimento do setor de panificacao na Zona Leste da capital.",
+    "bairro": "Nova Porto Velho",
+    "category": "Alimentos & Industria",
+    "date": "25 de Julho de 2026",
+    "cnpj": "58.991.204/0001-88",
+    "cnae": "1091-1/01 - Fabricacao de produtos de panificacao industrial",
+    "capitalSocial": "R$ 120.000,00",
+    "logradouro": "Av. Prefeito Chiquilito Erse (sem n o exato)",
+    "confidence": "100% (Dado Cadastral Oficial)",
+    "sourceName": "Receita Federal do Brasil (CNPJ Dados Abertos)",
+    "sourceHash": "sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+    "content": "\n          <p>Registros oficiais da Receita Federal apontam a emissao de cadastro ativo para a <strong>PANIFICADORA E CONFEITARIA RIO MADEIRA LTDA</strong>, localizada no bairro <strong>Nova Porto Velho</strong>, em Porto Velho.</p>\n          <p>O empreendimento foi registrado com capital social de <strong>R$ 120.000,00</strong> e atividade principal voltada ao ramo de panificacao e confeitaria.</p>\n          <p><em>Nota de transparencia: O cadastro oficial confirma a regularidade juridica do registro, mas nao informa a data exata de inicio do atendimento presencial ao publico.</em></p>\n        "
+},
   {
     id: "art-rfb-001",
     title: "Novo estabelecimento comercial do setor de alimentos é registrado no bairro Embratel",
