@@ -3,32 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O Vigia — Porto Velho | Jornal Autônomo Hiperlocal</title>
-  <meta name="description" content="Jornalismo autônomo hiperlocal de Porto Velho baseado em inteligência cívica, monitoramento contínuo de registros públicos e transparência factual.">
+  <title>O Vigia — Jornal Autônomo Hiperlocal</title>
+  <meta name="description" content="Jornalismo autônomo hiperlocal baseado em inteligência cívica, monitoramento contínuo de registros públicos e transparência factual.">
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <!-- Header Sticky com Status de Inteligência Cívica -->
+  <!-- Header Sticky com Selector Inteligente de Cidades -->
   <header>
     <div class="nav-container">
       <a href="#" class="brand-logo">
         <span class="brand-badge">IA Autônoma</span>
         <span class="brand-title">O Vigia</span>
-        <span class="brand-city">Porto Velho</span>
       </a>
+
+      <!-- Selector de Cidade Inteligente -->
+      <div class="city-selector-wrapper">
+        <div class="city-selector-btn" id="city-selector-btn" title="Clique para alterar a cidade">
+          <span class="city-pin-icon">📍</span>
+          <div class="city-name-box">
+            <span class="city-label" id="current-city-name">Carregando...</span>
+            <span class="city-reason-badge" id="current-city-reason">Detectando...</span>
+          </div>
+          <span class="city-arrow">▼</span>
+        </div>
+      </div>
 
       <div class="header-status">
         <span class="status-dot"></span>
-        <span>Sensor Ativo: RFB CNPJ &bull; Atualizado há 15 min</span>
+        <span id="header-sensor-status">Sensor Ativo: RFB CNPJ &bull; Varredura Hoje</span>
       </div>
     </div>
   </header>
 
-  <!-- Banner Principal da Cidade -->
+  <!-- Modal de Seleção de Cidade -->
+  <div class="modal-overlay" id="modal-city-picker">
+    <div class="modal-card modal-city-card">
+      <button class="modal-close" id="modal-city-close">&times;</button>
+      <h3 class="modal-title">Escolha a sua Cidade</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+        O Vigia monitora dados públicos municipais em tempo real. Escolha a cidade que deseja acompanhar:
+      </p>
+
+      <div class="city-options-grid" id="city-options-list">
+        <!-- Lista de cidades suportadas preenchida via JS -->
+      </div>
+
+      <div class="geo-detect-box" id="geo-detect-btn">
+        <span>📡 Detectar automaticamente por GPS/Localização</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner Principal da Cidade Ativa -->
   <section class="city-hero">
-    <h1>O que está mudando em Porto Velho?</h1>
-    <p>Notícias produzidas autonomamente a partir do cruzamento diário de registros da Receita Federal, diários oficiais e dados urbanos primários.</p>
+    <h1>O que está mudando em <span id="hero-city-name">Porto Velho</span>?</h1>
+    <p id="hero-city-description">Notícias produzidas autonomamente a partir do cruzamento diário de registros da Receita Federal, diários oficiais e dados urbanos primários.</p>
 
     <div class="stats-bar">
       <div class="stat-item">
@@ -54,12 +84,7 @@
     </div>
 
     <div class="bairro-filter" id="bairro-filter">
-      <button class="filter-chip active" data-bairro="all">Todos os Bairros</button>
-      <button class="filter-chip" data-bairro="Embratel">Embratel</button>
-      <button class="filter-chip" data-bairro="Areal">Areal</button>
-      <button class="filter-chip" data-bairro="Nova Porto Velho">Nova Porto Velho</button>
-      <button class="filter-chip" data-bairro="Centro">Centro</button>
-      <button class="filter-chip" data-bairro="São Cristóvão">São Cristóvão</button>
+      <!-- Filtros de bairros injetados dinamicamente com base na cidade ativa -->
     </div>
   </section>
 
@@ -84,7 +109,7 @@
   <footer>
     <div class="footer-content">
       <div>
-        <strong>O Vigia — Porto Velho</strong> &copy; 2026 &bull; Conteúdo sob licença CC BY 4.0.
+        <strong>O Vigia — <span id="footer-city-name">Porto Velho</span></strong> &copy; 2026 &bull; Conteúdo sob licença CC BY 4.0.
       </div>
       <div class="footer-links">
         <a href="#" onclick="alert('Este jornal não possui editores humanos prévios. Matérias são produzidas e checadas por agentes autônomos com base em fontes públicas oficiais.'); return false;">Metodologia</a>
