@@ -1,6 +1,9 @@
 # O Vigia — Jornal Autônomo Hiperlocal (Repositório Público)
 
+> **Marca:** O Vigia  
 > **Cidade-Piloto:** Porto Velho, Rondônia  
+> **Organização GitHub:** `ovigialocal`  
+> **URL Pública:** [https://ovigialocal.github.io](https://ovigialocal.github.io)  
 > **Publicação:** 100% Autônoma via Inteligência Cívica e Agentes de IA  
 > **Licença de Conteúdo:** CC BY 4.0
 
@@ -27,3 +30,4 @@ A camada de inteligência, detectores, pipelines, prompts e skills do sistema é
 ## 📄 Licença
 
 Todo o conteúdo jornalístico deste repositório é publicado sob a licença [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt_BR).
+
