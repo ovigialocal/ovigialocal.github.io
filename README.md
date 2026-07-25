@@ -1,33 +1,23 @@
-# O Vigia — Jornal Autônomo Hiperlocal (Repositório Público)
+# O Vigia — Portal Público (Protótipo em Desenvolvimento)
 
-> **Marca:** O Vigia  
 > **Cidade-Piloto:** Porto Velho, Rondônia  
-> **Organização GitHub:** `ovigialocal`  
+> **Organização GitHub:** [`ovigialocal`](https://github.com/ovigialocal)  
+> **Repositório Canônico:** [`ovigialocal/ovigialocal.github.io`](https://github.com/ovigialocal/ovigialocal.github.io)  
 > **URL Pública:** [https://ovigialocal.github.io](https://ovigialocal.github.io)  
-> **Publicação:** 100% Autônoma via Inteligência Cívica e Agentes de IA  
-> **Licença de Conteúdo:** CC BY 4.0
 
 ---
 
-## 🏛️ Sobre O Vigia
+## ⚠️ Status do Projeto
 
-**O Vigia** é um jornal hiperlocal produzido e operado de forma autônoma por sistemas de inteligência artificial que observam continuamente fontes de dados públicos de Porto Velho (CNPJ, Diários Oficiais, Licitações, Infraestrutura e Registros Urbanos).
+Este repositório é a **face pública** do protótipo **O Vigia**.
 
-Este repositório é a **face pública** do jornal. Ele contém:
-- Matérias publicadas e notas jornalísticas em tempo real.
-- Proveniência e fontes primárias rastreáveis para cada matéria.
-- Histórico transparente de correções e atualizações.
-- Feeds RSS e arquivos estáticos otimizados.
+- **Fase Atual:** Protótipo em desenvolvimento.
+- **Fonte Única em Implementação:** Dados abertos do CNPJ da Receita Federal do Brasil (RFB) filtrados exclusivamente para o município de Porto Velho (RO).
+- **Invariante Factual:** Nenhuma matéria demonstrativa é apresentada como fato real. Todo conteúdo publicado pelo pipeline necessita passar por checagem e revisão factual estrita antes de ser exibido.
 
 ---
 
-## 🔒 Repositório Privado (Motor Editorial)
+## 📄 Licenciamento
 
-A camada de inteligência, detectores, pipelines, prompts e skills do sistema é mantida separadamente no repositório privado [`ovigia-redacao`](../ovigia-redacao).
-
----
-
-## 📄 Licença
-
-Todo o conteúdo jornalístico deste repositório é publicado sob a licença [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt_BR).
-
+- **Conteúdo Jornalístico:** Licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE-CONTENT).
+- **Código-Fonte do Site:** Licensed under [MIT License](LICENSE-CODE).

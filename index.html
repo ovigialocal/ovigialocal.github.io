@@ -3,102 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O Vigia — Jornal Autônomo Hiperlocal</title>
-  <meta name="description" content="Jornalismo autônomo hiperlocal baseado em inteligência cívica, monitoramento contínuo de registros públicos e transparência factual.">
+  <title>O Vigia — Porto Velho (Protótipo em Desenvolvimento)</title>
+  <meta name="description" content="Protótipo em desenvolvimento de inteligência cívica e jornalismo autônomo hiperlocal para Porto Velho (RO).">
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <!-- Header Sticky com Selector Inteligente de Cidades -->
+  <!-- Header Sticky com Selector de Cidade -->
   <header>
     <div class="nav-container">
-      <a href="#" class="brand-logo">
-        <span class="brand-badge">IA Autônoma</span>
+      <a href="index.html" class="brand-logo">
+        <span class="brand-badge">Protótipo</span>
         <span class="brand-title">O Vigia</span>
       </a>
 
-      <!-- Selector de Cidade Inteligente -->
+      <!-- Selector de Cidade -->
       <div class="city-selector-wrapper">
-        <div class="city-selector-btn" id="city-selector-btn" title="Clique para alterar a cidade">
+        <button type="button" class="city-selector-btn" id="city-selector-btn" aria-haspopup="dialog" aria-expanded="false" title="Alterar cidade">
           <span class="city-pin-icon">📍</span>
           <div class="city-name-box">
-            <span class="city-label" id="current-city-name">Carregando...</span>
-            <span class="city-reason-badge" id="current-city-reason">Detectando...</span>
+            <span class="city-label" id="current-city-name">Porto Velho (RO)</span>
+            <span class="city-reason-badge" id="current-city-reason">Cidade Piloto</span>
           </div>
           <span class="city-arrow">▼</span>
-        </div>
+        </button>
       </div>
 
       <div class="header-status">
         <span class="status-dot"></span>
-        <span id="header-sensor-status">Sensor Ativo: RFB CNPJ &bull; Varredura Hoje</span>
+        <span id="header-sensor-status">Fonte em Implementação: RFB CNPJ</span>
       </div>
     </div>
   </header>
 
   <!-- Modal de Seleção de Cidade -->
-  <div class="modal-overlay" id="modal-city-picker">
+  <div class="modal-overlay" id="modal-city-picker" role="dialog" aria-modal="true" aria-labelledby="modal-city-title" hidden>
     <div class="modal-card modal-city-card">
-      <button class="modal-close" id="modal-city-close">&times;</button>
-      <h3 class="modal-title">Escolha a sua Cidade</h3>
+      <button type="button" class="modal-close" id="modal-city-close" aria-label="Fechar modal">&times;</button>
+      <h3 class="modal-title" id="modal-city-title">Cidade Monitorada</h3>
       <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
-        O Vigia monitora dados públicos municipais em tempo real. Escolha a cidade que deseja acompanhar:
+        O Vigia está atualmente em desenvolvimento exclusivo para a cidade de Porto Velho (RO).
       </p>
 
       <div class="city-options-grid" id="city-options-list">
-        <!-- Lista de cidades suportadas preenchida via JS -->
+        <!-- Lista de cidades preenchida via JS -->
       </div>
 
-      <div class="geo-detect-box" id="geo-detect-btn">
-        <span>📡 Detectar automaticamente por GPS/Localização</span>
-      </div>
+      <button type="button" class="geo-detect-btn" id="geo-detect-btn">
+        <span>📡 Detectar cidade mais próxima por GPS</span>
+      </button>
     </div>
   </div>
 
   <!-- Banner Principal da Cidade Ativa -->
   <section class="city-hero">
-    <h1>O que está mudando em <span id="hero-city-name">Porto Velho</span>?</h1>
-    <p id="hero-city-description">Notícias produzidas autonomamente a partir do cruzamento diário de registros da Receita Federal, diários oficiais e dados urbanos primários.</p>
+    <div class="prototype-notice-badge">Protótipo em Desenvolvimento</div>
+    <h1>O Vigia — <span id="hero-city-name">Porto Velho</span></h1>
+    <p id="hero-city-description">Pipeline de inteligência cívica em construção. Processamento determinístico e checagem factual sobre dados abertos do CNPJ da Receita Federal.</p>
 
     <div class="stats-bar">
       <div class="stat-item">
-        <span>Monitorados:</span>
-        <span class="stat-value" id="stat-monitored">42.850 CNPJs</span>
+        <span>Município:</span>
+        <span class="stat-value">Porto Velho / RO</span>
       </div>
       <div class="stat-item">
-        <span>Novas Leads (mês):</span>
-        <span class="stat-value" id="stat-leads">128 detectadas</span>
+        <span>Fonte:</span>
+        <span class="stat-value">Receita Federal (CNPJ)</span>
       </div>
       <div class="stat-item">
-        <span>Precisão Factual:</span>
-        <span class="stat-value">100% Rastreável</span>
+        <span>Status Factual:</span>
+        <span class="stat-value" id="stat-factual-status">Aguardando Validação</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner de Aviso de Protótipo sem matérias -->
+  <section class="prototype-banner" id="prototype-banner">
+    <div class="prototype-card">
+      <span class="prototype-icon">🚧</span>
+      <div>
+        <h2>Nenhuma matéria factual foi publicada ainda</h2>
+        <p>Este sistema está em fase de protótipo. Matérias jornalísticas só são exibidas após passar pelo pipeline automatizado de extração, geração de bundle OKF, mapeamento de afirmações (claim map), revisão factual e gate editorial.</p>
       </div>
     </div>
   </section>
 
   <!-- Controles de Busca e Filtro de Bairros -->
-  <section class="controls-section">
+  <section class="controls-section" id="controls-section" style="display: none;">
     <div class="search-box">
       <span class="search-icon">🔍</span>
-      <input type="text" id="search-input" class="search-input" placeholder="Buscar por empresa, atividade comercial ou logradouro...">
+      <input type="text" id="search-input" class="search-input" placeholder="Buscar no acervo de matérias publicadas...">
     </div>
 
     <div class="bairro-filter" id="bairro-filter">
-      <!-- Filtros de bairros injetados dinamicamente com base na cidade ativa -->
+      <!-- Filtros de bairros -->
     </div>
   </section>
 
   <!-- Grid de Notícias Geradas Autonomamente -->
   <main>
     <div class="news-grid" id="news-grid">
-      <!-- Artigos carregados dinamicamente via JS -->
+      <!-- Artigos carregados dinamicamente via JS se existirem -->
     </div>
   </main>
 
   <!-- Modal de Rastreabilidade e Árvore de Proveniência Factual -->
-  <div class="modal-overlay" id="modal-provenance">
+  <div class="modal-overlay" id="modal-provenance" role="dialog" aria-modal="true" aria-labelledby="modal-provenance-title" hidden>
     <div class="modal-card">
-      <button class="modal-close" id="modal-close">&times;</button>
+      <button type="button" class="modal-close" id="modal-close" aria-label="Fechar modal">&times;</button>
       <div id="modal-content">
         <!-- Conteúdo preenchido dinamicamente -->
       </div>
@@ -112,9 +124,8 @@
         <strong>O Vigia — <span id="footer-city-name">Porto Velho</span></strong> &copy; 2026 &bull; Conteúdo sob licença CC BY 4.0.
       </div>
       <div class="footer-links">
-        <a href="#" onclick="alert('Este jornal não possui editores humanos prévios. Matérias são produzidas e checadas por agentes autônomos com base em fontes públicas oficiais.'); return false;">Metodologia</a>
-        <a href="#" onclick="alert('Para solicitar correção ou esclarecimento sobre qualquer dado publicado, o leitor pode abrir uma issue no repositório de correções.'); return false;">Correções e Erratas</a>
-        <a href="feed.xml" target="_blank">Feed RSS</a>
+        <a href="metodologia.html">Metodologia</a>
+        <a href="correcoes.html">Correções e Erratas</a>
       </div>
     </div>
   </footer>
