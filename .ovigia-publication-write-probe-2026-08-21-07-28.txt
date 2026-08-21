@@ -1,0 +1,4 @@
+O Vigia reversible publication-boundary probe
+cycle: 2026-08-21-07-28
+editorial_content: false
+purpose: verify connector persistence to canonical public repository
