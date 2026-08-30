@@ -7,14 +7,15 @@ Operate the independent public authority of O Vigia. The newsroom ends at `artic
 ## Session flow
 
 ```text
-pin newsroom commit
+reconcile pending publication/reviews side effects
+  → pin newsroom commit
   → load OKF bundle
   → enumerate valid article-ready concepts
-  → subtract existing publication/reviews decisions
+  → subtract reconciled publication/reviews decisions
   → independent publication-review
-      ├─ reject → decision record + one newsroom issue
-      └─ accept → decision record + public Markdown
-                    → derived static artifacts
+      ├─ reject → decision record → exactly one newsroom issue
+      └─ accept → decision record + fixed public_path
+                    → public Markdown + projections
                     → commit / Pages / URL confirmation
                     → publication event
 ```
@@ -31,13 +32,17 @@ Use exactly:
 
 with `source_digest` from `okf-parser`. Also persist the pinned newsroom commit for reproducibility. Do not invent another ID/hash.
 
-## Idempotency
+## Idempotency and recovery
 
 Before reviewing, inspect `publication/reviews/<story-id>/<source-digest>.md`.
 
-- existing `rejected`: do not create another issue for the same digest;
-- existing `accepted`: resume the same allocated `public_path`; do not review/publish it as a second item;
-- no record: candidate is eligible.
+- no record: candidate is eligible for review;
+- existing `rejected` with `newsroom_issue: pending`: search the newsroom for the exact `publication-review-key`; create the issue only if none exists, then reconcile the record;
+- existing reconciled `rejected`: do not reopen review or create another issue;
+- existing `accepted` without a publication event: resume the same allocated `public_path` and complete publication; do not review/publish a second item;
+- existing `accepted` with the corresponding event: nothing to repeat for that digest.
+
+Every cross-repository or Pages side effect must be reconstructible and resumable after a session stops between steps.
 
 ## Review scope
 
@@ -59,7 +64,7 @@ A material body edit requires a new newsroom digest.
 ## Canonical public state
 
 - `content/articles/<slug>.md`: public article Markdown;
-- `publication/reviews/...`: publication decisions;
+- `publication/reviews/...`: publication decisions and pending/reconciled side effects;
 - `publication/events/...`: confirmed public history;
 - HTML/`articles.json`/feed/sitemap: derived projections.
 
