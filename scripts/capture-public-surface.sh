@@ -28,7 +28,7 @@ npx --yes playwright@1.55.0 screenshot \
 
 npx --yes playwright@1.55.0 screenshot \
   --browser chromium \
-  --device "iPhone 13" \
+  --viewport-size "390,844" \
   --full-page \
   "$BASE/" "$OUT/home-mobile.png"
 
