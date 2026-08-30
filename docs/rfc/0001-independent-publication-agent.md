@@ -7,7 +7,7 @@ Data: 30 de agosto de 2026
 
 `ovigialocal/ovigialocal.github.io` é a **autoridade pública** de O Vigia.
 
-A Redação privada (`franklinbaldo/ovigia-redacao`) termina em `article-ready`. Este repositório descobre candidatas por pull e um agente operando sob o contrato daqui decide, de forma independente, se aceita uma versão exata sob a marca pública.
+A Redação privada (`franklinbaldo/ovigia-redacao`) termina em `article-ready`. Este repositório descobre candidatas por pull e decide, de forma independente, se aceita uma versão exata sob a marca pública.
 
 ```text
 ovigia-redacao
@@ -59,9 +59,7 @@ Antes da review:
 (source_repository, source_path, source_digest)
 ```
 
-onde `source_digest` é o `ConceptRecord.source_digest` fornecido pelo parser.
-
-O commit privado fixado também é registrado para reprodutibilidade, mas não substitui o digest do concept. Não criar hash, ID ou `concept_id` paralelo.
+`source_digest` é o `ConceptRecord.source_digest` fornecido pelo parser. O commit privado fixado também é registrado para reprodutibilidade, mas não substitui o digest. Não criar hash, ID ou `concept_id` paralelo.
 
 ## 4. Descoberta por pull sem fila compartilhada
 
@@ -74,10 +72,13 @@ Em uma execução session-based, o agente:
 3. valida spec/grafo/gates;
 4. transforma cada concept em candidate key;
 5. lê `publication/reviews/` neste repo;
-6. ignora digests que já possuem decisão final;
-7. escolhe uma candidata elegível.
+6. separa três classes:
+   - **sem decision record:** candidata elegível a review;
+   - **decision record com side effect incompleto:** trabalho de reconciliação, não nova review;
+   - **decision record completamente reconciliado:** nada a repetir para aquele digest;
+7. escolhe uma unidade de trabalho finita.
 
-A “fila” é a diferença derivada entre `article-ready` válidos e decisões públicas existentes. O estado “já examinado” pertence somente a este repositório.
+A “fila” é derivada de `article-ready` + estado público persistido. O fato de uma candidata já ter sido examinada pertence somente a este repo.
 
 ## 5. Ledger Git mínimo de publicação
 
@@ -98,10 +99,12 @@ Campos mínimos:
 - `source_digest`;
 - `decision: accepted | rejected`;
 - `decided_at`;
-- para rejeição: issue da Redação;
-- para aceite: `public_path` alocado.
+- se rejeitado: `newsroom_issue: pending | <issue-url>`;
+- se aceito: `public_path` alocado.
 
-A existência desse registro é a chave de idempotência. Uma candidata/digest recebe exatamente uma decisão final, salvo override humano explícito e auditável que não apague a decisão anterior.
+A existência do record congela a decisão editorial para a candidate key. Uma candidata/digest recebe exatamente uma decisão final, salvo override humano explícito e auditável que preserve a decisão anterior.
+
+O record **não implica que seus side effects terminaram**. Sessões posteriores devem reconciliar side effects pendentes antes de procurar trabalho novo.
 
 ### 5.2 Publication event
 
@@ -124,7 +127,13 @@ com, conforme aplicável:
 
 O event record posterior evita circularidade: o commit de publicação não precisa aparecer dentro dos próprios bytes que determinam aquele commit.
 
-Git é o banco. Não criar banco, worker, workflow engine ou serviço de sincronização.
+### 5.3 Regra de recuperação
+
+Git é o banco; portanto toda operação que cruza repositórios ou depende de Pages deve ser retomável.
+
+Antes de criar qualquer side effect externo, o agente procura evidência de que ele já existe. Se a sessão morrer entre duas etapas, a seguinte reconstrói o estado e completa a mesma decisão em vez de criar outra.
+
+Não criar banco, worker, workflow engine ou serviço de sincronização.
 
 ## 6. `publication-review`: função própria
 
@@ -149,19 +158,22 @@ Preferência estética/cosmética não é motivo suficiente para rejeição.
 
 Problema editorial volta à Redação. Problema apenas de slug, HTML, feed, sitemap, CSS, canonical URL ou metadado público é resolvido aqui.
 
-## 7. Rejeição e idempotência da issue
+## 7. Rejeição, issue e idempotência transacional
 
 Ao rejeitar:
 
-1. crie primeiro o decision record `rejected` para a candidate key;
-2. abra uma única issue em `franklinbaldo/ovigia-redacao`;
-3. faça os dois lados referenciarem um ao outro;
-4. não copie nem edite a candidata.
+1. grave o decision record `rejected` com `newsroom_issue: pending`;
+2. procure na Redação uma issue que contenha a candidate key exata;
+3. se existir, reutilize-a;
+4. se não existir, abra uma única issue;
+5. atualize o decision record com a URL da issue;
+6. não copie nem edite a candidata.
 
-A issue deve conter:
+A issue usa um marcador estável e pesquisável:
 
 ```markdown
 publication-review: rejected
+publication-review-key: <source_repository>|<source_path>|<source_digest>
 story_id: <story-id>
 source_repository: franklinbaldo/ovigia-redacao
 source_commit: <sha>
@@ -179,16 +191,18 @@ review_record: <path/url deste repo>
 - ...
 ```
 
-Uma execução posterior que encontre a mesma candidate key e o mesmo `rejected` **não abre issue duplicada**.
+Se uma sessão morrer depois do decision record e antes da issue, a próxima vê `newsroom_issue: pending`, procura pelo marcador exato e cria/reconcilia o side effect. Ela **não reabre a review**.
 
-Quando a Redação produzir digest B, B é uma nova candidate key. A review de A continua histórica. A issue de A pode ser fechada/reconciliada quando o novo trabalho estiver representado, mas aceite nunca é herdado.
+Se morrer depois de criar a issue e antes de atualizar o record, a busca pelo mesmo marcador encontra a issue existente e evita duplicação.
+
+Quando a Redação produzir digest B, B é nova candidate key. A review de A continua histórica. A issue de A pode ser fechada/reconciliada quando o novo trabalho estiver representado, mas aceite nunca é herdado.
 
 ## 8. Aceite e double publication
 
 Ao aceitar:
 
-1. fixe a candidate key e crie decision record `accepted` com um único `public_path`;
-2. se a mesma candidate key reaparecer, retome aquele mesmo path/decisão em vez de publicar novamente;
+1. fixe a candidate key e grave decision record `accepted` com um único `public_path`;
+2. se o record já existia, retome aquele path/decisão em vez de revisar novamente;
 3. copie o corpo editorial aprovado;
 4. acrescente somente metadados públicos;
 5. derive a superfície estática;
@@ -198,9 +212,7 @@ Ao aceitar:
 
 Uma candidate key não pode mapear silenciosamente para dois paths públicos.
 
-### Estado intermediário
-
-`accepted` sem event `published` significa “decidido e ainda não confirmado”. Uma nova sessão deve **retomar** essa publicação, não refazer a review ou escolher outro slug.
+`accepted` sem event `published` significa “decidido, side effect ainda incompleto”. Uma nova sessão deve **retomar** a publicação, verificar o que já foi materializado/commitado/servido e completar o evento; não escolher outro slug nem publicar uma segunda cópia.
 
 ## 9. O que significa copiar Markdown
 
@@ -222,7 +234,9 @@ O publicador extrai o **body editorial aprovado** e aplica uma whitelist de meta
 - frontmatter de workflow;
 - informação sensível não destinada ao leitor.
 
-O Markdown público deve preservar, em metadados de proveniência não necessariamente exibidos com destaque:
+O body editorial copiado deve permanecer materialmente idêntico ao aprovado; mudanças puramente mecânicas de envelope/frontmatter não autorizam reescrita do texto.
+
+O Markdown público preserva, em metadados de proveniência não necessariamente exibidos com destaque:
 
 - `story_id`;
 - `source_repository`;
@@ -230,9 +244,7 @@ O Markdown público deve preservar, em metadados de proveniência não necessari
 - `source_path`;
 - `source_digest`.
 
-Slug, data/hora pública, URL e metadados de apresentação pertencem a este repo.
-
-Uma reescrita material do body invalida o aceite e volta à Redação como novo digest.
+Slug, data/hora pública, URL e metadados de apresentação pertencem a este repo. Uma reescrita material do body invalida o aceite e volta à Redação como novo digest.
 
 ## 10. Slug collision e identidade de história
 
@@ -240,9 +252,9 @@ O slug é metadado de publicação e pertence a este repo.
 
 - se o path proposto está livre, aloque-o no `accepted` record;
 - se colide com outro `story_id`, escolha alternativa determinística/legível e registre a decisão; não devolva à Redação apenas por isso;
-- um novo digest do **mesmo** `story_id` que corrige/atualiza publicação existente usa, por default, o mesmo `public_path`;
-- uma matéria jornalisticamente nova deve chegar com identidade editorial própria;
-- substituição deliberada de uma publicação por outra deve ser um event explícito `replaced`, nunca inferida de slug semelhante.
+- novo digest do **mesmo** `story_id` que corrige/atualiza publicação existente usa, por default, o mesmo `public_path`;
+- matéria jornalisticamente nova deve chegar com identidade editorial própria;
+- substituição deliberada deve ser event explícito `replaced`, nunca inferida de slug semelhante.
 
 ## 11. Correções, atualizações e retrações
 
@@ -257,7 +269,7 @@ Erro factual, nova informação de serviço ou mudança material do texto exige:
 1. issue/trabalho na Redação;
 2. novo `article-ready`/digest;
 3. nova `publication-review` independente;
-4. atualização do mesmo Markdown público/path quando for a continuação da mesma história;
+4. atualização do mesmo Markdown público/path quando for continuação da mesma história;
 5. event `corrected` ou `updated` ligando versão anterior e nova.
 
 Git preserva bytes anteriores; a superfície de correções deve ser derivável desses eventos e não apagar silenciosamente a história.
@@ -299,10 +311,10 @@ Nenhum daemon é necessário.
 Uma sessão recorrente:
 
 - reconstrói estado pelo Git;
-- fixa o commit privado;
-- descobre uma candidata elegível;
-- revisa;
-- persiste decision/issue ou decision/publicação/event;
+- primeiro reconcilia side effects pendentes de decisions existentes;
+- depois fixa o commit privado e descobre candidata sem decisão;
+- revisa no máximo a unidade de trabalho escolhida;
+- persiste decision + side effects retomáveis;
 - termina.
 
 GitHub Actions pode existir para tarefas auxiliares do repositório público, como captura visual, mas não é requisito do protocolo Redação → Publicação nem substitui o agente independente.
@@ -315,7 +327,7 @@ Este repo só deve criar wiki/evolução própria se volume de decisões públic
 
 ## 16. Compatibilidade com a missão da primeira matéria
 
-A antiga issue privada #30 deve terminar no marco privado `article-ready`. A primeira review/publicação/URL deve ser conduzida por issue sucessora neste repo.
+A issue privada #30 termina no marco privado `article-ready`. A primeira review/publicação/URL é conduzida pela issue pública #12.
 
 Um marco end-to-end pode citar ambas as issues, mas não cria autoridade compartilhada.
 
@@ -325,9 +337,9 @@ A arquitetura está provada quando:
 
 1. um agente fixa commit privado e enumera `article-ready` via `okf-parser`;
 2. candidate key repo/path/digest é persistida em decision record;
-3. mesma candidate key não gera review/issue/publicação duplicada;
-4. rejeição cria exatamente uma issue acionável e novo digest é nova candidatura;
-5. aceite fixa um único public path;
+3. mesma candidate key não gera segunda review;
+4. rejeição produz exatamente uma issue, inclusive após falha entre record e criação da issue;
+5. aceite fixa um único public path e é retomável após falha parcial;
 6. corpo público é extraído sem vazar frontmatter interno;
 7. HTML/JSON/feed/sitemap são derivados do Markdown público;
 8. publication event liga candidate key, commit, artefato e URL confirmada;
@@ -342,4 +354,4 @@ Não construir CMS, backend, workflow engine, sincronizador permanente, espelho 
 
 > “Existe uma candidata exata que eu, como autoridade pública independente, aceito colocar sob a marca O Vigia?”
 
-Se sim, registre a decisão e publique aquela versão de forma rastreável. Se não, registre rejeição e devolva trabalho à Redação sem reescrevê-la.
+Se sim, registre a decisão e complete seus side effects de forma retomável. Se não, registre rejeição e devolva trabalho à Redação sem reescrevê-la.
