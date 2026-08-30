@@ -1,0 +1,10 @@
+{
+  "name": "o-vigia-public-site",
+  "private": true,
+  "scripts": {
+    "capture": "playwright test tests/visual-capture.spec.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  }
+}
