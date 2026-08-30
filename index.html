@@ -3,130 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O Vigia — Porto Velho (Protótipo em Desenvolvimento)</title>
-  <meta name="description" content="Protótipo em desenvolvimento de inteligência cívica e jornalismo autônomo hiperlocal para Porto Velho (RO).">
+  <title>O Vigia — Notícias de Porto Velho</title>
+  <meta name="description" content="O Vigia acompanha Porto Velho com jornalismo local baseado em fontes verificáveis e transparência editorial.">
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-
-  <!-- Header Sticky com Selector de Cidade -->
-  <header>
-    <div class="nav-container">
-      <a href="index.html" class="brand-logo">
-        <span class="brand-badge">Protótipo</span>
-        <span class="brand-title">O Vigia</span>
-      </a>
-
-      <!-- Selector de Cidade -->
-      <div class="city-selector-wrapper">
-        <button type="button" class="city-selector-btn" id="city-selector-btn" aria-haspopup="dialog" aria-expanded="false" title="Alterar cidade">
-          <span class="city-pin-icon">📍</span>
-          <div class="city-name-box">
-            <span class="city-label" id="current-city-name">Porto Velho (RO)</span>
-            <span class="city-reason-badge" id="current-city-reason">Cidade Piloto</span>
-          </div>
-          <span class="city-arrow">▼</span>
-        </button>
-      </div>
-
-      <div class="header-status">
-        <span class="status-dot"></span>
-        <span id="header-sensor-status">Fonte em Implementação: RFB CNPJ</span>
-      </div>
+  <header class="site-header">
+    <div class="utility-bar">
+      <span>Porto Velho, Rondônia</span>
+      <nav aria-label="Links institucionais">
+        <a href="metodologia.html">Como apuramos</a>
+        <a href="correcoes.html">Correções</a>
+      </nav>
     </div>
+    <div class="masthead">
+      <a href="index.html" class="brand-logo" aria-label="O Vigia — página inicial">
+        <span class="brand-title">O Vigia</span>
+        <span class="brand-kicker">Porto Velho</span>
+      </a>
+      <p class="masthead-tagline">Jornalismo local para entender o que muda perto de você.</p>
+    </div>
+    <nav class="section-nav" aria-label="Seções do jornal">
+      <span class="section-nav-active">Últimas</span>
+      <span>Cidade</span>
+      <span>Serviços</span>
+      <span>Economia local</span>
+      <span>Bairros</span>
+    </nav>
   </header>
 
-  <!-- Modal de Seleção de Cidade -->
-  <div class="modal-overlay" id="modal-city-picker" role="dialog" aria-modal="true" aria-labelledby="modal-city-title" hidden>
-    <div class="modal-card modal-city-card">
-      <button type="button" class="modal-close" id="modal-city-close" aria-label="Fechar modal">&times;</button>
-      <h3 class="modal-title" id="modal-city-title">Cidade Monitorada</h3>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
-        O Vigia está atualmente em desenvolvimento exclusivo para a cidade de Porto Velho (RO).
-      </p>
+  <main class="front-page">
+    <section class="edition-intro" aria-labelledby="edition-title">
+      <p class="eyebrow">Edição de Porto Velho</p>
+      <h1 id="edition-title">Notícias da cidade, com a fonte à vista.</h1>
+      <p class="edition-deck">O Vigia está preparando sua primeira edição pública. Quando as matérias começarem a chegar, esta página reunirá notícias locais, informações de serviço e acontecimentos dos bairros — sempre com acesso à origem das informações.</p>
+    </section>
 
-      <div class="city-options-grid" id="city-options-list">
-        <!-- Lista de cidades preenchida via JS -->
+    <section class="empty-edition" id="prototype-banner" aria-labelledby="empty-title">
+      <div class="empty-edition-main">
+        <p class="eyebrow">Primeira edição em preparação</p>
+        <h2 id="empty-title">Ainda não há matérias publicadas.</h2>
+        <p>Preferimos uma edição vazia a publicar algo antes de terminar a apuração. O acervo aparecerá aqui assim que as primeiras matérias estiverem prontas.</p>
       </div>
+      <aside class="trust-note" aria-label="Compromisso editorial">
+        <h3>O que você poderá conferir</h3>
+        <p>Cada matéria publicada indicará suas fontes e terá um caminho claro para correções.</p>
+        <div class="trust-links">
+          <a href="metodologia.html">Conheça a metodologia →</a>
+          <a href="correcoes.html">Correções e erratas →</a>
+        </div>
+      </aside>
+    </section>
 
-      <button type="button" class="geo-detect-btn" id="geo-detect-btn">
-        <span>📡 Detectar cidade mais próxima por GPS</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Banner Principal da Cidade Ativa -->
-  <section class="city-hero">
-    <div class="prototype-notice-badge">Protótipo em Desenvolvimento</div>
-    <h1>O Vigia — <span id="hero-city-name">Porto Velho</span></h1>
-    <p id="hero-city-description">Pipeline de inteligência cívica em construção. Processamento determinístico e checagem factual sobre dados abertos do CNPJ da Receita Federal.</p>
-
-    <div class="stats-bar">
-      <div class="stat-item">
-        <span>Município:</span>
-        <span class="stat-value">Porto Velho / RO</span>
+    <section class="controls-section" id="controls-section" style="display:none;" aria-label="Buscar matérias">
+      <div class="search-box">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input type="search" id="search-input" class="search-input" placeholder="Buscar no acervo..." aria-label="Buscar no acervo">
       </div>
-      <div class="stat-item">
-        <span>Fonte:</span>
-        <span class="stat-value">Receita Federal (CNPJ)</span>
+      <div class="bairro-filter" id="bairro-filter"></div>
+    </section>
+
+    <section class="published-section" aria-labelledby="published-title">
+      <div class="section-heading">
+        <p class="eyebrow">Acervo</p>
+        <h2 id="published-title">Matérias publicadas</h2>
       </div>
-      <div class="stat-item">
-        <span>Status Factual:</span>
-        <span class="stat-value" id="stat-factual-status">Aguardando Validação</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Banner de Aviso de Protótipo sem matérias -->
-  <section class="prototype-banner" id="prototype-banner">
-    <div class="prototype-card">
-      <span class="prototype-icon">🚧</span>
-      <div>
-        <h2>Nenhuma matéria factual foi publicada ainda</h2>
-        <p>Este sistema está em fase de protótipo. Matérias jornalísticas só são exibidas após passar pelo pipeline automatizado de extração, geração de bundle OKF, mapeamento de afirmações (claim map), revisão factual e gate editorial.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Controles de Busca e Filtro de Bairros -->
-  <section class="controls-section" id="controls-section" style="display: none;">
-    <div class="search-box">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="search-input" class="search-input" placeholder="Buscar no acervo de matérias publicadas...">
-    </div>
-
-    <div class="bairro-filter" id="bairro-filter">
-      <!-- Filtros de bairros -->
-    </div>
-  </section>
-
-  <!-- Grid de Notícias Geradas Autonomamente -->
-  <main>
-    <div class="news-grid" id="news-grid">
-      <!-- Artigos carregados dinamicamente via JS se existirem -->
-    </div>
+      <div class="news-grid" id="news-grid"></div>
+    </section>
   </main>
 
-  <!-- Modal de Rastreabilidade e Árvore de Proveniência Factual -->
   <div class="modal-overlay" id="modal-provenance" role="dialog" aria-modal="true" aria-labelledby="modal-provenance-title" hidden>
     <div class="modal-card">
       <button type="button" class="modal-close" id="modal-close" aria-label="Fechar modal">&times;</button>
-      <div id="modal-content">
-        <!-- Conteúdo preenchido dinamicamente -->
-      </div>
+      <div id="modal-content"></div>
     </div>
   </div>
 
-  <!-- Rodapé Transparente -->
   <footer>
     <div class="footer-content">
-      <div>
-        <strong>O Vigia — <span id="footer-city-name">Porto Velho</span></strong> &copy; 2026 &bull; Conteúdo sob licença CC BY 4.0.
+      <div class="footer-brand">
+        <strong>O Vigia</strong>
+        <span>Jornalismo local em Porto Velho.</span>
       </div>
       <div class="footer-links">
         <a href="metodologia.html">Metodologia</a>
-        <a href="correcoes.html">Correções e Erratas</a>
+        <a href="correcoes.html">Correções e erratas</a>
       </div>
+      <p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p>
     </div>
   </footer>
 
