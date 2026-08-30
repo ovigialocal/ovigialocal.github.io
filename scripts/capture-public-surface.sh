@@ -39,8 +39,15 @@ capture "390,844" "$BASE/" "$OUT/home-mobile.png"
 capture "1280,900" "$BASE/?preview=populated" "$OUT/home-populated-preview-desktop.png"
 capture "390,844" "$BASE/?preview=populated" "$OUT/home-populated-preview-mobile.png"
 
-printf 'Captured:\n- %s\n- %s\n- %s\n- %s\n' \
+# A rota de matéria é capturada pelo mesmo método antes/depois. Antes da implementação,
+# o servidor devolve a página 404; depois, o preview local exercita o template real.
+capture "1280,900" "$BASE/article.html?preview=article" "$OUT/article-preview-desktop.png"
+capture "390,844" "$BASE/article.html?preview=article" "$OUT/article-preview-mobile.png"
+
+printf 'Captured:\n- %s\n- %s\n- %s\n- %s\n- %s\n- %s\n' \
   "$OUT/home-desktop.png" \
   "$OUT/home-mobile.png" \
   "$OUT/home-populated-preview-desktop.png" \
-  "$OUT/home-populated-preview-mobile.png"
+  "$OUT/home-populated-preview-mobile.png" \
+  "$OUT/article-preview-desktop.png" \
+  "$OUT/article-preview-mobile.png"
