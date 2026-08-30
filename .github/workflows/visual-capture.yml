@@ -8,6 +8,14 @@ on:
       - '**.js'
       - 'scripts/capture-public-surface.sh'
       - '.github/workflows/visual-capture.yml'
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - '**.css'
+      - '**.js'
+      - 'scripts/capture-public-surface.sh'
+      - '.github/workflows/visual-capture.yml'
   workflow_dispatch:
 
 permissions:

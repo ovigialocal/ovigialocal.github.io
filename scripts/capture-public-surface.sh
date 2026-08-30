@@ -20,16 +20,27 @@ for _ in $(seq 1 30); do
 done
 curl --fail --silent "$BASE/" >/dev/null
 
-npx --yes playwright@1.55.0 screenshot \
-  --browser chromium \
-  --viewport-size "1280,900" \
-  --full-page \
-  "$BASE/" "$OUT/home-desktop.png"
+capture() {
+  local viewport="$1"
+  local url="$2"
+  local target="$3"
+  npx --yes playwright@1.55.0 screenshot \
+    --browser chromium \
+    --viewport-size "$viewport" \
+    --full-page \
+    "$url" "$target"
+}
 
-npx --yes playwright@1.55.0 screenshot \
-  --browser chromium \
-  --viewport-size "390,844" \
-  --full-page \
-  "$BASE/" "$OUT/home-mobile.png"
+# A superfície pública continua vazia enquanto publishedArticles estiver vazio.
+capture "1280,900" "$BASE/" "$OUT/home-desktop.png"
+capture "390,844" "$BASE/" "$OUT/home-mobile.png"
 
-printf 'Captured:\n- %s\n- %s\n' "$OUT/home-desktop.png" "$OUT/home-mobile.png"
+# O estado populado só existe em localhost; o mesmo renderer recebe fixtures de composição.
+capture "1280,900" "$BASE/?preview=populated" "$OUT/home-populated-preview-desktop.png"
+capture "390,844" "$BASE/?preview=populated" "$OUT/home-populated-preview-mobile.png"
+
+printf 'Captured:\n- %s\n- %s\n- %s\n- %s\n' \
+  "$OUT/home-desktop.png" \
+  "$OUT/home-mobile.png" \
+  "$OUT/home-populated-preview-desktop.png" \
+  "$OUT/home-populated-preview-mobile.png"
