@@ -3,7 +3,7 @@ name: publication-review
 description: Avalia independentemente uma candidata article-ready e decide publicar ou devolver trabalho à redação por issue.
 compatibility: ">=1.0.0"
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
   owner_role: "publication-agent"
 ---
 
@@ -24,28 +24,30 @@ Decidir se uma versão exata `article-ready` pode ser colocada sob a marca públ
 
 ## Procedure
 
-1. Fixe um commit da Redação.
-2. Carregue o bundle com `okf-parser` e enumere `article-ready` válidos.
-3. Exclua candidate keys com decision record final existente.
-4. Escolha uma candidata e leia a matéria inteira.
-5. Confirme coerência de digest, subject, profile, approvals e proveniência.
-6. Faça julgamento independente focado em defeitos **materiais** de publicação; não repita gates só para demonstrar atividade.
-7. Se houver necessidade de nova apuração/revisão editorial, siga `Reject`.
-8. Se for publicável sem mudança material de body, siga `Accept`.
+1. Antes de nova review, reconcilie side effects pendentes em `publication/reviews/`.
+2. Fixe um commit da Redação.
+3. Carregue o bundle com `okf-parser` e enumere `article-ready` válidos.
+4. Exclua candidate keys com decision record existente; records incompletos são retomados, não reavaliados.
+5. Escolha uma candidata sem decisão e leia a matéria inteira.
+6. Confirme coerência de digest, subject, profile, approvals e proveniência.
+7. Faça julgamento independente focado em defeitos **materiais** de publicação; não repita gates só para demonstrar atividade.
+8. Se houver necessidade de nova apuração/revisão editorial, siga `Reject`.
+9. Se for publicável sem mudança material de body, siga `Accept`.
 
 ## Reject
 
-1. Grave `publication/reviews/<story-id>/<source-digest>.md` com `decision: rejected`.
-2. Se esse record já existia, não abra issue duplicada.
-3. Abra uma issue na Redação com candidate key, commit, findings, evidence, required work e referência ao review record.
-4. Faça o review record apontar para a issue.
-5. Não copie nem edite a candidata.
-6. Digest futuro é nova candidata; decisão antiga permanece histórica.
+1. Grave `publication/reviews/<story-id>/<source-digest>.md` com `decision: rejected` e `newsroom_issue: pending`.
+2. Procure na Redação o marcador exato `publication-review-key: <repo>|<path>|<digest>`.
+3. Se uma issue com a chave já existe, reutilize-a; se não, abra exatamente uma.
+4. Atualize o review record com a URL da issue.
+5. Se a sessão parar entre essas etapas, a próxima sessão reconcilia o record pendente em vez de refazer a review.
+6. Não copie nem edite a candidata.
+7. Digest futuro é nova candidata; decisão antiga permanece histórica.
 
 ## Accept
 
 1. Grave decision record `accepted` com um único `public_path`.
-2. Se o record já existia, retome o mesmo path; não publique uma segunda cópia.
+2. Se o record já existia sem event final, retome o mesmo path e inspecione o que já foi materializado/commitado/servido; não publique uma segunda cópia.
 3. Extraia o body aprovado; não copie frontmatter privado inteiro.
 4. Aplique whitelist de metadados públicos e preserve `story_id`, source repo/commit/path/digest.
 5. Resolva slug collision como metadado público; não rejeite só por colisão técnica.
@@ -67,6 +69,7 @@ Decidir se uma versão exata `article-ready` pode ser colocada sob a marca públ
 - sincronizar automaticamente;
 - criar fila/ID paralelo;
 - duplicar review/issue/publicação para a mesma candidate key;
+- abandonar um decision record com side effect pendente;
 - expor metadados privados por cópia cega;
 - editar body materialmente;
 - tratar preferência estilística como blocker;
@@ -74,4 +77,4 @@ Decidir se uma versão exata `article-ready` pode ser colocada sob a marca públ
 
 ## Output
 
-Uma decisão persistida e idempotente por candidate key: `accepted` ou `rejected`; quando aceita e efetivamente publicada, um evento público confirmável completa o ciclo.
+Uma decisão persistida e idempotente por candidate key. Side effects externos ficam explicitamente reconciliáveis; quando aceita e efetivamente publicada, um evento público confirmável completa o ciclo.
