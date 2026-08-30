@@ -1,15 +1,1 @@
-[
-  {
-    "title": "Novo registro comercial do setor de alimentos e emitido no bairro Nova Porto Velho",
-    "excerpt": "Dados da Receita Federal indicam cadastro ativo para estabelecimento de panificacao na capital de Rondonia.",
-    "bairro": "NOVA PORTO VELHO",
-    "category": "Alimentos & Comercio",
-    "date": "25 de Julho de 2026",
-    "cnpj": "11.222.333/0001-81",
-    "cnae": "1091-1/01",
-    "logradouro": "AV PREFEITO CHIQUILITO ERSE",
-    "sourceName": "Receita Federal do Brasil (CNPJ Dados Abertos)",
-    "sourceHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content": "<p>O estabelecimento de CNPJ 11.222.333/0001-81 aparece como ativo no cadastro da Receita Federal para o municipio de Porto Velho.</p><p>A data declarada de inicio da atividade e 2026-07-25. Os dados cadastrais nao confirmam se o atendimento ao publico ja comecou.</p>"
-  }
-]
+[]
