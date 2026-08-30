@@ -3,123 +3,171 @@
 Status: Em revisão  
 Data: 30 de agosto de 2026
 
-## 1. Resumo da decisão
+## 1. Decisão institucional
 
 `ovigialocal/ovigialocal.github.io` é a **autoridade pública** de O Vigia.
 
-A redação privada em `franklinbaldo/ovigia-redacao` produz matérias até `article-ready`. Este repositório não recebe sincronização automática. Um **agente independente de publicação**, executando sob o contrato deste repositório, consulta a redação por pull, lê uma candidata pronta e decide se aceita colocá-la sob a marca pública de O Vigia.
-
-O fluxo é:
+A Redação privada (`franklinbaldo/ovigia-redacao`) termina em `article-ready`. Este repositório descobre candidatas por pull e um agente operando sob o contrato daqui decide, de forma independente, se aceita uma versão exata sob a marca pública.
 
 ```text
-franklinbaldo/ovigia-redacao
-        article-ready
-             ↓
-      publication agent
-        /          \
-     accept        reject
-       ↓              ↓
-copy Markdown      open issue
-into this repo     in newsroom
-       ↓              ↓
-public artifact     new digest
-       ↓
-GitHub Pages
+ovigia-redacao
+  article-ready
+       ║ pull de commit fixado
+publication-review
+   ┌───┴────┐
+reject     accept
+  ↓           ↓
+issue      Markdown público canônico
+              ↓
+       projeções estáticas
+              ↓
+       commit / GitHub Pages
+              ↓
+       confirmação da URL
 ```
 
-A independência é deliberada: `article-ready` é uma alegação da redação, não uma ordem de publicação.
+`article-ready` é uma alegação da Redação, nunca uma ordem de publicação.
 
 ## 2. Autoridade deste repositório
 
-Este repositório é autoridade sobre:
+Este repo é o único dono de:
 
-- quais matérias são aceitas para publicação;
-- a cópia pública canônica do Markdown aceito;
-- metadados especificamente públicos;
-- renderização estática;
-- homepage, arquivo, artigo, feed e sitemap;
-- commit que materializa a publicação;
-- URL pública e sua confirmação;
-- histórico público de correções/atualizações;
-- evidência de que uma matéria está efetivamente publicada.
+- `publication-review`;
+- decisão `accepted`/`rejected` para uma candidata exata;
+- Markdown público canônico;
+- slug/path e metadados de publicação;
+- HTML, `articles.json`, feed e sitemap derivados;
+- commit que materializa publicação;
+- URL e confirmação pública;
+- disponibilidade pública;
+- histórico de publicação, correção, atualização, retirada e retração.
 
-Este repositório **não** é autoridade sobre:
+Não é autoridade sobre fontes internas, pauta, apuração, draft, self-review, gates ou `article-ready`.
 
-- detecção de leads;
-- pauta;
-- apuração;
-- edição interna da redação;
-- criação dos gates editoriais internos;
-- promoção de uma matéria a `article-ready`;
-- reescrita silenciosa da candidata privada.
+## 3. Chave de identidade e pinning
 
-## 3. Contrato com a redação
+O publicador nunca trabalha com “a última versão” implicitamente.
 
-A redação canônica é `franklinbaldo/ovigia-redacao`.
+Antes da review:
 
-Ela termina em `article-ready` e deve oferecer, para uma versão candidata:
+1. fixa um commit de `franklinbaldo/ovigia-redacao`;
+2. carrega o bundle daquele commit com `okf-parser`;
+3. resolve um concept `article-ready` válido;
+4. usa como chave da candidata:
 
-- path/concept da matéria;
-- digest exato;
-- Markdown editorial;
-- profile/gates aplicáveis;
-- aprovações independentes do mesmo digest;
-- proveniência e fontes necessárias para revisão;
-- histórico de rejeição anterior quando relevante.
+```text
+(source_repository, source_path, source_digest)
+```
 
-O publicador trata esses artefatos como evidência de processo, não como obrigação de aceite.
+onde `source_digest` é o `ConceptRecord.source_digest` fornecido pelo parser.
 
-## 4. Descoberta é pull, nunca push
+O commit privado fixado também é registrado para reprodutibilidade, mas não substitui o digest do concept. Não criar hash, ID ou `concept_id` paralelo.
 
-O agente publicador entra neste repositório e, quando executar trabalho de publicação, consulta a redação para encontrar candidatas `article-ready` ainda não decididas/publicadas.
+## 4. Descoberta por pull sem fila compartilhada
 
-Não deve existir como requisito arquitetural:
+Não existe sync, webhook obrigatório, daemon ou flag escrita na Redação.
 
-- sincronização automática;
-- cópia acionada pela redação;
-- webhook obrigatório;
-- GitHub Action privada que empurre conteúdo;
-- espelhamento contínuo de diretórios.
+Em uma execução session-based, o agente:
 
-A separação de repositórios é uma separação de autoridade, não apenas de armazenamento.
+1. fixa um commit privado;
+2. enumera `concept_type=article-ready` via `okf-parser`;
+3. valida spec/grafo/gates;
+4. transforma cada concept em candidate key;
+5. lê `publication/reviews/` neste repo;
+6. ignora digests que já possuem decisão final;
+7. escolhe uma candidata elegível.
 
-## 5. Revisão independente
+A “fila” é a diferença derivada entre `article-ready` válidos e decisões públicas existentes. O estado “já examinado” pertence somente a este repositório.
 
-Antes de aceitar, o agente deve ler a matéria e contexto suficiente para formar julgamento próprio.
+## 5. Ledger Git mínimo de publicação
 
-A revisão do publicador não precisa duplicar mecanicamente todos os gates da redação. Ela serve como última barreira independente para problemas materiais que tornariam inadequado publicar a versão sob a marca pública.
+Para tornar review, retry e idempotência auditáveis sem construir CMS, este repo mantém dois tipos de registros Markdown versionados por Git.
 
-Exemplos de razões legítimas para rejeição:
+### 5.1 Decision record
 
-- afirmação material sem sustentação suficiente;
-- fonte inadequada ou proveniência inconsistente;
-- informação de serviço já perecida;
-- título/abertura materialmente desproporcional;
-- risco de privacidade ou sensibilidade não resolvido;
-- conteúdo que contradiz a própria evidência anexada;
-- ausência de metadado indispensável para publicação;
-- falha estrutural que impede identificar com segurança a versão aprovada.
+```text
+publication/reviews/<story-id>/<source-digest>.md
+```
 
-O agente deve evitar rejeições cosméticas que apenas expressem preferência estilística.
+Campos mínimos:
 
-## 6. Caminho de rejeição
+- `story_id`;
+- `source_repository`;
+- `source_commit`;
+- `source_path`;
+- `source_digest`;
+- `decision: accepted | rejected`;
+- `decided_at`;
+- para rejeição: issue da Redação;
+- para aceite: `public_path` alocado.
 
-Se houver problema material:
+A existência desse registro é a chave de idempotência. Uma candidata/digest recebe exatamente uma decisão final, salvo override humano explícito e auditável que não apague a decisão anterior.
 
-1. **não copie** a candidata;
-2. **não edite** o arquivo da redação;
-3. abra issue em `franklinbaldo/ovigia-redacao`;
-4. identifique path/concept e digest exatos;
-5. descreva findings concretos;
-6. cite evidências examinadas;
-7. declare o trabalho necessário para nova submissão.
+### 5.2 Publication event
 
-Template conceitual:
+Depois de uma candidata aceita ser efetivamente materializada/confirmada, registrar evento em:
+
+```text
+publication/events/<story-id>/<timestamp>-<kind>.md
+```
+
+com, conforme aplicável:
+
+- candidate key;
+- `kind: published | corrected | updated | withdrawn | retracted | replaced`;
+- `public_path`;
+- digest/hash do Markdown público ou artefato relevante;
+- commit público que materializou o evento;
+- URL;
+- `confirmed_at`;
+- relação com evento/publicação anterior quando existir.
+
+O event record posterior evita circularidade: o commit de publicação não precisa aparecer dentro dos próprios bytes que determinam aquele commit.
+
+Git é o banco. Não criar banco, worker, workflow engine ou serviço de sincronização.
+
+## 6. `publication-review`: função própria
+
+O publicador não repete uma redação inteira.
+
+Pode confiar como evidência de processo que:
+
+- a Redação declarou `article-ready`;
+- o profile e as avaliações ligadas existem;
+- `okf-parser` fornece identidade/digests/links.
+
+Mas deve formar julgamento independente sobre colocar aquela versão sob a marca, verificando o suficiente para detectar divergências materiais, como:
+
+- versão/gates/proveniência incoerentes;
+- afirmação factual material sem sustentação aparente;
+- freshness material para informação de serviço;
+- risco de privacidade/sensibilidade não resolvido;
+- título/abertura materialmente desproporcionais;
+- versão estruturalmente insegura para publicação.
+
+Preferência estética/cosmética não é motivo suficiente para rejeição.
+
+Problema editorial volta à Redação. Problema apenas de slug, HTML, feed, sitemap, CSS, canonical URL ou metadado público é resolvido aqui.
+
+## 7. Rejeição e idempotência da issue
+
+Ao rejeitar:
+
+1. crie primeiro o decision record `rejected` para a candidate key;
+2. abra uma única issue em `franklinbaldo/ovigia-redacao`;
+3. faça os dois lados referenciarem um ao outro;
+4. não copie nem edite a candidata.
+
+A issue deve conter:
 
 ```markdown
 publication-review: rejected
-article: <path-or-concept>
+story_id: <story-id>
+source_repository: franklinbaldo/ovigia-redacao
+source_commit: <sha>
+source_path: <path>
 source_digest: <digest>
+review_record: <path/url deste repo>
 
 ## Findings
 - ...
@@ -131,127 +179,167 @@ source_digest: <digest>
 - ...
 ```
 
-A issue é feedback editorial. O agente publicador não corrige a matéria privada por conta própria.
+Uma execução posterior que encontre a mesma candidate key e o mesmo `rejected` **não abre issue duplicada**.
 
-Quando a redação responder com nova versão, ela terá novo digest e será avaliada como nova candidata.
+Quando a Redação produzir digest B, B é uma nova candidate key. A review de A continua histórica. A issue de A pode ser fechada/reconciliada quando o novo trabalho estiver representado, mas aceite nunca é herdado.
 
-## 7. Caminho de aceite
+## 8. Aceite e double publication
 
-Se a candidata for aceita:
+Ao aceitar:
 
-1. registre a identidade exata examinada;
-2. copie o Markdown editorial para a área pública canônica de conteúdo;
-3. preserve o corpo editorial aprovado;
-4. acrescente somente metadados que pertencem à publicação, como slug/URL/data pública quando definidos por este repositório;
-5. gere/atualize os artefatos derivados do site;
-6. abra commit/PR neste repositório;
-7. depois da integração/deploy, confirme a URL pública;
-8. preserve evidência suficiente para reconstruir qual digest privado originou a publicação.
+1. fixe a candidate key e crie decision record `accepted` com um único `public_path`;
+2. se a mesma candidate key reaparecer, retome aquele mesmo path/decisão em vez de publicar novamente;
+3. copie o corpo editorial aprovado;
+4. acrescente somente metadados públicos;
+5. derive a superfície estática;
+6. integre por Git/PR normal;
+7. confirme a URL;
+8. grave o `publication-event` correspondente.
 
-Uma mudança editorial material durante a cópia invalida o aceite: ela deve voltar para a redação como nova versão.
+Uma candidate key não pode mapear silenciosamente para dois paths públicos.
 
-## 8. Markdown público canônico
+### Estado intermediário
 
-A direção arquitetural é manter a matéria aceita em Markdown dentro deste repositório, separando **conteúdo canônico** de **artefatos derivados de apresentação**.
+`accepted` sem event `published` significa “decidido e ainda não confirmado”. Uma nova sessão deve **retomar** essa publicação, não refazer a review ou escolher outro slug.
 
-Estrutura inicial de referência:
+## 9. O que significa copiar Markdown
 
-```text
-content/
-  articles/
-    <slug>.md
+Nunca copie o arquivo privado byte a byte.
 
-docs/rfc/
-skills/
-```
-
-A forma exata de renderizar esse Markdown pode evoluir. HTML, JSON, feed e sitemap são projeções públicas derivadas; não devem ser a única cópia semanticamente legível da matéria.
-
-Nenhum arquivo demonstrativo deve ser promovido como notícia real.
-
-## 9. Metadados de proveniência pública
-
-Uma matéria pública deve ser relacionável à candidata privada que foi aceita.
-
-O mínimo recomendado inclui:
-
-- `source_repository: franklinbaldo/ovigia-redacao`;
-- path/concept da candidata;
-- digest exato da versão aceita;
-- commit deste repositório que publicou a matéria;
-- data/hora pública quando aplicável.
-
-Esses dados são confiança/proveniência, não devem necessariamente dominar a apresentação visual ao leitor. A UI pode usar divulgação progressiva.
-
-## 10. Correções e atualizações
-
-Depois da publicação, este repositório é autoridade sobre o estado público.
-
-Se um problema exigir nova apuração ou reescrita editorial:
-
-1. abra issue na redação;
-2. aguarde nova versão `article-ready`;
-3. faça nova revisão independente;
-4. publique como correção/atualização preservando o histórico público.
-
-Correções não devem apagar silenciosamente o que foi publicado anteriormente quando a mudança for material.
-
-## 11. Skill do publicador
-
-O procedimento executável vive em:
+O conteúdo público canônico é:
 
 ```text
-skills/publication-review/SKILL.md
+content/articles/<slug>.md
 ```
 
-A skill pertence a este repositório para preservar independência institucional. A redação não define unilateralmente o procedimento pelo qual suas candidatas são aceitas para publicação.
+O publicador extrai o **body editorial aprovado** e aplica uma whitelist de metadados públicos. Não copiar por default:
 
-## 12. Relação com WikiSkill
+- self-review;
+- findings internos;
+- notas de apuração;
+- instruções de agente;
+- experiência operacional;
+- frontmatter de workflow;
+- informação sensível não destinada ao leitor.
 
-A redação adota WikiSkill para aprender continuamente com experiência editorial. Este repositório não precisa adotar imediatamente a mesma infraestrutura.
+O Markdown público deve preservar, em metadados de proveniência não necessariamente exibidos com destaque:
 
-Porém, as rejeições do publicador são sinais estruturados de alta qualidade para a experiência da redação. O agente deve produzir issues precisas o suficiente para que padrões recorrentes possam ser consolidados e eventualmente melhorar skills jornalísticas.
+- `story_id`;
+- `source_repository`;
+- `source_commit`;
+- `source_path`;
+- `source_digest`.
 
-Se no futuro o próprio publicador acumular volume suficiente de decisões, este repositório poderá adotar sua própria wiki/skill evolution — separada da wiki da redação.
+Slug, data/hora pública, URL e metadados de apresentação pertencem a este repo.
+
+Uma reescrita material do body invalida o aceite e volta à Redação como novo digest.
+
+## 10. Slug collision e identidade de história
+
+O slug é metadado de publicação e pertence a este repo.
+
+- se o path proposto está livre, aloque-o no `accepted` record;
+- se colide com outro `story_id`, escolha alternativa determinística/legível e registre a decisão; não devolva à Redação apenas por isso;
+- um novo digest do **mesmo** `story_id` que corrige/atualiza publicação existente usa, por default, o mesmo `public_path`;
+- uma matéria jornalisticamente nova deve chegar com identidade editorial própria;
+- substituição deliberada de uma publicação por outra deve ser um event explícito `replaced`, nunca inferida de slug semelhante.
+
+## 11. Correções, atualizações e retrações
+
+### 11.1 Defeito de projeção
+
+HTML/feed/sitemap/CSS/canonical/metadado público pode ser corrigido diretamente aqui quando o body editorial aceito não muda. Registre evento se a mudança altera o artefato público de modo material para auditabilidade.
+
+### 11.2 Correção editorial
+
+Erro factual, nova informação de serviço ou mudança material do texto exige:
+
+1. issue/trabalho na Redação;
+2. novo `article-ready`/digest;
+3. nova `publication-review` independente;
+4. atualização do mesmo Markdown público/path quando for a continuação da mesma história;
+5. event `corrected` ou `updated` ligando versão anterior e nova.
+
+Git preserva bytes anteriores; a superfície de correções deve ser derivável desses eventos e não apagar silenciosamente a história.
+
+### 11.3 Retração/withdrawal urgente
+
+Este repo controla disponibilidade pública. Se houver risco urgente, o publicador pode retirar/tombstonar uma matéria antes de novo conteúdo editorial e registrar `withdrawn`, além de abrir issue na Redação.
+
+Se for necessária nota editorial material de retração/correção, a Redação produz novo conteúdo/digest e este repo o avalia. O evento final `retracted` preserva relação com a publicação original.
+
+## 12. Publicação pública e OKF
+
+O repo público não precisa se tornar outro knowledge bundle apenas para espelhar a Redação.
+
+Para o conteúdo público, Markdown com frontmatter mínimo + Git + decision/event records é suficiente enquanto o volume não demonstrar necessidade maior. Não criar `concept_id`, grafo ou schema paralelo.
+
+`okf-parser` é usado para **ler/validar a Redação** no boundary privado. Se no futuro os próprios registros públicos ganharem relações complexas suficientes para justificar OKF, isso exige decisão própria baseada em uso real.
 
 ## 13. Relação com o site atual
 
-O site permanece static-first e hospedado via GitHub Pages.
+Hoje o site possui HTML/JS estático, `articles.json`, feed e sitemap, com previews locais e edição pública vazia.
 
-A introdução do Markdown canônico não exige trocar toda a implementação visual nesta RFC. O primeiro objetivo é estabelecer responsabilidade e contrato. A migração da projeção atual (`articles.json`/HTML/JS) para uma renderização derivada do Markdown pode ocorrer incrementalmente.
+A RFC define a direção:
 
-Cobogó continua sendo a referência de gramática visual compartilhada quando aplicável.
+```text
+content/articles/<slug>.md        # canônico
+publication/reviews/...           # decisão
+publication/events/...            # histórico público
+        ↓
+HTML + articles.json + feed + sitemap  # derivados
+```
 
-## 14. Critérios de aceite
+A migração do renderer é implementação posterior desta RFC. Ela não altera o contrato institucional e não deve introduzir backend permanente.
 
-A arquitetura estará provada quando:
+## 14. Modelo operacional com agentes session-based
 
-1. existir ao menos uma matéria real `article-ready` na redação;
-2. um agente operando neste repositório descobri-la por pull;
-3. o agente conseguir revisar o digest exato;
-4. uma rejeição, quando houver problema, gerar issue acionável na redação sem editar a candidata;
-5. uma candidata aceita seja copiada como Markdown público canônico;
-6. o corpo editorial aceito permaneça identificável;
-7. o site derive sua publicação do conteúdo versionado aqui;
-8. a URL pública possa ser ligada ao digest privado e ao commit público;
-9. nenhuma sincronização automática seja necessária para o fluxo funcionar.
+Nenhum daemon é necessário.
 
-## 15. Não objetivos
+Uma sessão recorrente:
 
-Esta RFC não propõe:
+- reconstrói estado pelo Git;
+- fixa o commit privado;
+- descobre uma candidata elegível;
+- revisa;
+- persiste decision/issue ou decision/publicação/event;
+- termina.
 
-- publicar automaticamente toda candidata `article-ready`;
-- transformar o publicador em coautor silencioso;
-- mover o pipeline de redação para este repositório;
-- permitir que a redação faça push direto como ato de publicação;
-- exigir backend permanente;
-- esconder o histórico de correções;
-- criar agora uma segunda infraestrutura WikiSkill completa.
+GitHub Actions pode existir para tarefas auxiliares do repositório público, como captura visual, mas não é requisito do protocolo Redação → Publicação nem substitui o agente independente.
 
-## 16. Regra operacional curta
+## 15. Relação com WikiSkill
 
-Ao entrar neste repositório, um agente deve perguntar:
+WikiSkill fica inicialmente na Redação. Issues de rejeição são sinais estruturados de alto valor para a experiência editorial.
 
-> “Existe uma candidata `article-ready` que eu, como autoridade pública independente, aceito colocar sob a marca O Vigia?”
+Este repo só deve criar wiki/evolução própria se volume de decisões públicas justificar. A independência exige que a Redação não controle a skill `publication-review` daqui.
 
-Se sim, publique de forma versionada e rastreável. Se não, devolva trabalho por issue à redação.
+## 16. Compatibilidade com a missão da primeira matéria
+
+A antiga issue privada #30 deve terminar no marco privado `article-ready`. A primeira review/publicação/URL deve ser conduzida por issue sucessora neste repo.
+
+Um marco end-to-end pode citar ambas as issues, mas não cria autoridade compartilhada.
+
+## 17. Critérios de aceite
+
+A arquitetura está provada quando:
+
+1. um agente fixa commit privado e enumera `article-ready` via `okf-parser`;
+2. candidate key repo/path/digest é persistida em decision record;
+3. mesma candidate key não gera review/issue/publicação duplicada;
+4. rejeição cria exatamente uma issue acionável e novo digest é nova candidatura;
+5. aceite fixa um único public path;
+6. corpo público é extraído sem vazar frontmatter interno;
+7. HTML/JSON/feed/sitemap são derivados do Markdown público;
+8. publication event liga candidate key, commit, artefato e URL confirmada;
+9. correção/retração preserva histórico e a separação Redação × Publicação;
+10. nenhuma sync, CMS, daemon ou banco é necessário.
+
+## 18. Não objetivos
+
+Não construir CMS, backend, workflow engine, sincronizador permanente, espelho do knowledge corpus, segunda redação, publicação automática de todo `article-ready` ou sistema de IDs paralelo.
+
+## 19. Regra curta
+
+> “Existe uma candidata exata que eu, como autoridade pública independente, aceito colocar sob a marca O Vigia?”
+
+Se sim, registre a decisão e publique aquela versão de forma rastreável. Se não, registre rejeição e devolva trabalho à Redação sem reescrevê-la.

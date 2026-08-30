@@ -2,72 +2,65 @@
 
 ## Goal
 
-Operate the public authority of O Vigia. This repository publishes only material that an independent publication agent has accepted after reviewing an exact `article-ready` candidate from `franklinbaldo/ovigia-redacao`.
+Operate the independent public authority of O Vigia. The newsroom ends at `article-ready`; this repository decides whether an exact candidate is accepted for the public brand.
 
-## Core flow
+## Session flow
 
 ```text
-query newsroom for article-ready
-        ↓
-load exact candidate + digest + evidence
-        ↓
-independent publication review
-     /                     \
-  accept                  reject
-    ↓                        ↓
-copy approved Markdown     open issue in newsroom
-into this repository       against exact digest
-    ↓                        ↓
-derive static artifacts    STOP here
-    ↓
-commit / merge / Pages
-    ↓
-confirm public URL
+pin newsroom commit
+  → load OKF bundle
+  → enumerate valid article-ready concepts
+  → subtract existing publication/reviews decisions
+  → independent publication-review
+      ├─ reject → decision record + one newsroom issue
+      └─ accept → decision record + public Markdown
+                    → derived static artifacts
+                    → commit / Pages / URL confirmation
+                    → publication event
 ```
 
-## Institutional boundary
+No automatic sync, webhook, daemon or shared queue is part of the contract.
 
-The newsroom decides whether a version is `article-ready`. This repository decides whether that version is **published**.
+## Candidate identity
 
-Do not treat `article-ready` as an instruction to publish. Do not let the newsroom push/sync content automatically into this repository.
+Use exactly:
 
-## On rejection
+```text
+(source_repository, source_path, source_digest)
+```
 
-When a material problem exists:
+with `source_digest` from `okf-parser`. Also persist the pinned newsroom commit for reproducibility. Do not invent another ID/hash.
 
-- do not copy the candidate;
-- do not edit the private newsroom candidate;
-- open an issue in `franklinbaldo/ovigia-redacao`;
-- include the exact path/concept and digest;
-- state concrete findings, evidence and required work;
-- wait for a new version/digest in a future run.
+## Idempotency
 
-Reject material defects, not harmless stylistic preferences.
+Before reviewing, inspect `publication/reviews/<story-id>/<source-digest>.md`.
 
-## On acceptance
+- existing `rejected`: do not create another issue for the same digest;
+- existing `accepted`: resume the same allocated `public_path`; do not review/publish it as a second item;
+- no record: candidate is eligible.
 
-When a candidate is fit for publication:
+## Review scope
 
-- preserve the approved editorial body;
-- copy it as public canonical Markdown;
-- add only publication-owned metadata;
-- keep a reconstructible link to the newsroom source and exact digest;
-- derive HTML/JSON/feed/sitemap as public projections;
-- use normal Git history/PRs as the publication change boundary.
+Trust the newsroom process as evidence, but independently judge material fitness for the public brand. Do not mechanically rerun every newsroom gate. Reject material factual/provenance/freshness/privacy/framing/integrity defects, not harmless style preferences.
 
-A material editorial rewrite requires a new newsroom version; do not silently edit during publication.
+## Safe copy boundary
+
+Copy the approved **editorial body**, not the private file byte-for-byte. Whitelist public metadata. Never expose self-review, internal findings, reporting notes, experience records or workflow instructions by default.
+
+A material body edit requires a new newsroom digest.
 
 ## Corrections
 
-This repository owns the public state and correction history. If a correction requires new editorial work, open an issue in the newsroom and evaluate the resulting new `article-ready` version independently.
+- projection/public-metadata bugs can be fixed here if the accepted body is unchanged;
+- material editorial corrections/updates require a new newsroom `article-ready` and a new review;
+- this repo may withdraw/tombstone urgently because it owns public availability, but substantive retraction wording belongs to editorial work in the newsroom;
+- preserve publication history through `publication/events/` and Git.
 
-## Publication skill
+## Canonical public state
 
-Use `skills/publication-review/SKILL.md` for the executable review procedure. See `docs/rfc/0001-independent-publication-agent.md` for the architectural contract.
+- `content/articles/<slug>.md`: public article Markdown;
+- `publication/reviews/...`: publication decisions;
+- `publication/events/...`: confirmed public history;
+- HTML/`articles.json`/feed/sitemap: derived projections.
 
-## Public-surface constraints
-
-- The site remains static-first and deployable on GitHub Pages.
-- Fixtures/demo content must never appear as real journalism.
-- Cobogó is the shared visual grammar when applicable.
-- Provenance should be preserved without turning the article page into a technical dashboard.
+See `docs/rfc/0001-independent-publication-agent.md` and `skills/publication-review/SKILL.md`.
