@@ -79,7 +79,7 @@ function renderPublishedArticle(article) {
     }
   }
 
-  const state = document.querySelector(".provenance-list dd:last-child");
+  const state = document.querySelector(".provenance-list > div:last-child dd");
   if (state) state.textContent = "Publicado";
 
   const body = document.getElementById("article-body");
