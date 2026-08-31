@@ -7,7 +7,7 @@ import html
 import json
 import re
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from email.utils import format_datetime
 from pathlib import Path
 from urllib.parse import quote
@@ -194,7 +194,8 @@ def build_feed(articles: list[Article]) -> str:
             f"      <title>{xml_escape(meta['title'])}</title>\n"
             f"      <link>{xml_escape(url)}</link>\n"
             f"      <guid isPermaLink=\"true\">{xml_escape(url)}</guid>\n"
-            f"      <pubDate>{format_datetime(article.published_at)}</pubDate>\n"
+            f"      <pubDate>{format_datetime(article.published_at.astimezone(timezone.utc), usegmt=True)}</pubDate>\n"
+            f"      <category>{xml_escape(meta['category'])}</category>\n"
             f"      <description>{xml_escape(meta['description'])}</description>\n"
             "    </item>"
         )
@@ -215,13 +216,26 @@ def build_feed(articles: list[Article]) -> str:
 
 
 def build_sitemap(articles: list[Article]) -> str:
-    urls = [f"{SITE}/", *(f"{SITE}/{article.route}" for article in articles)]
-    body = "\n".join(f"  <url><loc>{xml_escape(url)}</loc></url>" for url in urls)
+    chunks = [
+        "  <url>\n"
+        f"    <loc>{SITE}/</loc>\n"
+        "    <changefreq>daily</changefreq>\n"
+        "  </url>"
+    ]
+    for article in articles:
+        url = f"{SITE}/{article.route}"
+        chunks.append(
+            "  <url>\n"
+            f"    <loc>{xml_escape(url)}</loc>\n"
+            f"    <lastmod>{article.published_at.date().isoformat()}</lastmod>\n"
+            "    <changefreq>daily</changefreq>\n"
+            "  </url>"
+        )
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        f'{body}\n'
-        '</urlset>\n'
+        + "\n".join(chunks)
+        + "\n</urlset>\n"
     )
 
 
