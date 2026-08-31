@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ovigialocal.github.io/</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://ovigialocal.github.io/article.html?id=porto-velho-sine-vagas-2026-08-19</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>daily</changefreq>
   </url>
 </urlset>
