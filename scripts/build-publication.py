@@ -177,7 +177,7 @@ def build_json(articles: list[Article]) -> str:
             "sourceName": meta["source_name"],
             "sourceUrl": meta["source_url"],
             "sourceHash": meta["source_digest"],
-            "neighborhood": meta["locality"],
+            "neighborhood": meta.get("neighborhood", meta["locality"].split(",", 1)[0].strip()),
             "url": article.route,
             "contentHtml": render_markdown(article.body),
         })
