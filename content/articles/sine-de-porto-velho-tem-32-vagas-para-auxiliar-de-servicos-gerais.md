@@ -9,6 +9,8 @@ source_repository: "franklinbaldo/ovigia-redacao"
 source_commit: "81dd8ddb933e323e9ddad4f037fb1ae8347458be"
 source_path: "knowledge/porto-velho/articles/2026/08/porto-velho-sine-vagas-2026-08-19/ready-v4.md"
 source_digest: "sha256:48f1077d1497d0e23c8c5373a6b122fd1ae0305805e8fb9283c4e3da8f28c250"
+source_name: "Sine Municipal de Porto Velho"
+source_url: "https://www.portovelho.ro.gov.br/sine/vagas"
 ---
 
 # Sine de Porto Velho tem 32 vagas para auxiliar de serviços gerais; prazo exibido vai até segunda

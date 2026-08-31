@@ -82,6 +82,19 @@ Copy approved **editorial content**, not the private file byte-for-byte. Whiteli
 
 A material body/title/description edit requires a new newsroom ready digest.
 
+## Derived projections
+
+`content/articles/<slug>.md` is the canonical public article. `articles.json`, feed and sitemap are generated projections and must not be maintained independently by hand.
+
+Every public article must include the flat public metadata required by `scripts/build-publication.py`, including `source_name` and `source_url` in addition to the provenance fields. After adding or changing canonical public Markdown, run:
+
+```text
+python scripts/build-publication.py
+python scripts/build-publication.py --check
+```
+
+The second command must pass before merge. The builder is stdlib-only and deliberately renders the small Markdown subset used by the public surface; unsupported public metadata should fail closed rather than silently invent projection state.
+
 ## Corrections
 
 - projection/public-metadata bugs can be fixed here if accepted editorial content is unchanged;
