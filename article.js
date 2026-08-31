@@ -1,6 +1,6 @@
-// Preview editorial estritamente local: nenhum conteúdo demonstrativo é publicado como notícia.
+const params = new URLSearchParams(window.location.search);
 const isLocalPreview = ["localhost", "127.0.0.1"].includes(window.location.hostname)
-  && new URLSearchParams(window.location.search).get("preview") === "article";
+  && params.get("preview") === "article";
 
 const previewArticle = {
   section: "Cidade",
@@ -14,27 +14,29 @@ const previewArticle = {
     "O bloco de confiança fica ao lado no desktop e volta ao fluxo normal no celular. A fonte pode ser aberta quando necessária, e o caminho de correções continua visível sem transformar a matéria em um painel técnico.",
     "Quando conteúdo real atravessar o fluxo governado de publicação, este mesmo template receberá os dados publicados. O preview local testa apenas composição e comportamento responsivo."
   ],
-  source: "Documento demonstrativo de layout",
-  reference: "preview-local/article-template"
+  sourceName: "Documento demonstrativo de layout",
+  sourceHash: "preview-local/article-template"
 };
 
-function populatePreview() {
+function setText(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.textContent = value || "";
+}
+
+function showShell() {
   document.getElementById("article-empty")?.setAttribute("hidden", "true");
-  const shell = document.getElementById("article-shell");
-  shell?.removeAttribute("hidden");
+  document.getElementById("article-shell")?.removeAttribute("hidden");
+}
 
-  const setText = (id, value) => {
-    const element = document.getElementById(id);
-    if (element) element.textContent = value;
-  };
-
+function renderPreview() {
+  showShell();
   setText("article-section", previewArticle.section);
   setText("article-neighborhood", previewArticle.neighborhood);
   setText("article-date", previewArticle.date);
   setText("article-title", previewArticle.title);
   setText("article-deck", previewArticle.deck);
-  setText("article-source", previewArticle.source);
-  setText("article-reference", previewArticle.reference);
+  setText("article-source", previewArticle.sourceName);
+  setText("article-reference", previewArticle.sourceHash);
 
   const body = document.getElementById("article-body");
   if (body) {
@@ -44,8 +46,68 @@ function populatePreview() {
       return paragraph;
     }));
   }
-
   document.title = `${previewArticle.title} — O Vigia`;
 }
 
-if (isLocalPreview) populatePreview();
+function renderPublishedArticle(article) {
+  showShell();
+  const previewLabel = document.getElementById("preview-label");
+  if (previewLabel) previewLabel.hidden = true;
+
+  setText("article-section", article.category || "Notícia");
+  setText("article-neighborhood", article.neighborhood || article.bairro || "Porto Velho");
+  const date = document.getElementById("article-date");
+  if (date) {
+    date.textContent = article.date || "";
+    if (article.dateIso) date.dateTime = article.dateIso;
+  }
+  setText("article-title", article.title);
+  setText("article-deck", article.deck || article.excerpt);
+  setText("article-reference", article.sourceHash);
+
+  const source = document.getElementById("article-source");
+  if (source) {
+    source.replaceChildren();
+    if (article.sourceUrl) {
+      const link = document.createElement("a");
+      link.href = article.sourceUrl;
+      link.rel = "noopener noreferrer";
+      link.textContent = article.sourceName || "Fonte oficial";
+      source.appendChild(link);
+    } else {
+      source.textContent = article.sourceName || "";
+    }
+  }
+
+  const state = document.querySelector(".provenance-list > div:last-child dd");
+  if (state) state.textContent = "Publicado";
+
+  const body = document.getElementById("article-body");
+  if (body) body.innerHTML = article.contentHtml || "";
+
+  document.title = `${article.title} — O Vigia`;
+  const description = document.querySelector('meta[name="description"]');
+  if (description) description.content = article.deck || article.excerpt || "";
+}
+
+async function loadPublishedArticle() {
+  if (isLocalPreview) {
+    renderPreview();
+    return;
+  }
+
+  const articleId = params.get("id");
+  if (!articleId) return;
+
+  try {
+    const response = await fetch("articles.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`articles.json: HTTP ${response.status}`);
+    const articles = await response.json();
+    const article = Array.isArray(articles) ? articles.find(item => item.id === articleId) : null;
+    if (article) renderPublishedArticle(article);
+  } catch (error) {
+    console.error("Não foi possível carregar a matéria publicada.", error);
+  }
+}
+
+loadPublishedArticle();

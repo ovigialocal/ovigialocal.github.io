@@ -1,6 +1,6 @@
 // O Vigia — face pública.
-// A publicação editorial preenche esta coleção; o estado vazio é uma edição válida.
-const publishedArticles = [];
+// A publicação editorial preenche articles.json; o estado vazio é uma edição válida.
+let publishedArticles = [];
 
 // Fixture exclusivamente local para validar a composição futura sem publicar notícia falsa.
 // Em GitHub Pages este preview nunca é ativado.
@@ -17,14 +17,28 @@ function previewEnabled() {
   return local && new URLSearchParams(location.search).get("preview") === "populated";
 }
 
+async function loadPublishedArticles() {
+  if (previewEnabled()) return;
+  try {
+    const response = await fetch("articles.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`articles.json: HTTP ${response.status}`);
+    const data = await response.json();
+    publishedArticles = Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error("Não foi possível carregar o acervo publicado.", error);
+    publishedArticles = [];
+  }
+}
+
 function currentArticles() {
   return previewEnabled() ? LOCAL_PREVIEW_ARTICLES : publishedArticles;
 }
 
 let activeBairro = "Todos os Bairros";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   if (previewEnabled()) document.body.dataset.preview = "populated";
+  await loadPublishedArticles();
   setupSearch();
   setupModal();
   setupKeyboardAccessibility();
@@ -92,6 +106,7 @@ function renderArticles(articles) {
     tag.textContent = [article.category, article.bairro].filter(Boolean).join(" · ");
     const date = document.createElement("time");
     date.className = "card-date";
+    if (article.dateIso) date.dateTime = article.dateIso;
     date.textContent = article.date || "";
     header.append(tag, date);
     const title = document.createElement("h3");
@@ -111,6 +126,13 @@ function renderArticles(articles) {
     provenance.textContent = "Ver fontes";
     provenance.addEventListener("click", () => openProvenanceModal(article.id));
     meta.append(source, provenance);
+    if (article.url) {
+      const read = document.createElement("a");
+      read.className = "btn-provenance";
+      read.href = article.url;
+      read.textContent = "Ler matéria";
+      meta.appendChild(read);
+    }
     card.append(header, title, excerpt, meta);
     grid.appendChild(card);
   });
@@ -141,6 +163,16 @@ function openProvenanceModal(articleId) {
     item.append(strong, document.createTextNode(value));
     box.appendChild(item);
   });
+  if (article.sourceUrl && !previewEnabled()) {
+    const item = document.createElement("div");
+    item.className = "provenance-item";
+    const link = document.createElement("a");
+    link.href = article.sourceUrl;
+    link.rel = "noopener noreferrer";
+    link.textContent = "Abrir fonte oficial";
+    item.appendChild(link);
+    box.appendChild(item);
+  }
   content.append(title, box);
   modal.removeAttribute("hidden");
   modal.classList.add("active");
