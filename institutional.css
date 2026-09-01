@@ -1,0 +1,109 @@
+.institutional-page {
+  max-width: 980px;
+  margin: auto;
+  padding: 3.5rem 1.5rem 6rem;
+}
+.institutional-header {
+  max-width: 760px;
+  padding-bottom: 2rem;
+  border-bottom: 3px double var(--ink);
+}
+.institutional-header h1 {
+  margin: .25rem 0 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: .92;
+  font-weight: 500;
+  letter-spacing: -.04em;
+}
+.institutional-header .deck {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  line-height: 1.45;
+}
+.institutional-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 46rem) minmax(14rem, 1fr);
+  gap: 4rem;
+  padding-top: 2.5rem;
+}
+.institutional-body {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  line-height: 1.72;
+}
+.institutional-body h2 {
+  margin: 2.8rem 0 .85rem;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  line-height: 1.05;
+}
+.institutional-body h2:first-child { margin-top: 0; }
+.institutional-body h3 {
+  margin: 2rem 0 .6rem;
+  font-size: 1.3rem;
+}
+.institutional-body li { margin-bottom: .7rem; }
+.institutional-body a { color: var(--accent-dark); }
+.principle-box {
+  margin: 1.8rem 0;
+  padding: 1.2rem 1.4rem;
+  border-left: 5px solid var(--accent);
+  background: var(--paper-deep);
+}
+.principle-box strong {
+  display: block;
+  margin-bottom: .35rem;
+  font-family: var(--font-sans);
+  font-size: .76rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+}
+.institutional-aside {
+  align-self: start;
+  position: sticky;
+  top: 1.5rem;
+  border-top: 3px double var(--ink);
+  padding-top: 1rem;
+}
+.institutional-aside h2 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  line-height: 1.05;
+}
+.institutional-aside p,
+.institutional-aside li {
+  color: var(--muted);
+  font-size: .85rem;
+}
+.institutional-aside a { color: var(--accent); font-weight: 700; }
+.policy-list {
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+.policy-list li {
+  padding: .75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.correction-cta {
+  display: inline-block;
+  margin: .8rem 0 1rem;
+  border: 1px solid var(--ink);
+  padding: .75rem 1rem;
+  text-decoration: none;
+  font: 700 .85rem var(--font-sans);
+}
+.correction-cta:hover { border-color: var(--accent); color: var(--accent); }
+@media (max-width: 760px) {
+  .institutional-page { padding: 2.2rem 1rem 4rem; }
+  .institutional-header h1 { font-size: clamp(2.7rem, 13vw, 4rem); }
+  .institutional-header .deck { font-size: 1.08rem; }
+  .institutional-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+  .institutional-body { font-size: 1.06rem; line-height: 1.68; }
+  .institutional-aside { position: static; }
+}
