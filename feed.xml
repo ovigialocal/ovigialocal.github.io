@@ -1,113 +1,23 @@
+---
+layout: null
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
     <title>O Vigia — Porto Velho</title>
-    <link>https://ovigialocal.github.io</link>
+    <link>{{ '/' | absolute_url }}</link>
     <description>Feed do projeto O Vigia em Porto Velho (RO)</description>
     <language>pt-BR</language>
+    {% assign sorted_news = site.news | sort: "published_at" | reverse %}
+    {% for story in sorted_news %}
     <item>
-      <title>Corrida dos 112 anos de Porto Velho abre 3 mil vagas; prova será em 26 de setembro</title>
-      <link>https://ovigialocal.github.io/article.html?id=porto-velho-corrida-112-anos-2026-09-26</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=porto-velho-corrida-112-anos-2026-09-26</guid>
-      <pubDate>Tue, 01 Sep 2026 22:45:00 GMT</pubDate>
-      <category>Serviços</category>
-      <description>Inscrições estão abertas para a prova municipal marcada para 17h; a Prefeitura divulgou 3 mil vagas e o link de cadastro.</description>
+      <title>{{ story.title | xml_escape }}</title>
+      <link>{{ story.url | absolute_url }}</link>
+      <guid isPermaLink="true">{{ story.url | absolute_url }}</guid>
+      <pubDate>{{ story.published_at | date_to_rfc822 }}</pubDate>
+      <category>{{ story.category | xml_escape }}</category>
+      <description>{{ story.description | xml_escape }}</description>
     </item>
-    <item>
-      <title>Seduc convoca classificados do Amigo Voluntário; prazo vai até 11 de setembro</title>
-      <link>https://ovigialocal.github.io/article.html?id=rondonia-seduc-amigo-voluntario-convocacao-2026-09-11</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=rondonia-seduc-amigo-voluntario-convocacao-2026-09-11</guid>
-      <pubDate>Tue, 01 Sep 2026 20:36:00 GMT</pubDate>
-      <category>Serviços</category>
-      <description>12ª convocação exige envio de documentos, cadastro ativo no SEI/RO e apresentação na Superintendência Regional indicada no edital.</description>
-    </item>
-    <item>
-      <title>Rondônia tem 6% de subutilização da força de trabalho no 2º trimestre, aponta IBGE</title>
-      <link>https://ovigialocal.github.io/article.html?id=rondonia-pnad-subutilizacao-2026q2</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=rondonia-pnad-subutilizacao-2026q2</guid>
-      <pubDate>Tue, 01 Sep 2026 16:48:00 GMT</pubDate>
-      <category>Economia</category>
-      <description>PNAD Contínua coloca o estado entre as menores taxas do país; indicador é mais amplo que desemprego e inclui subocupação e força de trabalho potencial.</description>
-    </item>
-    <item>
-      <title>MPC cobra justificativas após cotação de solução educacional chegar a R$ 120,2 milhões em RO</title>
-      <link>https://ovigialocal.github.io/article.html?id=rondonia-mpc-seduc-kits-120-milhoes-2026</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=rondonia-mpc-seduc-kits-120-milhoes-2026</guid>
-      <pubDate>Tue, 01 Sep 2026 15:55:00 GMT</pubDate>
-      <category>Poder público</category>
-      <description>Recomendação à Seduc pede análise de preços, sobreposição e necessidade antes de nova adesão; documento compara estimativas anteriores de R$ 63,1 milhões e R$ 29,7 milhões.</description>
-    </item>
-    <item>
-      <title>Rondônia abre pregão de R$ 1,66 milhão para telefonia dos atendimentos 190 e 193</title>
-      <link>https://ovigialocal.github.io/article.html?id=rondonia-pregao-90054-190-193-2026</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=rondonia-pregao-90054-190-193-2026</guid>
-      <pubDate>Tue, 01 Sep 2026 14:50:00 GMT</pubDate>
-      <category>Poder público</category>
-      <description>Licitação da Sesdec prevê registro de preços para telefonia fixa, SIP e VoIP dos serviços de emergência e outras unidades; sessão está marcada para 2 de setembro.</description>
-    </item>
-    <item>
-      <title>Governo de RO descontinua Geração Emprego e orienta procura pelo Sine Estadual</title>
-      <link>https://ovigialocal.github.io/article.html?id=rondonia-geracao-emprego-descontinuidade-2026-09-01</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=rondonia-geracao-emprego-descontinuidade-2026-09-01</guid>
-      <pubDate>Tue, 01 Sep 2026 12:40:00 GMT</pubDate>
-      <category>Serviços</category>
-      <description>Plataformas Geração Emprego e Geração Serviço deixam de ser o canal indicado a partir de 1º de setembro; em Porto Velho, o atendimento estadual segue em duas unidades do Sine.</description>
-    </item>
-    <item>
-      <title>Atendimento odontológico gratuito em Porto Velho segue até 3 de setembro</title>
-      <link>https://ovigialocal.github.io/article.html?id=porto-velho-novos-sorrisos-2026-09-03</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=porto-velho-novos-sorrisos-2026-09-03</guid>
-      <pubDate>Tue, 01 Sep 2026 09:50:00 GMT</pubDate>
-      <category>Saúde</category>
-      <description>Expedição Novos Sorrisos atende no bairro Lagoa das 8h30 às 16h; vagas são limitadas e o agendamento pode ser feito na unidade móvel ou pelo site do projeto.</description>
-    </item>
-    <item>
-      <title>Sine de Porto Velho exibe 17 vagas com prazo até 8 e 10 de setembro</title>
-      <link>https://ovigialocal.github.io/article.html?id=porto-velho-sine-vagas-2026-09-01</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=porto-velho-sine-vagas-2026-09-01</guid>
-      <pubDate>Tue, 01 Sep 2026 07:12:00 GMT</pubDate>
-      <category>Serviços</category>
-      <description>Consulta em 1º de setembro encontrou vagas para soldador, roçador em Jacy-Paraná, peixeiro, farmacêutico e outras; o portal ainda mantém anúncios vencidos, então é preciso conferir o prazo antes de enviar.</description>
-    </item>
-    <item>
-      <title>FGTS por calamidade em Porto Velho pode ser solicitado até 17 de setembro</title>
-      <link>https://ovigialocal.github.io/article.html?id=porto-velho-fgts-saque-calamidade-2026-09-17</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=porto-velho-fgts-saque-calamidade-2026-09-17</guid>
-      <pubDate>Tue, 01 Sep 2026 07:04:00 GMT</pubDate>
-      <category>Serviços</category>
-      <description>Trabalhadores de áreas atingidas e habilitadas pela Defesa Civil podem pedir o saque pelo app FGTS; valor é limitado a R$ 6.220 por conta e ao saldo disponível.</description>
-    </item>
-    <item>
-      <title>ITR 2026: declaração de imóveis rurais em Porto Velho vai até 30 de setembro</title>
-      <link>https://ovigialocal.github.io/article.html?id=porto-velho-itr-2026-prazo-30-setembro</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=porto-velho-itr-2026-prazo-30-setembro</guid>
-      <pubDate>Tue, 01 Sep 2026 06:48:00 GMT</pubDate>
-      <category>Serviços</category>
-      <description>Prazo termina às 23h59min59s no horário de Brasília; atraso gera multa mínima de R$ 50 e a Prefeitura publicou os valores de terra nua de 2026 usados como referência.</description>
-    </item>
-    <item>
-      <title>Desfile cívico de escolas municipais acontece nesta terça às 16h no Centro de Porto Velho</title>
-      <link>https://ovigialocal.github.io/article.html?id=porto-velho-desfile-civico-2026-09-01</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=porto-velho-desfile-civico-2026-09-01</guid>
-      <pubDate>Tue, 01 Sep 2026 05:35:00 GMT</pubDate>
-      <category>Educação</category>
-      <description>Evento da rede municipal começa às 16h em frente à Prefeitura, no encontro da avenida Sete de Setembro com a Farquar, e tem encerramento previsto para 17h30.</description>
-    </item>
-    <item>
-      <title>Campanha de multivacinação em Porto Velho termina terça-feira, 1º de setembro</title>
-      <link>https://ovigialocal.github.io/article.html?id=porto-velho-dia-d-vacinacao-2026-08-22</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=porto-velho-dia-d-vacinacao-2026-08-22</guid>
-      <pubDate>Tue, 01 Sep 2026 00:55:00 GMT</pubDate>
-      <category>Saúde</category>
-      <description>Campanha para crianças e adolescentes menores de 15 anos segue até terça. Responsáveis podem procurar as unidades de saúde para conferir a caderneta e atualizar doses pendentes.</description>
-    </item>
-    <item>
-      <title>Sine de Porto Velho tem 32 vagas para auxiliar de serviços gerais; prazo exibido vai até segunda</title>
-      <link>https://ovigialocal.github.io/article.html?id=porto-velho-sine-vagas-2026-08-19</link>
-      <guid isPermaLink="true">https://ovigialocal.github.io/article.html?id=porto-velho-sine-vagas-2026-08-19</guid>
-      <pubDate>Mon, 31 Aug 2026 21:03:00 GMT</pubDate>
-      <category>Serviços</category>
-      <description>Oferta pede ensino fundamental completo, moto própria e início às 7h; lista atual também reúne vagas PCD e outras oportunidades com prazo até 31 de agosto.</description>
-    </item>
+    {% endfor %}
   </channel>
 </rss>
