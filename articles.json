@@ -1,5 +1,21 @@
 [
   {
+    "id": "porto-velho-desfile-civico-2026-09-01",
+    "category": "Educação",
+    "bairro": "",
+    "date": "1 set",
+    "dateIso": "2026-09-01T01:35:00-04:00",
+    "title": "Desfile cívico de escolas municipais acontece nesta terça às 16h no Centro de Porto Velho",
+    "excerpt": "Evento da rede municipal começa às 16h em frente à Prefeitura, no encontro da avenida Sete de Setembro com a Farquar, e tem encerramento previsto para 17h30.",
+    "deck": "Evento da rede municipal começa às 16h em frente à Prefeitura, no encontro da avenida Sete de Setembro com a Farquar, e tem encerramento previsto para 17h30.",
+    "sourceName": "Prefeitura de Porto Velho",
+    "sourceUrl": "https://agencia.portovelho.ro.gov.br/noticias/58097",
+    "sourceHash": "sha256:afd3dbe0f3141386e823112dbe913dfb5452d118482dadf170d6da0ded74b912",
+    "neighborhood": "Porto Velho",
+    "url": "article.html?id=porto-velho-desfile-civico-2026-09-01",
+    "contentHtml": "<p>Escolas da rede municipal participam nesta <strong>terça-feira (1º de setembro)</strong> do desfile cívico <strong>“Marchando pela Educação”</strong>, no Centro de Porto Velho. Segundo a Prefeitura, a solenidade começa <strong>às 16h</strong>, em frente ao prédio municipal, no encontro da <strong>avenida Sete de Setembro com a avenida Farquar</strong>.</p><p>O encerramento está previsto para <strong>17h30</strong>. A programação abre as comemorações escolares da Independência do Brasil no município.</p><h2>Quem participa</h2><p>A Prefeitura anunciou a participação das escolas municipais <strong>Jerusalém da Amazônia, Senador Olavo Gomes Pires, Antônio Ferreira da Silva e São Miguel</strong>. A Banda Musical do Centro Municipal de Arte e Cultura Escolar Francisco Lázaro dos Santos (CMACE LAIO) também participa da solenidade.</p><p>A atividade é organizada pela Secretaria Municipal de Educação (Semed), com apoio de órgãos municipais, da Polícia Militar de Rondônia e do Corpo de Bombeiros.</p><h2>Serviço</h2><ul><li><strong>O quê:</strong> desfile cívico “Marchando pela Educação”</li><li><strong>Quando:</strong> terça-feira, 1º de setembro, a partir das 16h</li><li><strong>Onde:</strong> em frente à Prefeitura de Porto Velho, no encontro da avenida Sete de Setembro com a avenida Farquar</li><li><strong>Encerramento previsto:</strong> 17h30</li></ul><p>A comunicação oficial não informa bloqueios de trânsito, estacionamento específico ou necessidade de credenciamento para acompanhar o evento. Por isso, esses pontos não são apresentados como serviço confirmado.</p>"
+  },
+  {
     "id": "porto-velho-dia-d-vacinacao-2026-08-22",
     "category": "Saúde",
     "bairro": "",
