@@ -3,38 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Correções e Erratas — O Vigia</title>
+  <title>Correções e erratas — O Vigia</title>
+  <meta name="description" content="Política pública de correções, atualizações, retiradas e erratas de O Vigia.">
+  <link rel="canonical" href="https://ovigialocal.github.io/correcoes.html">
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="news-shell.css">
+  <link rel="stylesheet" href="institutional.css">
 </head>
 <body>
-  <header>
-    <div class="nav-container">
-      <a href="index.html" class="brand-logo">
-        <span class="brand-badge">Protótipo</span>
-        <span class="brand-title">O Vigia</span>
-      </a>
+  <header class="site-header">
+    <div class="utility-bar">
+      <span>Porto Velho, Rondônia</span>
+      <nav aria-label="Links institucionais">
+        <a href="index.html">Capa</a>
+        <a href="metodologia.html">Como apuramos</a>
+        <a href="feed.xml">RSS</a>
+      </nav>
+    </div>
+    <div class="article-masthead">
+      <a href="index.html" class="article-brand" aria-label="O Vigia — página inicial">O Vigia</a>
+      <a class="back-link" href="index.html">← Voltar à capa</a>
     </div>
   </header>
 
-  <main style="max-width: 800px; margin: 3rem auto; padding: 0 1.5rem;">
-    <h1 style="font-family: var(--font-serif); font-size: 2.25rem; margin-bottom: 1rem;">Política de Correções e Erratas</h1>
-    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-      Transparência e exatidão são os pilares centrais do projeto O Vigia. Caso seja identificada qualquer incorreção ou imprecisão em dados derivados de fontes públicas, o registro de retificação será publicado de forma pública e rastreável.
-    </p>
+  <main class="institutional-page">
+    <header class="institutional-header">
+      <p class="eyebrow">Prestação de contas</p>
+      <h1>Correções e erratas</h1>
+      <p class="deck">O Vigia corrige o registro público quando a evidência mostra que uma publicação está errada, incompleta de forma material ou desatualizada em ponto que muda a compreensão do leitor.</p>
+    </header>
 
-    <h2 style="font-family: var(--font-serif); font-size: 1.5rem; margin: 2rem 0 0.5rem; color: var(--accent-cyan);">Como Solicitar uma Correção</h2>
-    <p style="color: var(--text-muted); line-height: 1.8;">
-      Qualquer cidadão ou representante pode solicitar retificação ou esclarecimento enviando uma solicitação através do repositório público ou entrando em contato com a equipe de transparência.
-    </p>
+    <div class="institutional-layout">
+      <article class="institutional-body">
+        <div class="principle-box">
+          <strong>Regra</strong>
+          Corrigir não é apagar silenciosamente. A mudança precisa ser compatível com a gravidade do erro e deixar um histórico recuperável.
+        </div>
 
-    <p style="margin-top: 2rem;">
-      <a href="index.html" style="color: var(--accent-cyan); text-decoration: none;">&larr; Voltar para a página inicial</a>
-    </p>
+        <h2>Como informar um problema</h2>
+        <p>Qualquer pessoa pode apontar erro, fonte inacessível, contexto faltante ou informação que mereça revisão. O canal público atual é o repositório de publicação.</p>
+        <p><a class="correction-cta" href="https://github.com/ovigialocal/ovigialocal.github.io/issues/new">Abrir pedido de correção ↗</a></p>
+        <p>Ajuda incluir a URL da matéria, o trecho questionado, a evidência que contradiz ou complementa a publicação e uma descrição curta do problema. Não é necessário conhecer a arquitetura interna do projeto.</p>
+
+        <h2>O que acontece depois</h2>
+        <p>O pedido é confrontado com a versão publicada e com a evidência relevante. O tratamento depende do tipo de mudança:</p>
+        <ul>
+          <li><strong>erro de apresentação ou projeção</strong> — por exemplo, metadata, link, HTML ou feed divergente do conteúdo aceito — pode ser corrigido diretamente na superfície pública sem alterar a decisão editorial;</li>
+          <li><strong>erro ou mudança editorial material</strong> — título, corpo, interpretação factual ou informação substancial — volta ao fluxo editorial e exige uma nova versão fechada antes de substituir o conteúdo público;</li>
+          <li><strong>risco urgente</strong> — a autoridade pública pode retirar/tombstonar temporariamente uma página para interromper exposição indevida, preservando o histórico e encaminhando a redação substantiva pelo fluxo editorial.</li>
+        </ul>
+
+        <h2>Correção, atualização e retração não são a mesma coisa</h2>
+        <h3>Correção</h3>
+        <p>Conserta uma afirmação que estava errada no momento da publicação.</p>
+        <h3>Atualização</h3>
+        <p>Acrescenta fato posterior ou nova evidência que muda materialmente o estado da história.</p>
+        <h3>Retirada ou retração</h3>
+        <p>É usada quando manter a publicação como matéria válida deixa de ser adequado. O histórico técnico não é apagado; a disponibilidade e a apresentação pública podem mudar.</p>
+
+        <h2>O histórico público</h2>
+        <p>O Vigia usa Git e registros de publicação para preservar a sequência de decisões e eventos públicos. Isso permite reconstruir quando uma versão foi aceita, publicada, corrigida, substituída ou retirada.</p>
+        <p>Na interface, o objetivo é mostrar ao leitor a informação que importa — data de publicação/atualização, fonte e estado de correção — sem transformar a página em um painel técnico.</p>
+
+        <h2>Contestação não implica correção automática</h2>
+        <p>Uma discordância pode revelar erro, mas também pode refletir interpretação diferente de uma evidência que continua correta. O Vigia deve avaliar o mérito do apontamento e explicar a alteração quando ela for necessária; não muda o texto apenas porque uma parte interessada pediu.</p>
+      </article>
+
+      <aside class="institutional-aside" aria-label="O que enviar em um pedido">
+        <p class="eyebrow">Para revisar rápido</p>
+        <h2>Inclua, se puder</h2>
+        <ul class="policy-list">
+          <li>URL da matéria;</li>
+          <li>trecho ou afirmação questionada;</li>
+          <li>fonte/evidência relevante;</li>
+          <li>por que o ponto muda a compreensão factual.</li>
+        </ul>
+        <p><a href="metodologia.html">Veja também como O Vigia apura →</a></p>
+      </aside>
+    </div>
   </main>
 
   <footer>
     <div class="footer-content">
-      <div><strong>O Vigia — Porto Velho</strong> &copy; 2026</div>
+      <div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div>
+      <div class="footer-links"><a href="index.html">Capa</a><a href="metodologia.html">Metodologia</a><a href="feed.xml">RSS</a></div>
+      <p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p>
     </div>
   </footer>
 </body>
