@@ -1,5 +1,21 @@
 [
   {
+    "id": "rondonia-geracao-emprego-descontinuidade-2026-09-01",
+    "category": "Serviços",
+    "bairro": "",
+    "date": "1 set",
+    "dateIso": "2026-09-01T08:40:00-04:00",
+    "title": "Governo de RO descontinua Geração Emprego e orienta procura pelo Sine Estadual",
+    "excerpt": "Plataformas Geração Emprego e Geração Serviço deixam de ser o canal indicado a partir de 1º de setembro; em Porto Velho, o atendimento estadual segue em duas unidades do Sine.",
+    "deck": "Plataformas Geração Emprego e Geração Serviço deixam de ser o canal indicado a partir de 1º de setembro; em Porto Velho, o atendimento estadual segue em duas unidades do Sine.",
+    "sourceName": "Governo de Rondônia — Geração Emprego",
+    "sourceUrl": "https://geracaoemprego.ro.gov.br/",
+    "sourceHash": "sha256:80951e53a52fd0421d1dd2fb7c035c74f03398e719bc90239957abad13cb35e0",
+    "neighborhood": "Porto Velho",
+    "url": "article.html?id=rondonia-geracao-emprego-descontinuidade-2026-09-01",
+    "contentHtml": "<p>O Governo de Rondônia informa que as plataformas <strong>Geração Emprego</strong> e <strong>Geração Serviço</strong> são descontinuadas a partir de <strong>1º de setembro</strong>. Na própria página do serviço, a orientação para quem precisa de informações é procurar uma unidade do <strong>Sine Estadual</strong> ou usar o telefone indicado pelo órgão.</p><p>Para moradores de Porto Velho, a página oficial lista duas unidades estaduais:</p><ul><li><strong>Sine Porto Velho — Sete de Setembro:</strong> Avenida 7 de Setembro, nº 830, Centro;</li><li><strong>Sine Porto Velho — IG Shopping:</strong> Avenida Amazonas, nº 8.338, bairro Tiradentes.</li></ul><p>Para assuntos de <strong>vagas</strong>, o telefone informado nas duas unidades é <strong>(69) 98425-6048</strong>. Para <strong>seguro-desemprego</strong>, a página informa <strong>(69) 98482-2407</strong>.</p><p>A descontinuidade das plataformas não significa, por si só, encerramento do atendimento do Sine. A fonte oficial mantém os contatos e endereços das unidades presenciais como orientação para quem precisa continuar buscando os serviços.</p><h2>Serviço</h2><ul><li><strong>O que mudou:</strong> Geração Emprego e Geração Serviço são descontinuados a partir de 1º de setembro;</li><li><strong>Vagas em Porto Velho:</strong> (69) 98425-6048;</li><li><strong>Seguro-desemprego:</strong> (69) 98482-2407;</li><li><strong>Unidade Centro:</strong> Avenida 7 de Setembro, nº 830;</li><li><strong>Unidade IG Shopping:</strong> Avenida Amazonas, nº 8.338, bairro Tiradentes;</li><li><strong>Fonte oficial:</strong> página do Geração Emprego do Governo de Rondônia.</li></ul>"
+  },
+  {
     "id": "porto-velho-novos-sorrisos-2026-09-03",
     "category": "Saúde",
     "bairro": "",
