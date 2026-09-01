@@ -2,6 +2,10 @@
 ---
 {% assign sorted_news = site.news | sort: "published_at" | reverse %}
 {% assign categories = sorted_news | map: "category" | uniq %}
+{% assign lead = sorted_news.first %}
+{% assign secondary_news = sorted_news | slice: 1, 3 %}
+{% assign latest_briefs = sorted_news | slice: 4, 5 %}
+{% assign service_news = sorted_news | where: "category", "Serviços" %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -40,8 +44,9 @@
     </div>
     <nav class="section-nav" aria-label="Seções do jornal">
       <a href="#ultimas" aria-current="page">Últimas</a>
+      <a href="#servico">Serviço</a>
       {% for category in categories %}
-        <a href="#editoria-{{ category | slugify }}">{{ category }}</a>
+        {% unless category == "Serviços" %}<a href="#editoria-{{ category | slugify }}">{{ category }}</a>{% endunless %}
       {% endfor %}
     </nav>
   </header>
@@ -55,84 +60,91 @@
 
     {% if sorted_news.size == 0 %}
       <section class="empty-edition" aria-labelledby="empty-title">
-        <div class="empty-edition-main">
-          <p class="eyebrow">Acervo</p>
-          <h2 id="empty-title">Ainda não há matérias publicadas.</h2>
-          <p>A capa permanece vazia quando não existe conteúdo aceito para publicação.</p>
-        </div>
+        <div class="empty-edition-main"><p class="eyebrow">Acervo</p><h2 id="empty-title">Ainda não há matérias publicadas.</h2><p>A capa permanece vazia quando não existe conteúdo aceito para publicação.</p></div>
       </section>
     {% else %}
       <section class="controls-section" aria-label="Buscar matérias">
-        <div class="search-box">
-          <span class="search-icon" aria-hidden="true">⌕</span>
-          <input type="search" id="search-input" class="search-input" placeholder="Buscar no acervo..." aria-label="Buscar no acervo">
-        </div>
+        <div class="search-box"><span class="search-icon" aria-hidden="true">⌕</span><input type="search" id="search-input" class="search-input" placeholder="Buscar no acervo..." aria-label="Buscar no acervo"></div>
         <div class="bairro-filter" id="bairro-filter" aria-label="Filtrar por território"></div>
       </section>
 
-      <section class="published-section" id="ultimas" data-news-section aria-labelledby="published-title">
-        <div class="section-heading">
-          <div><p class="eyebrow">Agora</p><h2 id="published-title">Últimas notícias</h2></div>
-          <p class="section-note">{{ sorted_news.size }} matérias no acervo público</p>
-        </div>
-        <div class="news-grid">
-          {% for story in sorted_news limit:9 %}
-            <article class="news-card {% if forloop.index0 == 0 %}news-card-lead{% elsif forloop.index0 < 3 %}news-card-secondary{% else %}news-card-brief{% endif %}" data-news-card data-category="{{ story.category | escape }}" data-bairro="{{ story.bairro | default: story.locality | escape }}">
-              <div class="card-header">
-                <a class="badge-tag" href="#editoria-{{ story.category | slugify }}">{{ story.category }}</a>
-                <time datetime="{{ story.published_at | date_to_xmlschema }}">{{ story.published_at | date: "%d/%m · %H:%M" }}</time>
-              </div>
-              <h3 class="card-title"><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h3>
-              <p class="card-excerpt">{{ story.description }}</p>
-              <div class="card-metadata">
-                <span class="source-badge">Fonte: {{ story.source_name }}</span>
-                <button type="button" class="btn-provenance" data-provenance-button data-title="{{ story.title | escape }}" data-source-name="{{ story.source_name | escape }}" data-source-url="{{ story.source_url | escape }}" data-source-hash="{{ story.source_digest | escape }}">Ver fonte</button>
-              </div>
+      <section class="front-lede" id="ultimas" data-news-section aria-label="Principais notícias">
+        {% if lead %}
+          <article class="lead-story" data-news-card data-category="{{ lead.category | escape }}" data-bairro="{{ lead.bairro | default: lead.locality | escape }}">
+            <div class="card-header"><a class="badge-tag" href="#editoria-{{ lead.category | slugify }}">{{ lead.category }}</a><time datetime="{{ lead.published_at | date_to_xmlschema }}">{{ lead.published_at | date: "%d/%m · %H:%M" }}</time></div>
+            <h2><a href="{{ lead.url | relative_url }}">{{ lead.title }}</a></h2>
+            <p class="lead-deck">{{ lead.description }}</p>
+            <div class="card-metadata"><span class="source-badge">Fonte: {{ lead.source_name }}</span><button type="button" class="btn-provenance" data-provenance-button data-title="{{ lead.title | escape }}" data-source-name="{{ lead.source_name | escape }}" data-source-url="{{ lead.source_url | escape }}" data-source-hash="{{ lead.source_digest | escape }}">Ver fonte</button></div>
+          </article>
+        {% endif %}
+
+        <aside class="lead-rail" aria-label="Destaques">
+          <p class="module-label">Destaques</p>
+          {% for story in secondary_news %}
+            <article class="rail-story" data-news-card data-category="{{ story.category | escape }}" data-bairro="{{ story.bairro | default: story.locality | escape }}">
+              <p class="card-header"><a class="badge-tag" href="#editoria-{{ story.category | slugify }}">{{ story.category }}</a><time datetime="{{ story.published_at | date_to_xmlschema }}">{{ story.published_at | date: "%H:%M" }}</time></p>
+              <h3><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h3>
+              <p>{{ story.description }}</p>
             </article>
           {% endfor %}
-        </div>
+        </aside>
       </section>
 
-      {% for category in categories %}
-        {% assign category_news = sorted_news | where: "category", category %}
-        <section class="editorial-section" id="editoria-{{ category | slugify }}" data-news-section aria-labelledby="editoria-title-{{ forloop.index }}">
-          <div class="section-heading">
-            <div><p class="eyebrow">Editoria</p><h2 id="editoria-title-{{ forloop.index }}">{{ category }}</h2></div>
-            <p class="section-note">{{ category_news.size }} no acervo</p>
-          </div>
-          <div class="news-grid news-grid-section">
-            {% for story in category_news limit:6 %}
-              <article class="news-card news-card-brief" data-news-card data-category="{{ story.category | escape }}" data-bairro="{{ story.bairro | default: story.locality | escape }}">
-                <div class="card-header"><time datetime="{{ story.published_at | date_to_xmlschema }}">{{ story.published_at | date: "%d/%m · %H:%M" }}</time></div>
-                <h3 class="card-title"><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h3>
-                <p class="card-excerpt">{{ story.description }}</p>
-                <div class="card-metadata">
-                  <span class="source-badge">{{ story.source_name }}</span>
-                  <button type="button" class="btn-provenance" data-provenance-button data-title="{{ story.title | escape }}" data-source-name="{{ story.source_name | escape }}" data-source-url="{{ story.source_url | escape }}" data-source-hash="{{ story.source_digest | escape }}">Ver fonte</button>
-                </div>
+      {% if latest_briefs.size > 0 %}
+        <section class="latest-line" data-news-section aria-labelledby="latest-line-title">
+          <div class="latest-line-heading"><p class="eyebrow">Últimas</p><h2 id="latest-line-title">O que entrou agora</h2></div>
+          <div class="latest-line-list">
+            {% for story in latest_briefs %}
+              <article class="latest-item" data-news-card data-category="{{ story.category | escape }}" data-bairro="{{ story.bairro | default: story.locality | escape }}">
+                <time datetime="{{ story.published_at | date_to_xmlschema }}">{{ story.published_at | date: "%H:%M" }}</time>
+                <div><span>{{ story.category }}</span><h3><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h3></div>
               </article>
             {% endfor %}
           </div>
         </section>
+      {% endif %}
+
+      {% if service_news.size > 0 %}
+        <section class="service-desk" id="servico" data-news-section aria-labelledby="service-title">
+          <header class="service-desk-header"><div><p class="eyebrow">Utilidade pública</p><h2 id="service-title">Serviço</h2></div><p>Informação prática para agir, se organizar ou não perder prazo.</p></header>
+          <div class="service-grid">
+            {% for story in service_news limit:4 %}
+              <article class="service-story" data-news-card data-category="{{ story.category | escape }}" data-bairro="{{ story.bairro | default: story.locality | escape }}">
+                <time datetime="{{ story.published_at | date_to_xmlschema }}">{{ story.published_at | date: "%d/%m" }}</time>
+                <h3><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h3>
+                <p>{{ story.description }}</p>
+                <a class="service-read" href="{{ story.url | relative_url }}">Entenda o serviço →</a>
+              </article>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% for category in categories %}
+        {% unless category == "Serviços" %}
+          {% assign category_news = sorted_news | where: "category", category %}
+          <section class="editorial-section" id="editoria-{{ category | slugify }}" data-news-section aria-labelledby="editoria-title-{{ forloop.index }}">
+            <div class="section-heading"><div><p class="eyebrow">Editoria</p><h2 id="editoria-title-{{ forloop.index }}">{{ category }}</h2></div><p class="section-note">{{ category_news.size }} no acervo</p></div>
+            <div class="news-grid news-grid-section">
+              {% for story in category_news limit:6 %}
+                <article class="news-card news-card-brief" data-news-card data-category="{{ story.category | escape }}" data-bairro="{{ story.bairro | default: story.locality | escape }}">
+                  <div class="card-header"><time datetime="{{ story.published_at | date_to_xmlschema }}">{{ story.published_at | date: "%d/%m · %H:%M" }}</time></div>
+                  <h3 class="card-title"><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h3>
+                  <p class="card-excerpt">{{ story.description }}</p>
+                  <div class="card-metadata"><span class="source-badge">{{ story.source_name }}</span><button type="button" class="btn-provenance" data-provenance-button data-title="{{ story.title | escape }}" data-source-name="{{ story.source_name | escape }}" data-source-url="{{ story.source_url | escape }}" data-source-hash="{{ story.source_digest | escape }}">Ver fonte</button></div>
+                </article>
+              {% endfor %}
+            </div>
+          </section>
+        {% endunless %}
       {% endfor %}
       <p class="no-results" id="no-results" hidden>Nenhuma matéria encontrada com esses filtros.</p>
     {% endif %}
   </main>
 
-  <div class="modal-overlay" id="modal-provenance" role="dialog" aria-modal="true" aria-labelledby="modal-provenance-title" hidden>
-    <div class="modal-card">
-      <button type="button" class="modal-close" id="modal-close" aria-label="Fechar modal">&times;</button>
-      <div id="modal-content"></div>
-    </div>
-  </div>
+  <div class="modal-overlay" id="modal-provenance" role="dialog" aria-modal="true" aria-labelledby="modal-provenance-title" hidden><div class="modal-card"><button type="button" class="modal-close" id="modal-close" aria-label="Fechar modal">&times;</button><div id="modal-content"></div></div></div>
 
-  <footer>
-    <div class="footer-content">
-      <div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div>
-      <div class="footer-links"><a href="{{ '/metodologia.html' | relative_url }}">Metodologia</a><a href="{{ '/correcoes.html' | relative_url }}">Correções e erratas</a><a href="{{ '/feed.xml' | relative_url }}">RSS</a></div>
-      <p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p>
-    </div>
-  </footer>
+  <footer><div class="footer-content"><div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div><div class="footer-links"><a href="{{ '/metodologia.html' | relative_url }}">Metodologia</a><a href="{{ '/correcoes.html' | relative_url }}">Correções e erratas</a><a href="{{ '/feed.xml' | relative_url }}">RSS</a></div><p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p></div></footer>
   <script src="{{ '/app.js' | relative_url }}"></script>
 </body>
 </html>
