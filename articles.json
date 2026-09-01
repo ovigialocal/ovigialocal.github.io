@@ -1,5 +1,21 @@
 [
   {
+    "id": "porto-velho-sine-vagas-2026-09-01",
+    "category": "Serviços",
+    "bairro": "",
+    "date": "1 set",
+    "dateIso": "2026-09-01T03:12:00-04:00",
+    "title": "Sine de Porto Velho exibe 17 vagas com prazo até 8 e 10 de setembro",
+    "excerpt": "Consulta em 1º de setembro encontrou vagas para soldador, roçador em Jacy-Paraná, peixeiro, farmacêutico e outras; o portal ainda mantém anúncios vencidos, então é preciso conferir o prazo antes de enviar.",
+    "deck": "Consulta em 1º de setembro encontrou vagas para soldador, roçador em Jacy-Paraná, peixeiro, farmacêutico e outras; o portal ainda mantém anúncios vencidos, então é preciso conferir o prazo antes de enviar.",
+    "sourceName": "Sine Municipal de Porto Velho",
+    "sourceUrl": "https://www.portovelho.ro.gov.br/sine/vagas",
+    "sourceHash": "sha256:fceb671f62bc0599744dbde4824b20c0852831d88dfaadcadb2522bbd3f50f9f",
+    "neighborhood": "Porto Velho",
+    "url": "article.html?id=porto-velho-sine-vagas-2026-09-01",
+    "contentHtml": "<p>A página do Sine Municipal de Porto Velho exibia, na consulta feita em <strong>1º de setembro</strong>, <strong>17 vagas com prazo de candidatura posterior à data da consulta</strong>. São 16 vagas com prazo até <strong>8 de setembro</strong> e uma vaga de auxiliar de lavanderia até <strong>10 de setembro</strong>.</p><p>O recorte é importante porque a mesma página ainda mantém anúncios cujo prazo exibido terminou em 31 de agosto. Por isso, esta matéria considera apenas as oportunidades que apareciam com prazo futuro no momento da verificação.</p><h2>Vagas com prazo até 8 de setembro</h2><ul><li><strong>Soldador:</strong> 5 vagas; experiência na função e disponibilidade de horário.</li><li><strong>Roçador em Jacy-Paraná:</strong> 5 vagas; experiência, operação e inspeção de equipamentos de corte, manutenção básica e uso de EPIs.</li><li><strong>Peixeiro:</strong> 3 vagas; experiência desejável em limpeza, corte, filetagem, preparo e atendimento.</li><li><strong>Mecânico soldador:</strong> 1 vaga; experiência na função e disponibilidade de horário.</li><li><strong>Ajudante de marmorista:</strong> 1 vaga; ensino médio completo e experiência na função.</li><li><strong>Farmacêutico:</strong> 1 vaga; graduação em Farmácia, registro ativo no CRF e disponibilidade de horário, inclusive aos finais de semana.</li></ul><h2>Vaga com prazo até 10 de setembro</h2><ul><li><strong>Auxiliar de lavanderia:</strong> 1 vaga; experiência na função e disponibilidade de horário.</li></ul><h2>Como concorrer</h2><p>No portal do Sine Municipal, escolha a vaga e use o botão <strong>“Concorrer à Vaga”</strong>. O formulário pede dados cadastrais e aceita currículo em <strong>PDF de até 5 MB</strong>.</p><p>Como a lista é dinâmica e o próprio portal pode manter anúncios vencidos visíveis, confirme <strong>prazo, quantidade e requisitos</strong> na página oficial imediatamente antes de enviar o currículo.</p><h2>Serviço</h2><ul><li><strong>Onde:</strong> página de vagas do Sine Municipal de Porto Velho</li><li><strong>Prazos observados:</strong> 8 e 10 de setembro de 2026</li><li><strong>Total com prazo futuro na consulta de 1º/9:</strong> 17 vagas</li><li><strong>Candidatura:</strong> pelo botão “Concorrer à Vaga” no portal, com currículo em PDF de até 5 MB</li></ul>"
+  },
+  {
     "id": "porto-velho-fgts-saque-calamidade-2026-09-17",
     "category": "Serviços",
     "bairro": "",
