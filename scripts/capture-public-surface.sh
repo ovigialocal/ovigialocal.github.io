@@ -44,8 +44,9 @@ ARTICLE_SLUG="$(basename "$ARTICLE_DIR")"
 capture "1280,900" "$BASE/noticias/$ARTICLE_SLUG/" "$OUT/article-desktop.png"
 capture "390,844" "$BASE/noticias/$ARTICLE_SLUG/" "$OUT/article-mobile.png"
 
-printf 'Captured:\n- %s\n- %s\n- %s\n- %s\n' \
-  "$OUT/home-desktop.png" \
-  "$OUT/home-mobile.png" \
-  "$OUT/article-desktop.png" \
-  "$OUT/article-mobile.png"
+capture "1280,900" "$BASE/metodologia.html" "$OUT/methodology-desktop.png"
+capture "390,844" "$BASE/metodologia.html" "$OUT/methodology-mobile.png"
+capture "1280,900" "$BASE/correcoes.html" "$OUT/corrections-desktop.png"
+capture "390,844" "$BASE/correcoes.html" "$OUT/corrections-mobile.png"
+
+printf 'Captured 8 public-surface views in %s\n' "$OUT"

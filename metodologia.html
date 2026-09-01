@@ -3,41 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Metodologia — O Vigia</title>
+  <title>Como apuramos — O Vigia</title>
+  <meta name="description" content="Metodologia editorial de O Vigia: fontes verificáveis, limites de evidência, proveniência e correções.">
+  <link rel="canonical" href="https://ovigialocal.github.io/metodologia.html">
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="news-shell.css">
+  <link rel="stylesheet" href="institutional.css">
 </head>
 <body>
-  <header>
-    <div class="nav-container">
-      <a href="index.html" class="brand-logo">
-        <span class="brand-badge">Protótipo</span>
-        <span class="brand-title">O Vigia</span>
-      </a>
+  <header class="site-header">
+    <div class="utility-bar">
+      <span>Porto Velho, Rondônia</span>
+      <nav aria-label="Links institucionais">
+        <a href="index.html">Capa</a>
+        <a href="correcoes.html">Correções</a>
+        <a href="feed.xml">RSS</a>
+      </nav>
+    </div>
+    <div class="article-masthead">
+      <a href="index.html" class="article-brand" aria-label="O Vigia — página inicial">O Vigia</a>
+      <a class="back-link" href="index.html">← Voltar à capa</a>
     </div>
   </header>
 
-  <main style="max-width: 800px; margin: 3rem auto; padding: 0 1.5rem;">
-    <h1 style="font-family: var(--font-serif); font-size: 2.25rem; margin-bottom: 1rem;">Metodologia Editorial e Rastreabilidade</h1>
-    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-      O Vigia é um projeto de inteligência cívica e jornalismo autônomo hiperlocal. Nesta fase inicial de protótipo, o sistema opera exclusivamente sobre a base de dados abertos do CNPJ da Receita Federal do Brasil para o município de Porto Velho (RO).
-    </p>
+  <main class="institutional-page">
+    <header class="institutional-header">
+      <p class="eyebrow">Transparência editorial</p>
+      <h1>Como O Vigia apura</h1>
+      <p class="deck">O ponto de partida não é uma base, um órgão ou um formato específico. O Vigia publica quando as afirmações de uma matéria podem ser sustentadas por evidência verificável e recuperável.</p>
+    </header>
 
-    <h2 style="font-family: var(--font-serif); font-size: 1.5rem; margin: 2rem 0 0.5rem; color: var(--accent-cyan);">Princípios Factuais Estritos</h2>
-    <ul style="color: var(--text-muted); margin-left: 1.5rem; line-height: 1.8;">
-      <li><strong>Inscrição cadastral ativa não é inauguração:</strong> O registro de um CNPJ ativo indica a concessão jurídica do cadastro, mas não confirma se o estabelecimento abriu as portas ou iniciou atendimento ao público.</li>
-      <li><strong>Capital social não é porte:</strong> O valor declarado de capital social reflete o montante subscrito pelos sócios, não o faturamento ou porte real do negócio.</li>
-      <li><strong>Preservação de privacidade:</strong> Números de endereço específicos e cadastros de Microempreendedores Individuais (MEI) são filtrados para evitar divulgação de endereços residenciais de pessoas físicas.</li>
-      <li><strong>Rastreabilidade total:</strong> Toda matéria publicada aponta diretamente para seu bundle de evidências e hash de proveniência.</li>
-    </ul>
+    <div class="institutional-layout">
+      <article class="institutional-body">
+        <div class="principle-box">
+          <strong>Princípio central</strong>
+          Uma fonte serve ao jornalismo quando permite verificar o que ela realmente sustenta — e também perceber o que ela não sustenta.
+        </div>
 
-    <p style="margin-top: 2rem;">
-      <a href="index.html" style="color: var(--accent-cyan); text-decoration: none;">&larr; Voltar para a página inicial</a>
-    </p>
+        <h2>O que pode ser fonte</h2>
+        <p>O Vigia pode trabalhar com documentos administrativos, diários oficiais, bases de dados, estatísticas, decisões, editais, portais públicos, universidades, organizações, registros empresariais, documentos técnicos, fontes jornalísticas e outras evidências adequadas ao fato apurado. Não existe uma lista fechada de fornecedores autorizados.</p>
+        <p>O critério é a relação entre a afirmação e a evidência: a fonte precisa ser identificável, recuperável e capaz de sustentar a formulação usada na matéria.</p>
+
+        <h2>Fonte oficial não é sinônimo de verdade automática</h2>
+        <p>Um documento oficial prova com segurança que determinado órgão publicou ou declarou algo. Dependendo do caso, isso não basta para provar que a afirmação do próprio órgão é verdadeira, completa ou atual. O texto de O Vigia distingue o conteúdo da fonte da conclusão jornalística.</p>
+        <p>Quando a pergunta exige confirmação independente, comparação histórica, cálculo, contexto ou contraditório documental, uma única fonte pode ser insuficiente.</p>
+
+        <h2>Fato, inferência e incerteza</h2>
+        <p>O texto deve deixar clara a diferença entre:</p>
+        <ul>
+          <li><strong>fato diretamente observado na evidência</strong> — por exemplo, valor, data, decisão ou regra expressa;</li>
+          <li><strong>cálculo ou derivação</strong> — resultado produzido a partir de dados que precisam permanecer recuperáveis;</li>
+          <li><strong>inferência</strong> — interpretação que exige explicar por que decorre dos fatos;</li>
+          <li><strong>incerteza</strong> — ponto que a evidência disponível não permite concluir.</li>
+        </ul>
+        <p>Uma lacuna não é preenchida por linguagem categórica. Quando não há evidência suficiente, a matéria deve dizer isso.</p>
+
+        <h2>Quando cruzamos fontes</h2>
+        <p>Confirmação adicional é especialmente importante quando a fonte é parte interessada, quando há divergência entre documentos, quando uma afirmação causal ou acusatória vai além do conteúdo primário, quando a informação mudou recentemente ou quando o impacto potencial exige maior segurança.</p>
+        <p>Cruzamento não significa acumular links. Cada fonte adicional precisa responder a uma necessidade factual ou contextual concreta.</p>
+
+        <h2>Proveniência perto da leitura</h2>
+        <p>Cada matéria mostra ao leitor a fonte principal em linguagem humana e um caminho para abri-la. Referências técnicas, como digests usados para fixar a versão examinada, ficam disponíveis como detalhe auditável — não como substituto da explicação editorial.</p>
+        <p>O estado canônico público da matéria é preservado no repositório de publicação. Projeções como HTML, feed, sitemap e índices são derivadas desse estado e verificadas para não divergirem silenciosamente.</p>
+
+        <h2>Privacidade e minimização</h2>
+        <p>Ser publicamente acessível não torna todo dado automaticamente necessário à matéria. O Vigia evita reproduzir informação pessoal sem relevância jornalística proporcional, especialmente quando ela pode expor endereço residencial, documento pessoal ou outro dado que aumente risco sem ampliar a compreensão do fato.</p>
+
+        <h2>Correções e atualização</h2>
+        <p>Erros factuais, mudanças materiais e novas evidências devem deixar rastro público. Uma correção não apaga silenciosamente a versão anterior: a política de correções explica como o conteúdo público é retificado, atualizado, retirado ou substituído.</p>
+        <p><a href="correcoes.html">Leia a política de correções e erratas →</a></p>
+
+        <h2>O que esta metodologia não promete</h2>
+        <p>Rastreabilidade não transforma uma matéria em verdade infalível. Ela permite examinar a base da publicação, contestar uma interpretação, encontrar erro e melhorar o registro público. O compromisso de O Vigia é publicar somente até onde a evidência permite e tornar esse limite visível.</p>
+      </article>
+
+      <aside class="institutional-aside" aria-label="Resumo da metodologia">
+        <p class="eyebrow">Em resumo</p>
+        <h2>O leitor deve conseguir conferir</h2>
+        <ul class="policy-list">
+          <li>qual afirmação a fonte sustenta;</li>
+          <li>onde abrir a evidência relevante;</li>
+          <li>quando há cálculo, interpretação ou incerteza;</li>
+          <li>como informar um erro;</li>
+          <li>quando a matéria foi publicada ou atualizada.</li>
+        </ul>
+      </aside>
+    </div>
   </main>
 
   <footer>
     <div class="footer-content">
-      <div><strong>O Vigia — Porto Velho</strong> &copy; 2026</div>
+      <div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div>
+      <div class="footer-links"><a href="index.html">Capa</a><a href="correcoes.html">Correções e erratas</a><a href="feed.xml">RSS</a></div>
+      <p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p>
     </div>
   </footer>
 </body>
