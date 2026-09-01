@@ -1,0 +1,141 @@
+/* Phone edition: preserve editorial order while reducing chrome and metadata noise. */
+@media (max-width: 480px) {
+  .utility-bar {
+    padding: .55rem 1rem;
+    font-size: .66rem;
+  }
+  .masthead {
+    padding: 1rem 1rem .9rem;
+  }
+  .brand-title {
+    font-size: clamp(3.15rem, 18vw, 4.4rem);
+  }
+  .brand-kicker { font-size: .64rem; }
+  .masthead-tagline {
+    max-width: 19rem;
+    margin-top: .7rem;
+    font-size: .98rem;
+  }
+  .section-nav {
+    padding: .62rem 1rem;
+    gap: 1.1rem;
+    scroll-snap-type: x proximity;
+  }
+  .section-nav a { scroll-snap-align: start; }
+  .front-page {
+    padding: 1.35rem 1rem 4rem;
+  }
+  .edition-intro {
+    padding-bottom: 1.35rem;
+  }
+  .edition-intro h1 {
+    font-size: clamp(2.35rem, 12.5vw, 3.25rem);
+    line-height: .94;
+  }
+  .edition-deck {
+    margin-top: .8rem;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .controls-section {
+    position: relative;
+    display: grid;
+    padding: 1rem 0;
+  }
+  .bairro-filter {
+    width: 100%;
+    padding-bottom: .15rem;
+    scroll-snap-type: x proximity;
+  }
+  .filter-chip {
+    min-height: 2.5rem;
+    scroll-snap-align: start;
+  }
+  .front-lede {
+    padding-top: 1.1rem;
+  }
+  .lead-story h2 {
+    margin-top: .2rem;
+    font-size: clamp(2.55rem, 13.5vw, 3.55rem);
+    text-wrap: pretty;
+  }
+  .lead-deck {
+    margin-bottom: 1rem;
+    font-size: 1.03rem;
+  }
+  .lead-story .card-metadata {
+    align-items: flex-start;
+  }
+  .lead-rail {
+    grid-template-columns: 1fr;
+  }
+  .rail-story,
+  .rail-story:nth-of-type(even) {
+    padding: .9rem 0;
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .rail-story:first-of-type { border-top: 0; }
+  .rail-story h3 { font-size: 1.5rem; }
+  .latest-line-list {
+    grid-template-columns: 1fr;
+  }
+  .latest-item,
+  .latest-item:nth-child(even) {
+    padding: .8rem 0;
+  }
+  .latest-item h3 { font-size: 1.08rem; }
+  .service-desk {
+    margin-top: 2.4rem;
+    padding-top: 1.1rem;
+  }
+  .service-desk-header h2 { font-size: 2.7rem; }
+  .service-story h3 { font-size: 1.55rem; }
+  .editorial-section { padding-top: 2.4rem; }
+  .section-heading h2,
+  .empty-edition-main h2 { font-size: 2.35rem; }
+  .card-metadata {
+    display: grid;
+    justify-content: stretch;
+  }
+  .btn-provenance {
+    min-height: 2.25rem;
+    text-align: left;
+  }
+  .article-page {
+    padding: 2rem 1rem 4rem;
+  }
+  .article-masthead {
+    padding: 1rem;
+  }
+  .article-header h1 {
+    font-size: clamp(2.65rem, 13vw, 3.7rem);
+    line-height: .94;
+  }
+  .article-deck {
+    margin-top: 1rem;
+    font-size: 1.13rem;
+  }
+  .article-body {
+    font-size: 1.08rem;
+    line-height: 1.66;
+  }
+  .article-body h2 {
+    margin-top: 2.35rem;
+    font-size: 1.75rem;
+  }
+  .article-body blockquote {
+    font-size: 1.2rem;
+  }
+  .article-trust {
+    margin-top: .2rem;
+  }
+  .share-button {
+    min-height: 2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-nav,
+  .bairro-filter { scroll-behavior: auto; }
+}
