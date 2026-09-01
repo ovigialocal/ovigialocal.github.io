@@ -1,46 +1,53 @@
 ---
-title: "Sine de Porto Velho exibe 17 vagas com prazo até 8 e 10 de setembro"
-description: "Consulta em 1º de setembro encontrou vagas para soldador, roçador em Jacy-Paraná, peixeiro, farmacêutico e outras; o portal ainda mantém anúncios vencidos, então é preciso conferir o prazo antes de enviar."
+title: "Sine de Porto Velho lista 27 vagas com prazos até 1º de outubro; 8 são para PCD"
+description: "Painel oficial tinha 27 postos dentro do prazo na noite de 1º de setembro, incluindo soldador, roçador, peixeiro, farmacêutico e vagas administrativas; oferta pode mudar conforme preenchimento."
 story_id: "porto-velho-sine-vagas-2026-09-01"
 locality: "Porto Velho, RO"
 category: "Serviços"
 published_at: "2026-09-01T03:12:00-04:00"
+updated_at: "2026-09-01T19:35:00-04:00"
 source_repository: "franklinbaldo/ovigia-redacao"
-source_commit: "5c83a2c598c0718b553725bb4daa46fdeb02686f"
+source_commit: "36d163525c476cbd405221a92fcc4ee2896ca785"
 source_path: "knowledge/porto-velho/articles/2026/09/porto-velho-sine-vagas-2026-09-01/ready-v1.md"
-source_digest: "sha256:fceb671f62bc0599744dbde4824b20c0852831d88dfaadcadb2522bbd3f50f9f"
+source_digest: "sha256:fd5510e2956b6f6ffe16bc36d807fb3d788a95b7cb1b5b155fe96a779e876c65"
 source_name: "Sine Municipal de Porto Velho"
 source_url: "https://www.portovelho.ro.gov.br/sine/vagas"
 ---
 
-# Sine de Porto Velho exibe 17 vagas com prazo até 8 e 10 de setembro
+# Sine de Porto Velho lista 27 vagas com prazos até 1º de outubro; 8 são para PCD
 
-A página do Sine Municipal de Porto Velho exibia, na consulta feita em **1º de setembro**, **17 vagas com prazo de candidatura posterior à data da consulta**. São 16 vagas com prazo até **8 de setembro** e uma vaga de auxiliar de lavanderia até **10 de setembro**.
+O painel oficial do **Sine Municipal de Porto Velho** mostrava **27 vagas ainda dentro do prazo** na noite desta terça-feira, **1º de setembro**. Há oportunidades para diferentes níveis de escolaridade, além de funções sem exigência formal de instrução. Oito postos de vendedor interno são destinados a **pessoas com deficiência (PCD)**.
 
-O recorte é importante porque a mesma página ainda mantém anúncios cujo prazo exibido terminou em 31 de agosto. Por isso, esta matéria considera apenas as oportunidades que apareciam com prazo futuro no momento da verificação.
+A disponibilidade é dinâmica: a própria Prefeitura informa que a relação pode mudar conforme as vagas são preenchidas. Por isso, a lista abaixo é um retrato da consulta feita em 1º de setembro; antes de enviar currículo ou se deslocar, confira se a oportunidade continua aparecendo no painel oficial.
 
-## Vagas com prazo até 8 de setembro
+## Prazos mais próximos
 
-- **Soldador:** 5 vagas; experiência na função e disponibilidade de horário.
-- **Roçador em Jacy-Paraná:** 5 vagas; experiência, operação e inspeção de equipamentos de corte, manutenção básica e uso de EPIs.
-- **Peixeiro:** 3 vagas; experiência desejável em limpeza, corte, filetagem, preparo e atendimento.
-- **Mecânico soldador:** 1 vaga; experiência na função e disponibilidade de horário.
-- **Ajudante de marmorista:** 1 vaga; ensino médio completo e experiência na função.
-- **Farmacêutico:** 1 vaga; graduação em Farmácia, registro ativo no CRF e disponibilidade de horário, inclusive aos finais de semana.
+Com prazo até **8 de setembro**, o painel mostrava:
 
-## Vaga com prazo até 10 de setembro
+- 1 vaga de mecânico soldador;
+- 5 vagas de soldador;
+- 5 vagas de roçador, para atuação em **Jacy-Paraná**;
+- 1 vaga de ajudante de marmorista;
+- 3 vagas de peixeiro;
+- 1 vaga de farmacêutico.
 
-- **Auxiliar de lavanderia:** 1 vaga; experiência na função e disponibilidade de horário.
+Também apareciam **1 vaga de auxiliar de lavanderia**, até **10 de setembro**, e **8 vagas de vendedor interno para PCD**, até **30 de setembro**.
+
+Os prazos mais longos eram de **1 vaga de auxiliar de RH** e **1 vaga de operador de telemarketing**, ambas até **1º de outubro**.
 
 ## Como concorrer
 
-No portal do Sine Municipal, escolha a vaga e use o botão **“Concorrer à Vaga”**. O formulário pede dados cadastrais e aceita currículo em **PDF de até 5 MB**.
+Na página de vagas do Sine, escolha a oportunidade e use o botão **“Concorrer à Vaga”**. O formulário oficial solicita dados pessoais, informações de escolaridade e **currículo em PDF de até 5 MB**.
 
-Como a lista é dinâmica e o próprio portal pode manter anúncios vencidos visíveis, confirme **prazo, quantidade e requisitos** na página oficial imediatamente antes de enviar o currículo.
+Quem preferir atendimento presencial pode procurar:
 
-## Serviço
+- **Sine Centro:** Rua General Osório, nº 81, Centro;
+- **Sine Praça CEU:** Rua Antônio Fraga Moreira, nº 1706, bairro JK.
 
-- **Onde:** página de vagas do Sine Municipal de Porto Velho
-- **Prazos observados:** 8 e 10 de setembro de 2026
-- **Total com prazo futuro na consulta de 1º/9:** 17 vagas
-- **Candidatura:** pelo botão “Concorrer à Vaga” no portal, com currículo em PDF de até 5 MB
+A Prefeitura informa os telefones **(69) 3901-3213** e **(69) 3901-3181** e o e-mail **sinemunicipal@portovelho.ro.gov.br** para informações.
+
+## Antes de se candidatar
+
+Leia os requisitos específicos no anúncio. Algumas funções exigem experiência; a vaga de farmacêutico pede graduação completa e registro ativo no CRF, e as oito vagas de vendedor interno são destinadas a candidatos PCD.
+
+Como o painel pode mudar antes da data-limite exibida, a confirmação na fonte oficial é a etapa final antes da candidatura.
