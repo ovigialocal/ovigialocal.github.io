@@ -1,3 +1,7 @@
+---
+---
+{% assign sorted_news = site.news | sort: "published_at" | reverse %}
+{% assign categories = sorted_news | map: "category" | uniq %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,31 +9,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>O Vigia — Notícias de Porto Velho</title>
   <meta name="description" content="O Vigia acompanha Porto Velho com jornalismo local baseado em fontes verificáveis e transparência editorial.">
-  <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="editorial-cover.css">
+  <link rel="canonical" href="{{ '/' | absolute_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="O Vigia">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="O Vigia — Notícias de Porto Velho">
+  <meta property="og:description" content="Jornalismo local para entender o que muda perto de você, com a fonte à vista.">
+  <meta property="og:url" content="{{ '/' | absolute_url }}">
+  <link rel="alternate" type="application/rss+xml" title="O Vigia" href="{{ '/feed.xml' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/index.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/editorial-cover.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/news-shell.css' | relative_url }}">
 </head>
 <body>
   <header class="site-header">
     <div class="utility-bar">
       <span>Porto Velho, Rondônia</span>
       <nav aria-label="Links institucionais">
-        <a href="metodologia.html">Como apuramos</a>
-        <a href="correcoes.html">Correções</a>
+        <a href="{{ '/metodologia.html' | relative_url }}">Como apuramos</a>
+        <a href="{{ '/correcoes.html' | relative_url }}">Correções</a>
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
       </nav>
     </div>
     <div class="masthead">
-      <a href="index.html" class="brand-logo" aria-label="O Vigia — página inicial">
+      <a href="{{ '/' | relative_url }}" class="brand-logo" aria-label="O Vigia — página inicial">
         <span class="brand-title">O Vigia</span>
         <span class="brand-kicker">Porto Velho</span>
       </a>
       <p class="masthead-tagline">Jornalismo local para entender o que muda perto de você.</p>
     </div>
     <nav class="section-nav" aria-label="Seções do jornal">
-      <span class="section-nav-active">Últimas</span>
-      <span>Cidade</span>
-      <span>Serviços</span>
-      <span>Economia local</span>
-      <span>Bairros</span>
+      <a href="#ultimas" aria-current="page">Últimas</a>
+      {% for category in categories %}
+        <a href="#editoria-{{ category | slugify }}">{{ category }}</a>
+      {% endfor %}
     </nav>
   </header>
 
@@ -37,40 +50,73 @@
     <section class="edition-intro" aria-labelledby="edition-title">
       <p class="eyebrow">Edição de Porto Velho</p>
       <h1 id="edition-title">Notícias da cidade, com a fonte à vista.</h1>
-      <p class="edition-deck">O Vigia está preparando sua primeira edição pública. Quando as matérias começarem a chegar, esta página reunirá notícias locais, informações de serviço e acontecimentos dos bairros — sempre com acesso à origem das informações.</p>
+      <p class="edition-deck">O Vigia acompanha decisões públicas, serviços, economia e acontecimentos que afetam Porto Velho. Cada matéria mantém um caminho claro até a evidência que a sustenta.</p>
     </section>
 
-    <section class="empty-edition" id="prototype-banner" aria-labelledby="empty-title">
-      <div class="empty-edition-main">
-        <p class="eyebrow">Primeira edição em preparação</p>
-        <h2 id="empty-title">Ainda não há matérias publicadas.</h2>
-        <p>Preferimos uma edição vazia a publicar algo antes de terminar a apuração. O acervo aparecerá aqui assim que as primeiras matérias estiverem prontas.</p>
-      </div>
-      <aside class="trust-note" aria-label="Compromisso editorial">
-        <h3>O que você poderá conferir</h3>
-        <p>Cada matéria publicada indicará suas fontes e terá um caminho claro para correções.</p>
-        <div class="trust-links">
-          <a href="metodologia.html">Conheça a metodologia →</a>
-          <a href="correcoes.html">Correções e erratas →</a>
+    {% if sorted_news.size == 0 %}
+      <section class="empty-edition" aria-labelledby="empty-title">
+        <div class="empty-edition-main">
+          <p class="eyebrow">Acervo</p>
+          <h2 id="empty-title">Ainda não há matérias publicadas.</h2>
+          <p>A capa permanece vazia quando não existe conteúdo aceito para publicação.</p>
         </div>
-      </aside>
-    </section>
+      </section>
+    {% else %}
+      <section class="controls-section" aria-label="Buscar matérias">
+        <div class="search-box">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input type="search" id="search-input" class="search-input" placeholder="Buscar no acervo..." aria-label="Buscar no acervo">
+        </div>
+        <div class="bairro-filter" id="bairro-filter" aria-label="Filtrar por território"></div>
+      </section>
 
-    <section class="controls-section" id="controls-section" style="display:none;" aria-label="Buscar matérias">
-      <div class="search-box">
-        <span class="search-icon" aria-hidden="true">⌕</span>
-        <input type="search" id="search-input" class="search-input" placeholder="Buscar no acervo..." aria-label="Buscar no acervo">
-      </div>
-      <div class="bairro-filter" id="bairro-filter"></div>
-    </section>
+      <section class="published-section" id="ultimas" data-news-section aria-labelledby="published-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">Agora</p><h2 id="published-title">Últimas notícias</h2></div>
+          <p class="section-note">{{ sorted_news.size }} matérias no acervo público</p>
+        </div>
+        <div class="news-grid">
+          {% for story in sorted_news limit:9 %}
+            <article class="news-card {% if forloop.index0 == 0 %}news-card-lead{% elsif forloop.index0 < 3 %}news-card-secondary{% else %}news-card-brief{% endif %}" data-news-card data-category="{{ story.category | escape }}" data-bairro="{{ story.bairro | default: story.locality | escape }}">
+              <div class="card-header">
+                <a class="badge-tag" href="#editoria-{{ story.category | slugify }}">{{ story.category }}</a>
+                <time datetime="{{ story.published_at | date_to_xmlschema }}">{{ story.published_at | date: "%d/%m · %H:%M" }}</time>
+              </div>
+              <h3 class="card-title"><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h3>
+              <p class="card-excerpt">{{ story.description }}</p>
+              <div class="card-metadata">
+                <span class="source-badge">Fonte: {{ story.source_name }}</span>
+                <button type="button" class="btn-provenance" data-provenance-button data-title="{{ story.title | escape }}" data-source-name="{{ story.source_name | escape }}" data-source-url="{{ story.source_url | escape }}" data-source-hash="{{ story.source_digest | escape }}">Ver fonte</button>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
 
-    <section class="published-section" aria-labelledby="published-title">
-      <div class="section-heading">
-        <p class="eyebrow">Acervo</p>
-        <h2 id="published-title">Matérias publicadas</h2>
-      </div>
-      <div class="news-grid" id="news-grid"></div>
-    </section>
+      {% for category in categories %}
+        {% assign category_news = sorted_news | where: "category", category %}
+        <section class="editorial-section" id="editoria-{{ category | slugify }}" data-news-section aria-labelledby="editoria-title-{{ forloop.index }}">
+          <div class="section-heading">
+            <div><p class="eyebrow">Editoria</p><h2 id="editoria-title-{{ forloop.index }}">{{ category }}</h2></div>
+            <p class="section-note">{{ category_news.size }} no acervo</p>
+          </div>
+          <div class="news-grid news-grid-section">
+            {% for story in category_news limit:6 %}
+              <article class="news-card news-card-brief" data-news-card data-category="{{ story.category | escape }}" data-bairro="{{ story.bairro | default: story.locality | escape }}">
+                <div class="card-header"><time datetime="{{ story.published_at | date_to_xmlschema }}">{{ story.published_at | date: "%d/%m · %H:%M" }}</time></div>
+                <h3 class="card-title"><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h3>
+                <p class="card-excerpt">{{ story.description }}</p>
+                <div class="card-metadata">
+                  <span class="source-badge">{{ story.source_name }}</span>
+                  <button type="button" class="btn-provenance" data-provenance-button data-title="{{ story.title | escape }}" data-source-name="{{ story.source_name | escape }}" data-source-url="{{ story.source_url | escape }}" data-source-hash="{{ story.source_digest | escape }}">Ver fonte</button>
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        </section>
+      {% endfor %}
+      <p class="no-results" id="no-results" hidden>Nenhuma matéria encontrada com esses filtros.</p>
+    {% endif %}
   </main>
 
   <div class="modal-overlay" id="modal-provenance" role="dialog" aria-modal="true" aria-labelledby="modal-provenance-title" hidden>
@@ -82,18 +128,11 @@
 
   <footer>
     <div class="footer-content">
-      <div class="footer-brand">
-        <strong>O Vigia</strong>
-        <span>Jornalismo local em Porto Velho.</span>
-      </div>
-      <div class="footer-links">
-        <a href="metodologia.html">Metodologia</a>
-        <a href="correcoes.html">Correções e erratas</a>
-      </div>
+      <div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div>
+      <div class="footer-links"><a href="{{ '/metodologia.html' | relative_url }}">Metodologia</a><a href="{{ '/correcoes.html' | relative_url }}">Correções e erratas</a><a href="{{ '/feed.xml' | relative_url }}">RSS</a></div>
       <p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p>
     </div>
   </footer>
-
-  <script src="app.js"></script>
+  <script src="{{ '/app.js' | relative_url }}"></script>
 </body>
 </html>
