@@ -1,72 +1,19 @@
+---
+layout: null
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>{{ '/' | absolute_url }}</loc><changefreq>daily</changefreq></url>
+  <url><loc>{{ '/arquivo.html' | absolute_url }}</loc><changefreq>daily</changefreq></url>
+  <url><loc>{{ '/editorias.html' | absolute_url }}</loc><changefreq>daily</changefreq></url>
+  <url><loc>{{ '/metodologia.html' | absolute_url }}</loc><changefreq>monthly</changefreq></url>
+  <url><loc>{{ '/correcoes.html' | absolute_url }}</loc><changefreq>monthly</changefreq></url>
+  {% assign sorted_news = site.news | sort: "published_at" | reverse %}
+  {% for story in sorted_news %}
   <url>
-    <loc>https://ovigialocal.github.io/</loc>
+    <loc>{{ story.url | absolute_url }}</loc>
+    <lastmod>{{ story.updated_at | default: story.published_at | date: "%Y-%m-%d" }}</lastmod>
     <changefreq>daily</changefreq>
   </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=porto-velho-corrida-112-anos-2026-09-26</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=rondonia-seduc-amigo-voluntario-convocacao-2026-09-11</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=rondonia-pnad-subutilizacao-2026q2</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=rondonia-mpc-seduc-kits-120-milhoes-2026</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=rondonia-pregao-90054-190-193-2026</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=rondonia-geracao-emprego-descontinuidade-2026-09-01</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=porto-velho-novos-sorrisos-2026-09-03</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=porto-velho-sine-vagas-2026-09-01</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=porto-velho-fgts-saque-calamidade-2026-09-17</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=porto-velho-itr-2026-prazo-30-setembro</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=porto-velho-desfile-civico-2026-09-01</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=porto-velho-dia-d-vacinacao-2026-08-22</loc>
-    <lastmod>2026-08-31</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
-    <loc>https://ovigialocal.github.io/article.html?id=porto-velho-sine-vagas-2026-08-19</loc>
-    <lastmod>2026-08-31</lastmod>
-    <changefreq>daily</changefreq>
-  </url>
+  {% endfor %}
 </urlset>
