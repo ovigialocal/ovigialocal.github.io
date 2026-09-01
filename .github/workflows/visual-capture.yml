@@ -6,7 +6,12 @@ on:
       - '**.html'
       - '**.css'
       - '**.js'
+      - '_config.yml'
+      - '_layouts/**'
+      - '_news/**'
+      - 'content/articles/**'
       - 'vendor/cobogo/**'
+      - 'scripts/build-publication.py'
       - 'scripts/check-cobogo-core.py'
       - 'scripts/capture-public-surface.sh'
       - '.github/workflows/visual-capture.yml'
@@ -16,7 +21,12 @@ on:
       - '**.html'
       - '**.css'
       - '**.js'
+      - '_config.yml'
+      - '_layouts/**'
+      - '_news/**'
+      - 'content/articles/**'
       - 'vendor/cobogo/**'
+      - 'scripts/build-publication.py'
       - 'scripts/check-cobogo-core.py'
       - 'scripts/capture-public-surface.sh'
       - '.github/workflows/visual-capture.yml'
@@ -30,15 +40,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Verify publication projections
+        run: python scripts/build-publication.py --check
       - name: Verify Cobogó foundation boundary
         run: python scripts/check-cobogo-core.py
+      - name: Build the GitHub Pages surface
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Install Chromium
         run: npx --yes playwright@1.55.0 install --with-deps chromium
-      - name: Capture rendered home
-        run: bash scripts/capture-public-surface.sh
+      - name: Capture rendered public surface
+        run: bash scripts/capture-public-surface.sh _site
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
