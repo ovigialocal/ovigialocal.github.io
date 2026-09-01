@@ -4,79 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Matéria — O Vigia</title>
-  <meta name="description" content="Página de matéria de O Vigia, jornalismo local de Porto Velho com fontes e correções acessíveis.">
+  <meta name="description" content="Rota de compatibilidade do acervo de O Vigia.">
+  <meta name="robots" content="noindex,follow">
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="article.css">
+  <link rel="stylesheet" href="news-shell.css">
 </head>
 <body>
   <header class="site-header">
     <div class="utility-bar">
       <span>Porto Velho, Rondônia</span>
-      <nav aria-label="Links institucionais">
-        <a href="metodologia.html">Como apuramos</a>
-        <a href="correcoes.html">Correções</a>
-      </nav>
+      <nav aria-label="Links institucionais"><a href="metodologia.html">Como apuramos</a><a href="correcoes.html">Correções</a></nav>
     </div>
     <div class="article-masthead">
-      <a href="index.html" class="article-brand" aria-label="O Vigia — página inicial">O Vigia</a>
-      <a class="back-link" href="index.html">← Voltar ao acervo</a>
+      <a href="index.html" class="article-brand">O Vigia</a>
+      <a class="back-link" href="index.html">← Voltar à capa</a>
     </div>
   </header>
-
   <main class="article-page">
-    <section class="article-empty" id="article-empty" aria-labelledby="empty-title">
+    <section class="article-empty" aria-labelledby="legacy-title">
       <p class="eyebrow">Acervo</p>
-      <h1 id="empty-title">Nenhuma matéria publicada nesta rota.</h1>
-      <p>Quando uma matéria real for publicada, esta página exibirá o texto, suas fontes e o caminho para correções. Conteúdo demonstrativo só pode aparecer no preview local de desenvolvimento.</p>
-      <div class="article-empty-links">
-        <a href="index.html">Voltar à capa</a>
-        <a href="metodologia.html">Como apuramos</a>
-        <a href="correcoes.html">Correções e erratas</a>
-      </div>
+      <h1 id="legacy-title">Abrindo a matéria no endereço atual…</h1>
+      <p>O acervo agora usa URLs estáticas e permanentes. Se o redirecionamento não acontecer, volte à capa e abra a matéria pelo acervo.</p>
+      <div class="article-empty-links"><a href="index.html">Voltar à capa</a></div>
     </section>
-
-    <article class="article-shell" id="article-shell" hidden>
-      <header class="article-header">
-        <p class="article-preview-label" id="preview-label">Preview local · conteúdo demonstrativo · não publicado</p>
-        <p class="article-meta"><span id="article-section"></span><span aria-hidden="true"> · </span><span id="article-neighborhood"></span><span aria-hidden="true"> · </span><time id="article-date"></time></p>
-        <h1 id="article-title"></h1>
-        <p class="article-deck" id="article-deck"></p>
-      </header>
-
-      <div class="article-layout">
-        <div class="article-body" id="article-body"></div>
-
-        <aside class="article-trust" aria-label="Fontes e correções">
-          <p class="eyebrow">Confiança</p>
-          <h2>Como conferir esta matéria</h2>
-          <p>Fontes e histórico ficam perto da leitura, sem competir com o texto.</p>
-          <details>
-            <summary>Ver fontes e proveniência</summary>
-            <dl class="provenance-list">
-              <div><dt>Fonte</dt><dd id="article-source"></dd></div>
-              <div><dt>Referência</dt><dd id="article-reference"></dd></div>
-              <div><dt>Estado</dt><dd>Preview local — não publicado</dd></div>
-            </dl>
-          </details>
-          <a class="correction-link" href="correcoes.html">Informar ou consultar uma correção →</a>
-        </aside>
-      </div>
-
-      <footer class="article-footer-nav">
-        <a href="index.html">← Voltar ao acervo</a>
-        <a href="metodologia.html">Como O Vigia apura →</a>
-      </footer>
-    </article>
   </main>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div>
-      <div class="footer-links"><a href="metodologia.html">Metodologia</a><a href="correcoes.html">Correções e erratas</a></div>
-      <p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p>
-    </div>
-  </footer>
-
   <script src="article.js"></script>
 </body>
 </html>
