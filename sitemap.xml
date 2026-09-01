@@ -4,10 +4,6 @@ layout: null
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>{{ '/' | absolute_url }}</loc><changefreq>daily</changefreq></url>
-  <url><loc>{{ '/arquivo.html' | absolute_url }}</loc><changefreq>daily</changefreq></url>
-  <url><loc>{{ '/editorias.html' | absolute_url }}</loc><changefreq>daily</changefreq></url>
-  <url><loc>{{ '/metodologia.html' | absolute_url }}</loc><changefreq>monthly</changefreq></url>
-  <url><loc>{{ '/correcoes.html' | absolute_url }}</loc><changefreq>monthly</changefreq></url>
   {% assign sorted_news = site.news | sort: "published_at" | reverse %}
   {% for story in sorted_news %}
   <url>
