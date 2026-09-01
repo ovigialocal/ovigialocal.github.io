@@ -1,5 +1,21 @@
 [
   {
+    "id": "porto-velho-dia-d-vacinacao-2026-08-22",
+    "category": "Saúde",
+    "bairro": "",
+    "date": "31 ago",
+    "dateIso": "2026-08-31T20:55:00-04:00",
+    "title": "Campanha de multivacinação em Porto Velho termina terça-feira, 1º de setembro",
+    "excerpt": "Campanha para crianças e adolescentes menores de 15 anos segue até terça. Responsáveis podem procurar as unidades de saúde para conferir a caderneta e atualizar doses pendentes.",
+    "deck": "Campanha para crianças e adolescentes menores de 15 anos segue até terça. Responsáveis podem procurar as unidades de saúde para conferir a caderneta e atualizar doses pendentes.",
+    "sourceName": "Prefeitura de Porto Velho",
+    "sourceUrl": "https://agencia.portovelho.ro.gov.br/noticias/57895",
+    "sourceHash": "sha256:933e38be63b12017a2bdff0e38efb1d764d387daa0044c5afb92904fff87369d",
+    "neighborhood": "Porto Velho",
+    "url": "article.html?id=porto-velho-dia-d-vacinacao-2026-08-22",
+    "contentHtml": "<p>A <strong>Campanha Nacional de Multivacinação continua até terça-feira, 1º de setembro</strong>, em Porto Velho. Nesta <strong>segunda-feira (31 de agosto)</strong> e na <strong>terça-feira (1º de setembro)</strong>, pais e responsáveis podem procurar as unidades de saúde para conferir a caderneta e atualizar doses pendentes.</p><p>A comunicação oficial da Prefeitura também inclui o <strong>Porto Velho Shopping</strong> entre os pontos da campanha. Como a página municipal não detalha o expediente de cada ponto, vale confirmar o horário antes de sair de casa.</p><p>A campanha é voltada principalmente a <strong>crianças e adolescentes menores de 15 anos</strong>. A vacinação é seletiva: a equipe confere idade, histórico e caderneta e aplica as doses que estiverem pendentes conforme o Calendário Nacional de Vacinação.</p><h2>O que levar</h2><p>Para o atendimento, a Semusa orienta levar:</p><ul><li><strong>documento de identificação</strong>;</li><li><strong>Cartão do SUS ou CPF</strong>;</li><li><strong>caderneta de vacinação</strong>.</li></ul><p>Entre as vacinas citadas pela Prefeitura durante a campanha estão poliomielite, tríplice viral, hepatites A e B, HPV, febre amarela, influenza, covid-19 e dengue quando indicada, além das demais vacinas de rotina. A dose necessária depende da avaliação da situação vacinal de cada pessoa.</p><h2>Onde procurar atendimento</h2><p>A <a href=\"https://agencia.portovelho.ro.gov.br/noticias/57895\">comunicação oficial da campanha</a> informa atendimento nas <strong>unidades de saúde e no Porto Velho Shopping</strong> até 1º de setembro.</p><p>Se a opção for uma UBS, vale confirmar antes <strong>qual unidade próxima está com sala de vacinação aberta e em qual horário</strong>, porque o expediente varia conforme a unidade. A Ouvidoria SEMUSA recebe dúvidas e pedidos de informação pelo <strong>WhatsApp (69) 98473-6263</strong>, exclusivo para mensagens de texto, de <strong>segunda a sexta-feira, das 8h às 14h</strong>.</p><p>Também é possível acompanhar novos avisos pelo <a href=\"https://whatsapp.com/channel/0029VbCaSTO5q08TB4mYNM0o\">canal oficial da Prefeitura no WhatsApp</a>.</p><h2>O que mudou em relação ao Dia D</h2><p>O Dia D de 29 de agosto já terminou. Os pontos e horários extraordinários daquele evento não são apresentados como serviço futuro. O que permanece acionável é a <strong>campanha regular até 1º de setembro</strong>, com atendimento nas unidades de saúde e o Porto Velho Shopping listado pela Prefeitura como ponto da campanha.</p>"
+  },
+  {
     "id": "porto-velho-sine-vagas-2026-08-19",
     "category": "Serviços",
     "bairro": "",
