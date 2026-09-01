@@ -1,5 +1,21 @@
 [
   {
+    "id": "porto-velho-itr-2026-prazo-30-setembro",
+    "category": "Serviços",
+    "bairro": "",
+    "date": "1 set",
+    "dateIso": "2026-09-01T02:48:00-04:00",
+    "title": "ITR 2026: declaração de imóveis rurais em Porto Velho vai até 30 de setembro",
+    "excerpt": "Prazo termina às 23h59min59s no horário de Brasília; atraso gera multa mínima de R$ 50 e a Prefeitura publicou os valores de terra nua de 2026 usados como referência.",
+    "deck": "Prazo termina às 23h59min59s no horário de Brasília; atraso gera multa mínima de R$ 50 e a Prefeitura publicou os valores de terra nua de 2026 usados como referência.",
+    "sourceName": "Receita Federal e Prefeitura de Porto Velho",
+    "sourceUrl": "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/julho/ditr-2026-prazo-de-entrega-comeca-em-10-de-agosto",
+    "sourceHash": "sha256:7ab5fead507117fa463d77383b3540f7bd6c00143c87e707f78544690ebac095",
+    "neighborhood": "Porto Velho",
+    "url": "article.html?id=porto-velho-itr-2026-prazo-30-setembro",
+    "contentHtml": "<p>Quem é proprietário, titular do domínio útil ou possuidor de <strong>imóvel rural em Porto Velho</strong> e não se enquadra em hipótese de imunidade ou isenção deve apresentar a <strong>Declaração do Imposto sobre a Propriedade Territorial Rural (DITR) 2026 até 30 de setembro</strong>.</p><p>A Receita Federal informa que o prazo termina às <strong>23h59min59s, no horário de Brasília</strong>. A declaração pode ser enviada pelo serviço <strong>Minhas Declarações do ITR</strong>, no Portal de Serviços da Receita Federal.</p><h2>Quem deve declarar e como enviar</h2><p>A obrigação alcança pessoas físicas e jurídicas proprietárias, titulares do domínio útil ou possuidoras de imóvel rural, ressalvadas as hipóteses legais de imunidade ou isenção. Segundo a Receita Federal, <strong>pessoa física com imóvel rural de até 100 hectares também pode usar o Programa ITR 2026</strong>.</p><h2>Valores da Terra Nua em Porto Velho</h2><p>A Prefeitura publicou os Valores da Terra Nua (VTN) de 2026 por hectare:</p><ul><li>lavoura — aptidão boa: <strong>R$ 21.294,26</strong>;</li><li>lavoura — aptidão regular: <strong>R$ 18.738,95</strong>;</li><li>lavoura — aptidão restrita: <strong>R$ 16.396,58</strong>;</li><li>pastagem plantada: <strong>R$ 13.841,27</strong>;</li><li>silvicultura ou pastagem natural: <strong>R$ 10.647,13</strong>;</li><li>preservação da fauna ou flora: <strong>R$ 6.388,28</strong>.</li></ul><p>O VTN é referência para a declaração e não substitui a análise das regras aplicáveis a cada imóvel.</p><h2>Atraso e pagamento</h2><p>A Receita Federal informa que a entrega fora do prazo gera multa de <strong>1% ao mês-calendário ou fração de atraso</strong> sobre o imposto devido, com mínimo de <strong>R$ 50</strong>. O imposto pode ser pago em até <strong>quatro quotas mensais e sucessivas</strong>, desde que nenhuma seja inferior a R$ 50. Se for inferior a R$ 100, o pagamento é em quota única. A quota única ou a primeira quota vence em <strong>30 de setembro de 2026</strong>.</p><h2>Serviço</h2><ul><li><strong>Prazo:</strong> 30 de setembro de 2026, às 23h59min59s, horário de Brasília</li><li><strong>Onde declarar:</strong> Minhas Declarações do ITR, no Portal de Serviços da Receita Federal</li><li><strong>Alternativa:</strong> pessoa física com imóvel rural de até 100 hectares também pode usar o Programa ITR 2026</li><li><strong>Referência local:</strong> VTN 2026 publicados pela Prefeitura de Porto Velho</li></ul>"
+  },
+  {
     "id": "porto-velho-desfile-civico-2026-09-01",
     "category": "Educação",
     "bairro": "",
