@@ -2,13 +2,14 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-OUT="${1:-$ROOT/artifacts/visual}"
+SITE_ROOT="${1:-$ROOT}"
+OUT="${2:-$ROOT/artifacts/visual}"
 PORT="${PORT:-4173}"
 BASE="http://127.0.0.1:${PORT}"
 
 mkdir -p "$OUT"
 
-python3 -m http.server "$PORT" --directory "$ROOT" >"$OUT/http-server.log" 2>&1 &
+python3 -m http.server "$PORT" --directory "$SITE_ROOT" >"$OUT/http-server.log" 2>&1 &
 SERVER_PID=$!
 trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
 
@@ -31,23 +32,20 @@ capture() {
     "$url" "$target"
 }
 
-# A superfície pública continua vazia enquanto publishedArticles estiver vazio.
 capture "1280,900" "$BASE/" "$OUT/home-desktop.png"
 capture "390,844" "$BASE/" "$OUT/home-mobile.png"
 
-# O estado populado só existe em localhost; o mesmo renderer recebe fixtures de composição.
-capture "1280,900" "$BASE/?preview=populated" "$OUT/home-populated-preview-desktop.png"
-capture "390,844" "$BASE/?preview=populated" "$OUT/home-populated-preview-mobile.png"
+ARTICLE_DIR="$(find "$SITE_ROOT/noticias" -mindepth 1 -maxdepth 1 -type d | sort | head -n 1 || true)"
+if [[ -z "$ARTICLE_DIR" ]]; then
+  echo "No rendered article found under $SITE_ROOT/noticias" >&2
+  exit 1
+fi
+ARTICLE_SLUG="$(basename "$ARTICLE_DIR")"
+capture "1280,900" "$BASE/noticias/$ARTICLE_SLUG/" "$OUT/article-desktop.png"
+capture "390,844" "$BASE/noticias/$ARTICLE_SLUG/" "$OUT/article-mobile.png"
 
-# A rota de matéria é capturada pelo mesmo método antes/depois. Antes da implementação,
-# o servidor devolve a página 404; depois, o preview local exercita o template real.
-capture "1280,900" "$BASE/article.html?preview=article" "$OUT/article-preview-desktop.png"
-capture "390,844" "$BASE/article.html?preview=article" "$OUT/article-preview-mobile.png"
-
-printf 'Captured:\n- %s\n- %s\n- %s\n- %s\n- %s\n- %s\n' \
+printf 'Captured:\n- %s\n- %s\n- %s\n- %s\n' \
   "$OUT/home-desktop.png" \
   "$OUT/home-mobile.png" \
-  "$OUT/home-populated-preview-desktop.png" \
-  "$OUT/home-populated-preview-mobile.png" \
-  "$OUT/article-preview-desktop.png" \
-  "$OUT/article-preview-mobile.png"
+  "$OUT/article-desktop.png" \
+  "$OUT/article-mobile.png"

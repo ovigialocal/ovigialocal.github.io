@@ -1,190 +1,128 @@
-// O Vigia — face pública.
-// A publicação editorial preenche articles.json; o estado vazio é uma edição válida.
-let publishedArticles = [];
+// O Vigia — melhoria progressiva da superfície já renderizada no HTML.
+let activeBairro = "Todos";
 
-// Fixture exclusivamente local para validar a composição futura sem publicar notícia falsa.
-// Em GitHub Pages este preview nunca é ativado.
-const LOCAL_PREVIEW_ARTICLES = [
-  { id: "preview-1", category: "Cidade", bairro: "Centro", date: "30 ago", title: "Manchete de demonstração mostra como a capa prioriza a notícia mais importante", excerpt: "Texto fictício de composição, usado apenas em localhost para validar hierarquia, ritmo e leitura da futura capa populada.", sourceName: "Fonte de demonstração" },
-  { id: "preview-2", category: "Serviços", bairro: "Zona Leste", date: "30 ago", title: "Informação de serviço aparece como notícia secundária sem competir com a manchete", excerpt: "A composição mantém editoria, bairro e data visíveis, mas subordinados ao título.", sourceName: "Fonte de demonstração" },
-  { id: "preview-3", category: "Bairros", bairro: "Areal", date: "29 ago", title: "Bairros ganham espaço próprio na leitura da edição", excerpt: "O módulo secundário usa menos peso e mais ritmo editorial do que um card de dashboard.", sourceName: "Fonte de demonstração" },
-  { id: "preview-4", category: "Economia local", bairro: "Nova Porto Velho", date: "29 ago", title: "Mais notícias ampliam a edição sem transformar a capa em grade uniforme", excerpt: "O sistema continua legível quando o acervo cresce.", sourceName: "Fonte de demonstração" },
-  { id: "preview-5", category: "Cidade", bairro: "Centro", date: "28 ago", title: "Metadados permanecem discretos e recuperáveis", excerpt: "A informação de confiança continua disponível sem dominar a leitura jornalística.", sourceName: "Fonte de demonstração" }
-];
+const normalize = value => (value || "")
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "")
+  .toLowerCase();
 
-function previewEnabled() {
-  const local = location.hostname === "127.0.0.1" || location.hostname === "localhost";
-  return local && new URLSearchParams(location.search).get("preview") === "populated";
+function cards() {
+  return [...document.querySelectorAll("[data-news-card]")];
 }
 
-async function loadPublishedArticles() {
-  if (previewEnabled()) return;
-  try {
-    const response = await fetch("articles.json", { cache: "no-store" });
-    if (!response.ok) throw new Error(`articles.json: HTTP ${response.status}`);
-    const data = await response.json();
-    publishedArticles = Array.isArray(data) ? data : [];
-  } catch (error) {
-    console.error("Não foi possível carregar o acervo publicado.", error);
-    publishedArticles = [];
-  }
-}
-
-function currentArticles() {
-  return previewEnabled() ? LOCAL_PREVIEW_ARTICLES : publishedArticles;
-}
-
-let activeBairro = "Todos os Bairros";
-
-document.addEventListener("DOMContentLoaded", async () => {
-  if (previewEnabled()) document.body.dataset.preview = "populated";
-  await loadPublishedArticles();
-  setupSearch();
-  setupModal();
-  setupKeyboardAccessibility();
-  renderBairroFilters();
-  filterAndRender();
-});
-
-function renderBairroFilters() {
+function setupBairroFilters() {
   const container = document.getElementById("bairro-filter");
   if (!container) return;
-  const bairros = ["Todos os Bairros", ...new Set(currentArticles().map(a => a.bairro).filter(Boolean))];
-  container.innerHTML = "";
-  bairros.forEach((bairro, index) => {
-    const chip = document.createElement("button");
-    chip.type = "button";
-    chip.className = `filter-chip ${index === 0 ? "active" : ""}`;
-    chip.textContent = bairro;
-    chip.addEventListener("click", () => {
-      container.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
-      chip.classList.add("active");
+
+  const bairros = [
+    "Todos",
+    ...new Set(cards().map(card => card.dataset.bairro).filter(Boolean))
+  ];
+
+  container.replaceChildren(...bairros.map((bairro, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `filter-chip ${index === 0 ? "active" : ""}`;
+    button.textContent = bairro;
+    button.addEventListener("click", () => {
+      container.querySelectorAll(".filter-chip").forEach(item => item.classList.remove("active"));
+      button.classList.add("active");
       activeBairro = bairro;
       filterAndRender();
     });
-    container.appendChild(chip);
-  });
+    return button;
+  }));
 }
 
 function filterAndRender() {
-  const articles = currentArticles();
-  const query = (document.getElementById("search-input")?.value || "").toLowerCase();
-  const emptyState = document.getElementById("prototype-banner");
-  const controls = document.getElementById("controls-section");
-  const grid = document.getElementById("news-grid");
-  if (articles.length === 0) {
-    if (emptyState) emptyState.style.display = "grid";
-    if (controls) controls.style.display = "none";
-    if (grid) grid.innerHTML = "";
-    return;
-  }
-  if (emptyState) emptyState.style.display = "none";
-  if (controls) controls.style.display = "flex";
-  const filtered = articles.filter(article => {
-    const bairro = activeBairro === "Todos os Bairros" || article.bairro === activeBairro;
-    const text = `${article.title || ""} ${article.excerpt || ""}`.toLowerCase();
-    return bairro && text.includes(query);
+  const query = normalize(document.getElementById("search-input")?.value);
+  let visible = 0;
+
+  cards().forEach(card => {
+    const bairroMatches = activeBairro === "Todos" || card.dataset.bairro === activeBairro;
+    const textMatches = !query || normalize(card.textContent).includes(query);
+    card.hidden = !(bairroMatches && textMatches);
+    if (!card.hidden) visible += 1;
   });
-  renderArticles(filtered);
+
+  document.querySelectorAll("[data-news-section]").forEach(section => {
+    section.hidden = ![...section.querySelectorAll("[data-news-card]")].some(card => !card.hidden);
+  });
+
+  const noResults = document.getElementById("no-results");
+  if (noResults) noResults.hidden = visible !== 0;
 }
 
-function renderArticles(articles) {
-  const grid = document.getElementById("news-grid");
-  if (!grid) return;
-  grid.innerHTML = "";
-  if (articles.length === 0) {
-    grid.innerHTML = '<p class="no-results">Nenhuma matéria encontrada com esses filtros.</p>';
-    return;
-  }
-  articles.forEach((article, index) => {
-    const card = document.createElement("article");
-    card.className = `news-card ${index === 0 ? "news-card-lead" : index < 3 ? "news-card-secondary" : "news-card-brief"}`;
-    const header = document.createElement("div");
-    header.className = "card-header";
-    const tag = document.createElement("span");
-    tag.className = "badge-tag";
-    tag.textContent = [article.category, article.bairro].filter(Boolean).join(" · ");
-    const date = document.createElement("time");
-    date.className = "card-date";
-    if (article.dateIso) date.dateTime = article.dateIso;
-    date.textContent = article.date || "";
-    header.append(tag, date);
-    const title = document.createElement("h3");
-    title.className = "card-title";
-    title.textContent = article.title;
-    const excerpt = document.createElement("p");
-    excerpt.className = "card-excerpt";
-    excerpt.textContent = article.excerpt || "";
-    const meta = document.createElement("div");
-    meta.className = "card-metadata";
-    const source = document.createElement("span");
-    source.className = "source-badge";
-    source.textContent = article.sourceName ? `Fonte: ${article.sourceName}` : "";
-    const provenance = document.createElement("button");
-    provenance.type = "button";
-    provenance.className = "btn-provenance";
-    provenance.textContent = "Ver fontes";
-    provenance.addEventListener("click", () => openProvenanceModal(article.id));
-    meta.append(source, provenance);
-    if (article.url) {
-      const read = document.createElement("a");
-      read.className = "btn-provenance";
-      read.href = article.url;
-      read.textContent = "Ler matéria";
-      meta.appendChild(read);
-    }
-    card.append(header, title, excerpt, meta);
-    grid.appendChild(card);
-  });
+function setupSearch() {
+  document.getElementById("search-input")?.addEventListener("input", filterAndRender);
 }
 
-function setupSearch() { document.getElementById("search-input")?.addEventListener("input", filterAndRender); }
-function setupModal() {
+function closeModal() {
   const modal = document.getElementById("modal-provenance");
-  document.getElementById("modal-close")?.addEventListener("click", () => closeModal(modal));
-  modal?.addEventListener("click", event => { if (event.target === modal) closeModal(modal); });
+  if (!modal) return;
+  modal.setAttribute("hidden", "true");
+  modal.classList.remove("active");
 }
-function openProvenanceModal(articleId) {
-  const article = currentArticles().find(a => a.id === articleId);
+
+function openProvenance(button) {
   const modal = document.getElementById("modal-provenance");
   const content = document.getElementById("modal-content");
-  if (!article || !modal || !content) return;
-  content.innerHTML = "";
+  if (!modal || !content) return;
+
   const title = document.createElement("h2");
   title.id = "modal-provenance-title";
-  title.textContent = previewEnabled() ? "Fontes — preview de composição" : "Fontes desta matéria";
+  title.textContent = button.dataset.title || "Fonte da matéria";
+
   const box = document.createElement("div");
   box.className = "provenance-box";
-  [["Matéria", article.title], ["Fonte", article.sourceName], ["Bairro", article.bairro], ["Referência", article.sourceHash]].filter(([,value]) => value).forEach(([label,value]) => {
-    const item = document.createElement("div");
-    item.className = "provenance-item";
-    const strong = document.createElement("strong");
-    strong.textContent = `${label}: `;
-    item.append(strong, document.createTextNode(value));
-    box.appendChild(item);
-  });
-  if (article.sourceUrl && !previewEnabled()) {
-    const item = document.createElement("div");
-    item.className = "provenance-item";
-    const link = document.createElement("a");
-    link.href = article.sourceUrl;
-    link.rel = "noopener noreferrer";
-    link.textContent = "Abrir fonte oficial";
-    item.appendChild(link);
-    box.appendChild(item);
+
+  const source = document.createElement("div");
+  source.className = "provenance-item";
+  const sourceLabel = document.createElement("strong");
+  sourceLabel.textContent = "Fonte: ";
+  source.append(sourceLabel, document.createTextNode(button.dataset.sourceName || ""));
+  box.appendChild(source);
+
+  if (button.dataset.sourceHash) {
+    const reference = document.createElement("div");
+    reference.className = "provenance-item";
+    const referenceLabel = document.createElement("strong");
+    referenceLabel.textContent = "Referência: ";
+    reference.append(referenceLabel, document.createTextNode(button.dataset.sourceHash));
+    box.appendChild(reference);
   }
-  content.append(title, box);
+
+  if (button.dataset.sourceUrl) {
+    const link = document.createElement("a");
+    link.className = "provenance-source-link";
+    link.href = button.dataset.sourceUrl;
+    link.rel = "noopener noreferrer";
+    link.textContent = "Abrir fonte verificável ↗";
+    box.appendChild(link);
+  }
+
+  content.replaceChildren(title, box);
   modal.removeAttribute("hidden");
   modal.classList.add("active");
   document.getElementById("modal-close")?.focus();
 }
-function closeModal(modal) {
-  if (!modal) return;
-  modal.classList.remove("active");
-  modal.setAttribute("hidden", "true");
-}
-function setupKeyboardAccessibility() {
+
+function setupModal() {
+  document.querySelectorAll("[data-provenance-button]").forEach(button => {
+    button.addEventListener("click", () => openProvenance(button));
+  });
+  document.getElementById("modal-close")?.addEventListener("click", closeModal);
+  document.getElementById("modal-provenance")?.addEventListener("click", event => {
+    if (event.target.id === "modal-provenance") closeModal();
+  });
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape") document.querySelectorAll(".modal-overlay.active").forEach(closeModal);
+    if (event.key === "Escape") closeModal();
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  setupBairroFilters();
+  setupSearch();
+  setupModal();
+  filterAndRender();
+});

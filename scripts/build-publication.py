@@ -15,6 +15,7 @@ from xml.sax.saxutils import escape as xml_escape
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_DIR = ROOT / "content" / "articles"
+JEKYLL_NEWS_DIR = ROOT / "_news"
 SITE = "https://ovigialocal.github.io"
 MONTHS_PT = ("jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez")
 REQUIRED = {
@@ -23,6 +24,7 @@ REQUIRED = {
     "source_name", "source_url",
 }
 KEY_RE = re.compile(r"^([A-Za-z0-9_-]+):(?:\s*(.*))?$")
+STORY_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 LINK_RE = re.compile(r"\[([^\]]+)\]\((https?://[^)\s]+)\)")
 BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 ORDERED_RE = re.compile(r"^\d+\.\s+(.+)$")
@@ -32,6 +34,7 @@ ORDERED_RE = re.compile(r"^\d+\.\s+(.+)$")
 class Article:
     meta: dict[str, str]
     body: str
+    source_file: Path
 
     @property
     def published_at(self) -> datetime:
@@ -39,7 +42,13 @@ class Article:
 
     @property
     def route(self) -> str:
+        # Compatibility route retained in JSON/feed/sitemap while old public links exist.
+        # The canonical reader-facing route is emitted by Jekyll as /noticias/<story_id>/.
         return f"article.html?id={quote(self.meta['story_id'], safe='')}"
+
+    @property
+    def jekyll_projection(self) -> Path:
+        return JEKYLL_NEWS_DIR / f"{self.meta['story_id']}.md"
 
 
 def parse_scalar(value: str) -> str:
@@ -76,11 +85,13 @@ def parse_article(path: Path) -> Article:
     missing = REQUIRED - meta.keys()
     if missing:
         raise ValueError(f"{path}: missing public metadata: {', '.join(sorted(missing))}")
+    if not STORY_ID_RE.fullmatch(meta["story_id"]):
+        raise ValueError(f"{path}: story_id is not safe for a static route: {meta['story_id']!r}")
     body = body.lstrip("\n")
     first_line, sep, remainder = body.partition("\n")
     if first_line == f"# {meta['title']}":
         body = remainder.lstrip("\n") if sep else ""
-    return Article(meta, body)
+    return Article(meta, body, path)
 
 
 def inline(text: str) -> str:
@@ -241,28 +252,49 @@ def build_sitemap(articles: list[Article]) -> str:
 
 def projections() -> dict[Path, str]:
     articles = load_articles()
-    return {
+    result = {
         ROOT / "articles.json": build_json(articles),
         ROOT / "feed.xml": build_feed(articles),
         ROOT / "sitemap.xml": build_sitemap(articles),
     }
+    for article in articles:
+        result[article.jekyll_projection] = article.source_file.read_text(encoding="utf-8")
+    return result
+
+
+def unexpected_news_files(expected: set[Path]) -> list[Path]:
+    if not JEKYLL_NEWS_DIR.exists():
+        return []
+    return sorted(path for path in JEKYLL_NEWS_DIR.glob("*.md") if path not in expected)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="fail if committed projections are stale")
     args = parser.parse_args()
+    expected = projections()
     stale: list[Path] = []
-    for path, expected in projections().items():
+    unexpected = unexpected_news_files(set(expected))
+
+    for path, content in expected.items():
         if args.check:
-            if not path.exists() or path.read_text(encoding="utf-8") != expected:
+            if not path.exists() or path.read_text(encoding="utf-8") != content:
                 stale.append(path.relative_to(ROOT))
         else:
-            path.write_text(expected, encoding="utf-8")
-    if stale:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content, encoding="utf-8")
+
+    if not args.check:
+        for path in unexpected:
+            path.unlink()
+        return 0
+
+    if stale or unexpected:
         print("stale publication projections:")
         for path in stale:
             print(f"- {path}")
+        for path in unexpected:
+            print(f"- unexpected: {path.relative_to(ROOT)}")
         print("run: python scripts/build-publication.py")
         return 1
     return 0

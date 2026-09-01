@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title | escape }} — O Vigia</title>
+  <meta name="description" content="{{ page.description | escape }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="O Vigia">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="{{ page.title | escape }}">
+  <meta property="og:description" content="{{ page.description | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="article:published_time" content="{{ page.published_at | date_to_xmlschema }}">
+  <link rel="stylesheet" href="{{ '/index.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/article.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/news-shell.css' | relative_url }}">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": {{ page.title | jsonify }},
+    "description": {{ page.description | jsonify }},
+    "datePublished": {{ page.published_at | date_to_xmlschema | jsonify }},
+    "mainEntityOfPage": {{ page.url | absolute_url | jsonify }},
+    "publisher": {"@type": "Organization", "name": "O Vigia", "url": {{ '/' | absolute_url | jsonify }}},
+    "isBasedOn": {{ page.source_url | jsonify }}
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="utility-bar">
+      <span>Porto Velho, Rondônia</span>
+      <nav aria-label="Links institucionais">
+        <a href="{{ '/metodologia.html' | relative_url }}">Como apuramos</a>
+        <a href="{{ '/correcoes.html' | relative_url }}">Correções</a>
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+      </nav>
+    </div>
+    <div class="article-masthead">
+      <a href="{{ '/' | relative_url }}" class="article-brand" aria-label="O Vigia — página inicial">O Vigia</a>
+      <a class="back-link" href="{{ '/' | relative_url }}">← Voltar à capa</a>
+    </div>
+  </header>
+
+  <main class="article-page">
+    <article class="article-shell">
+      <header class="article-header">
+        <p class="article-meta">
+          <a href="{{ '/' | relative_url }}#editoria-{{ page.category | slugify }}">{{ page.category }}</a>
+          <span aria-hidden="true"> · </span>
+          <span>{{ page.locality }}</span>
+          <span aria-hidden="true"> · </span>
+          <time datetime="{{ page.published_at | date_to_xmlschema }}">{{ page.published_at | date: "%d/%m/%Y · %H:%M" }}</time>
+        </p>
+        <h1>{{ page.title }}</h1>
+        <p class="article-deck">{{ page.description }}</p>
+      </header>
+
+      <div class="article-layout">
+        <div class="article-body">{{ content }}</div>
+
+        <aside class="article-trust" aria-label="Fontes e correções">
+          <p class="eyebrow">Fonte verificável</p>
+          <h2>Como conferir esta matéria</h2>
+          <p>A fonte principal fica visível para que o leitor possa consultar a evidência usada na publicação.</p>
+          <p class="source-primary"><a href="{{ page.source_url }}" rel="noopener noreferrer">{{ page.source_name }} ↗</a></p>
+          <details>
+            <summary>Detalhes de proveniência</summary>
+            <dl class="provenance-list">
+              <div><dt>Fonte</dt><dd><a href="{{ page.source_url }}" rel="noopener noreferrer">{{ page.source_name }}</a></dd></div>
+              <div><dt>Referência</dt><dd>{{ page.source_digest }}</dd></div>
+              <div><dt>Estado</dt><dd>Publicado</dd></div>
+            </dl>
+          </details>
+          <a class="correction-link" href="{{ '/correcoes.html' | relative_url }}">Informar ou consultar uma correção →</a>
+        </aside>
+      </div>
+
+      {% assign related = site.news | where: "category", page.category | sort: "published_at" | reverse %}
+      {% assign related_count = 0 %}
+      <section class="article-related" aria-labelledby="related-title">
+        <p class="eyebrow">Continue lendo</p>
+        <h2 id="related-title">Mais em {{ page.category }}</h2>
+        <div class="related-grid">
+          {% for story in related %}
+            {% if story.url != page.url and related_count < 3 %}
+              <article>
+                <p class="card-header"><time datetime="{{ story.published_at | date_to_xmlschema }}">{{ story.published_at | date: "%d/%m" }}</time></p>
+                <h3><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h3>
+                <p>{{ story.description }}</p>
+              </article>
+              {% assign related_count = related_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+
+      <footer class="article-footer-nav">
+        <a href="{{ '/' | relative_url }}#editoria-{{ page.category | slugify }}">← Mais em {{ page.category }}</a>
+        <a href="{{ '/metodologia.html' | relative_url }}">Como O Vigia apura →</a>
+      </footer>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div>
+      <div class="footer-links"><a href="{{ '/metodologia.html' | relative_url }}">Metodologia</a><a href="{{ '/correcoes.html' | relative_url }}">Correções e erratas</a><a href="{{ '/feed.xml' | relative_url }}">RSS</a></div>
+      <p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p>
+    </div>
+  </footer>
+</body>
+</html>
