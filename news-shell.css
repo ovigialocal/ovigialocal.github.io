@@ -1,3 +1,5 @@
+@import url('mobile-editorial.css');
+
 .section-nav a {
   color: var(--muted);
   text-decoration: none;
