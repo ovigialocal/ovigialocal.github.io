@@ -1,5 +1,21 @@
 [
   {
+    "id": "porto-velho-novos-sorrisos-2026-09-03",
+    "category": "Saúde",
+    "bairro": "",
+    "date": "1 set",
+    "dateIso": "2026-09-01T05:50:00-04:00",
+    "title": "Atendimento odontológico gratuito em Porto Velho segue até 3 de setembro",
+    "excerpt": "Expedição Novos Sorrisos atende no bairro Lagoa das 8h30 às 16h; vagas são limitadas e o agendamento pode ser feito na unidade móvel ou pelo site do projeto.",
+    "deck": "Expedição Novos Sorrisos atende no bairro Lagoa das 8h30 às 16h; vagas são limitadas e o agendamento pode ser feito na unidade móvel ou pelo site do projeto.",
+    "sourceName": "Prefeitura de Porto Velho",
+    "sourceUrl": "https://www.portovelho.ro.gov.br/noticias/57828",
+    "sourceHash": "sha256:1836d13be29aa6b7da5c19d75ed7ea3ee216cf3e11aa14d84ccd5d1296ed5274",
+    "neighborhood": "Porto Velho",
+    "url": "article.html?id=porto-velho-novos-sorrisos-2026-09-03",
+    "contentHtml": "<p>A <strong>Expedição Novos Sorrisos</strong> mantém em Porto Velho atendimentos odontológicos gratuitos até <strong>quinta-feira, 3 de setembro</strong>. A unidade móvel está instalada na <strong>Avenida Rio de Janeiro, nº 4.734, bairro Lagoa</strong>, e o horário informado é das <strong>8h30 às 16h</strong>.</p><p>Segundo a Prefeitura de Porto Velho, as vagas são limitadas. O agendamento pode ser feito <strong>diretamente na unidade móvel</strong> ou pelo site oficial da Expedição Novos Sorrisos.</p><p>A ação é promovida pela Neodent, com apoio da Prefeitura na divulgação. Como a capacidade é limitada e a matéria entra na reta final do atendimento, confirme a disponibilidade antes de se deslocar.</p><h2>Serviço</h2><ul><li><strong>O quê:</strong> atendimento odontológico gratuito — Expedição Novos Sorrisos</li><li><strong>Até quando:</strong> 3 de setembro de 2026</li><li><strong>Horário informado:</strong> 8h30 às 16h</li><li><strong>Onde:</strong> Avenida Rio de Janeiro, nº 4.734, bairro Lagoa, Porto Velho</li><li><strong>Agendamento:</strong> na própria unidade móvel ou pelo site da Expedição Novos Sorrisos</li><li><strong>Atenção:</strong> vagas limitadas; confirme disponibilidade antes de ir</li></ul>"
+  },
+  {
     "id": "porto-velho-sine-vagas-2026-09-01",
     "category": "Serviços",
     "bairro": "",
