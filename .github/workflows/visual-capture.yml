@@ -6,6 +6,8 @@ on:
       - '**.html'
       - '**.css'
       - '**.js'
+      - 'vendor/cobogo/**'
+      - 'scripts/check-cobogo-core.py'
       - 'scripts/capture-public-surface.sh'
       - '.github/workflows/visual-capture.yml'
   push:
@@ -14,6 +16,8 @@ on:
       - '**.html'
       - '**.css'
       - '**.js'
+      - 'vendor/cobogo/**'
+      - 'scripts/check-cobogo-core.py'
       - 'scripts/capture-public-surface.sh'
       - '.github/workflows/visual-capture.yml'
   workflow_dispatch:
@@ -26,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Verify Cobogó foundation boundary
+        run: python scripts/check-cobogo-core.py
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
