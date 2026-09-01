@@ -1,5 +1,21 @@
 [
   {
+    "id": "rondonia-pnad-subutilizacao-2026q2",
+    "category": "Economia",
+    "bairro": "",
+    "date": "1 set",
+    "dateIso": "2026-09-01T12:48:00-04:00",
+    "title": "Rondônia tem 6% de subutilização da força de trabalho no 2º trimestre, aponta IBGE",
+    "excerpt": "PNAD Contínua coloca o estado entre as menores taxas do país; indicador é mais amplo que desemprego e inclui subocupação e força de trabalho potencial.",
+    "deck": "PNAD Contínua coloca o estado entre as menores taxas do país; indicador é mais amplo que desemprego e inclui subocupação e força de trabalho potencial.",
+    "sourceName": "IBGE — PNAD Contínua",
+    "sourceUrl": "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Novos_Indicadores_Sobre_a_Forca_de_Trabalho/pnadc_202602_trimestre_novos_indicadores.pdf",
+    "sourceHash": "sha256:9da44a925e052dad4b976dcd8f6c18348e15d7ea417141002821063a6b7d7383",
+    "neighborhood": "Porto Velho",
+    "url": "article.html?id=rondonia-pnad-subutilizacao-2026q2",
+    "contentHtml": "<p>Rondônia registrou <strong>taxa composta de subutilização da força de trabalho de 6,0% no segundo trimestre de 2026</strong>, segundo a PNAD Contínua do IBGE publicada em 14 de agosto. Foi a <strong>segunda menor taxa entre as unidades da Federação</strong>, atrás de Santa Catarina (4,1%) e próxima de Mato Grosso (6,1%). A média brasileira ficou em <strong>12,9%</strong>.</p><p>O indicador é mais amplo que a taxa de desemprego. Ele reúne três grupos: pessoas desocupadas, pessoas que trabalham menos horas do que gostariam e estão disponíveis para trabalhar mais, e pessoas que estão fora da força de trabalho mas têm potencial para entrar nela. O denominador é a chamada força de trabalho ampliada.</p><p>Por isso, os <strong>6,0% não significam que 94% dos moradores de Rondônia estejam empregados</strong>. A PNAD é uma pesquisa amostral e o indicador mede uma condição específica da população de 14 anos ou mais dentro do universo estatístico definido pelo IBGE.</p><p>Na mesma divulgação, a <strong>taxa de desocupação de Rondônia foi de 2,6%</strong>. A diferença entre 2,6% e 6,0% mostra por que olhar apenas para desemprego deixa de fora parte da pressão por trabalho: há pessoas que já trabalham, mas querem mais horas, e pessoas fora da força de trabalho que poderiam ingressar nela.</p><p>A posição de Rondônia entre as menores taxas do país descreve o retrato do segundo trimestre; <strong>não explica por si só por que o indicador é baixo, nem prova melhora estrutural</strong>. Para falar em tendência ou causa seria necessário comparar séries e outros indicadores com método próprio.</p><h2>O que acompanhar</h2><p>As próximas divulgações trimestrais da PNAD permitem verificar se a diferença se mantém. Para acompanhar o mercado de trabalho estadual, vale observar em conjunto taxa de desocupação, subutilização, participação na força de trabalho, informalidade e rendimento — medidas que respondem a perguntas diferentes.</p>"
+  },
+  {
     "id": "rondonia-mpc-seduc-kits-120-milhoes-2026",
     "category": "Poder público",
     "bairro": "",
