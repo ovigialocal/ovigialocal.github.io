@@ -27,12 +27,12 @@ jobs:
         with:
           version: 0.12.9
           enable-cache: false
-      - name: Compile OKF TypeContracts to Astro Zod
+      - name: Compile relational OKF TypeContracts to Astro Zod
         run: >-
-          uvx --from okf-parser==0.45.1 okf-parser schema content
-          --format zod --zod-import astro --infer-types
+          uvx --from 'git+https://github.com/franklinbaldo/okf-parser.git@5ee72add40d3372682e528fd70641455143269ce'
+          okf-parser schema content --format zod --zod-import astro --infer-types
           --exclude 'docs/types/**' --spec-template 'docs/types/{slug}.md'
-          --relational-schema okf.schema.sql
+          --relational-schema okf.schema.sql --refs key
           > src/generated/okf-schema.ts
       - name: Commit generated contract
         shell: bash
