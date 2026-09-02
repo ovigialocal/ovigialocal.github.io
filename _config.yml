@@ -21,6 +21,11 @@ exclude:
   - publication
   - scripts
   - skills
+  - src
+  - astro.config.mjs
+  - package.json
+  - bun.lock
+  - tsconfig.json
   - AGENTS.md
   - README.md
   - LICENSE-CODE
