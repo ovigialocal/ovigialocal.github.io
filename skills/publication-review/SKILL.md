@@ -1,9 +1,9 @@
 ---
 name: publication-review
-description: Avalia independentemente uma candidata article-ready fechada e decide publicar ou devolver trabalho à redação por issue.
+description: Avalia independentemente uma candidata article-ready fechada e decide publicar ou devolver trabalho à redação por ficha editorial canônica.
 compatibility: ">=1.0.0"
 metadata:
-  version: "1.5.0"
+  version: "1.6.0"
   owner_role: "publication-agent"
 ---
 
@@ -12,6 +12,8 @@ metadata:
 ## Purpose
 
 Decidir se uma candidatura `article-ready` fechada pode ser colocada sob a marca pública sem transformar o publicador em segunda redação.
+
+A Redação e a face pública são loops recorrentes autônomos. `article-ready` é uma oferta assíncrona para julgamento independente, nunca uma ordem de publicação.
 
 ## Inputs
 
@@ -62,14 +64,23 @@ O frontmatter sempre guarda `story_id` e digest integrais.
 
 ## Reject
 
-1. Na transação reservada, grave decision `rejected` com `newsroom_issue: pending`.
-2. Procure na Redação o marker exato `publication-review-key: <repo>|<story_id>|<ready-digest>`.
-3. Reutilize issue existente ou abra exatamente uma.
-4. Atualize o record com a URL da issue.
-5. Integre a decision pelo fluxo Git normal quando possível.
-6. Se a sessão parar, a próxima retoma a mesma PR/marker e reconcilia issue/record; não refaz a review.
-7. Não copie nem edite a candidata.
-8. Ready digest futuro é nova candidate key; decisão antiga permanece histórica.
+Uma rejeição material devolve trabalho à Redação por **`editorial-ficha` canônica**, não por reescrita local e não por issue como autoridade.
+
+1. Na transação reservada, grave decision `rejected` com `newsroom_ficha: pending`.
+2. Derive a chave de deduplicação exata `publication-review-key: <repo>|<story_id>|<ready-digest>`.
+3. Procure em `franklinbaldo/ovigia-redacao` uma `editorial-ficha(kind=publication-rejection)` que carregue essa candidate key.
+4. Reutilize a ficha existente ou crie exatamente uma em `knowledge/editorial/fichas/<AAAA>/<MM>/<timestamp>-<slug>.md`, seguindo `specs/editorial-ficha.md` da Redação.
+5. A ficha deve registrar observação, relevância material, perguntas de apuração e critério de saída. Não presuma qual conclusão a Redação deve alcançar.
+6. Atualize o record local com o locator/URL da ficha em `newsroom_ficha`.
+7. Integre a decision pelo fluxo Git normal quando possível.
+8. Issue na Redação é opcional para visibilidade humana/bloqueio operacional. Se criada, deve apontar para a ficha e não substituí-la.
+9. Se a sessão parar, a próxima retoma a mesma PR/marker, procura a ficha pela candidate key e reconcilia; não refaz a review nem cria segunda ficha.
+10. Não copie nem edite a candidata.
+11. Ready digest futuro é nova candidate key; decisão e ficha antigas permanecem históricas.
+
+### Compatibilidade histórica
+
+Registros anteriores que usam `newsroom_issue` continuam válidos. Não os reescreva apenas para trocar o nome do campo. Se uma transação histórica estiver com `newsroom_issue: pending`, reconcilie pelo contrato histórico e não crie automaticamente uma ficha duplicada para o mesmo side effect.
 
 ## Accept
 
@@ -91,12 +102,14 @@ O frontmatter sempre guarda `story_id` e digest integrais.
 
 Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/Astro. Não trate `PublicTerritory.name` como rótulo de UI: `name` é chave relacional e `title` é apresentação humana.
 
-## Corrections
+## Corrections and post-publication feedback
 
 - renderer/metadado público sem mudança editorial: corrija aqui;
-- mudança editorial material: issue na Redação → novo subject/gates/ready digest → nova review;
+- mudança editorial material: crie/reutilize `editorial-ficha` na Redação → trabalho editorial → novo subject/gates/ready digest → nova review;
+- agentes que observam o estado já publicado também podem criar fichas `public-correction`, `follow-up`, `new-story`, `verification` ou `enrichment` quando houver necessidade material;
 - retirada urgente pode ocorrer aqui com event `withdrawn` porque este repo controla disponibilidade;
-- não apague histórico de publicação.
+- redação substantiva de correção/retração continua pertencendo à Redação;
+- não apague histórico de publicação nem fichas/respostas históricas.
 
 ## Must not
 
@@ -106,7 +119,8 @@ Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/A
 - ignorar PR/transação aberta para a mesma key;
 - sincronizar automaticamente;
 - criar ID/hash paralelo;
-- duplicar review/issue/publicação para a mesma key;
+- duplicar review/ficha/publicação para a mesma key;
+- tratar GitHub issue como autoridade semântica do retorno quando o contrato de ficha estiver ativo;
 - abandonar side effect pendente sem estado retomável;
 - expor metadados privados por cópia cega;
 - editar conteúdo editorial materialmente;
@@ -117,4 +131,4 @@ Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/A
 
 ## Output
 
-Uma decisão persistida e idempotente por candidate key. Antes do merge, a PR/branch determinística registra a transação in-flight; depois do merge, `main` é canônico. Quando aceita e efetivamente publicada, um evento público confirmável completa o ciclo.
+Uma decisão persistida e idempotente por candidate key. Antes do merge, a PR/branch determinística registra a transação in-flight; depois do merge, `main` é canônico. Quando aceita e efetivamente publicada, um evento público confirmável completa o ciclo. Quando rejeitada, uma única ficha canônica na Redação registra o trabalho devolvido e permite que rounds futuros processem a necessidade sem acoplamento síncrono.
