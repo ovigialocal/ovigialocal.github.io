@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDateTime, slugify, storyUrl } from '../../lib/news';
+
+interface Props {
+  story: CollectionEntry<'articles'>;
+  showCategory?: boolean;
+  showSource?: boolean;
+}
+
+const { story, showCategory = true, showSource = true } = Astro.props;
+---
+<article class="news-card news-card-brief" data-news-card data-category={story.data.category} data-bairro={story.data.bairro ?? story.data.locality}>
+  <div class="card-header">
+    {showCategory && <a class="badge-tag" href={`/editorias.html#editoria-${slugify(story.data.category)}`}>{story.data.category}</a>}
+    <time datetime={story.data.published_at}>{formatDateTime(story.data.published_at)}</time>
+  </div>
+  <h3 class="card-title"><a href={storyUrl(story)}>{story.data.title}</a></h3>
+  <p class="card-excerpt">{story.data.description}</p>
+  {showSource && <div class="card-metadata"><span class="source-badge">Fonte: {story.data.source_name}</span><a class="btn-provenance" href={story.data.source_url} rel="noopener noreferrer">Abrir fonte ↗</a></div>}
+</article>

@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PublicArticleCard from '../../components/concepts/PublicArticleCard.astro';
+import PublicTerritoryCard from '../../components/concepts/PublicTerritoryCard.astro';
+import PublicTerritoryHeader from '../../components/concepts/PublicTerritoryHeader.astro';
+import { storiesForTerritory, type Territory } from '../../lib/news';
+
+export async function getStaticPaths() {
+  const territories = await getCollection('territories');
+  return territories.map((territory) => ({ params: { territory_id: territory.data.territory_id }, props: { territory } }));
+}
+
+const { territory } = Astro.props as { territory: Territory };
+const territories = await getCollection('territories');
+const stories = await getCollection('articles');
+const directStories = storiesForTerritory(stories, territory);
+const parent = territory.data.parent_territory_id ? territories.find((item) => item.data.territory_id === territory.data.parent_territory_id) : undefined;
+const children = territories.filter((item) => item.data.parent_territory_id === territory.data.territory_id).sort((a, b) => a.data.name.localeCompare(b.data.name, 'pt-BR'));
+const navItems = [{ href: '/', label: 'Capa' }, { href: '/editorias.html', label: 'Editorias' }, { href: '/territorios.html', label: 'Territórios' }, { href: '/arquivo.html', label: 'Arquivo' }];
+---
+<BaseLayout title={`${territory.data.name} — Territórios — O Vigia`} description={territory.data.description} canonicalPath={`/territorios/${territory.data.territory_id}/`} tagline="Cobertura organizada por território publicado." navItems={navItems}>
+  <main class="front-page">
+    <PublicTerritoryHeader territory={territory} parent={parent} articleCount={directStories.length} />
+
+    {children.length > 0 && <section class="editorial-section" aria-labelledby="children-title">
+      <div class="section-heading"><div><p class="eyebrow">Dentro deste território</p><h2 id="children-title">Territórios relacionados</h2></div><p class="section-note">{children.length} publicados</p></div>
+      <div class="news-grid news-grid-section">{children.map((child) => <PublicTerritoryCard territory={child} articleCount={storiesForTerritory(stories, child).length} childCount={territories.filter((item) => item.data.parent_territory_id === child.data.territory_id).length} />)}</div>
+    </section>}
+
+    <section class="editorial-section" aria-labelledby="territory-news-title">
+      <div class="section-heading"><div><p class="eyebrow">Cobertura</p><h2 id="territory-news-title">Matérias em {territory.data.name}</h2></div><p class="section-note">{directStories.length} no acervo</p></div>
+      {directStories.length > 0 ? <div class="news-grid news-grid-section">{directStories.map((story) => <PublicArticleCard story={story} />)}</div> : <p class="edition-deck">Ainda não há matéria diretamente associada a este território.</p>}
+    </section>
+  </main>
+</BaseLayout>

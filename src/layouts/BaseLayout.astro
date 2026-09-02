@@ -1,0 +1,65 @@
+---
+import '../../index.css';
+import '../../editorial-cover.css';
+import '../../article.css';
+import '../../news-shell.css';
+import '../../temporal-modules.css';
+import '../../mobile-editorial.css';
+import '../../institutional.css';
+
+interface NavItem { href: string; label: string; current?: boolean }
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  tagline?: string;
+  compact?: boolean;
+  navItems?: NavItem[];
+  ogType?: 'website' | 'article';
+  image?: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  sourceUrl?: string;
+}
+
+const { title, description, canonicalPath, tagline = 'Jornalismo local para entender o que muda perto de você.', compact = false, navItems = [], ogType = 'website', image, publishedAt, updatedAt, sourceUrl } = Astro.props;
+const canonical = new URL(canonicalPath, Astro.site).toString();
+const jsonLd = ogType === 'article' ? {
+  '@context': 'https://schema.org', '@type': 'NewsArticle', headline: title.replace(/ — O Vigia$/, ''), description,
+  datePublished: publishedAt, ...(updatedAt ? { dateModified: updatedAt } : {}), mainEntityOfPage: canonical,
+  author: { '@type': 'Organization', name: 'O Vigia' }, publisher: { '@type': 'Organization', name: 'O Vigia', url: new URL('/', Astro.site).toString() },
+  ...(image ? { image: [image] } : {}), ...(sourceUrl ? { isBasedOn: sourceUrl } : {}),
+} : null;
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="author" content="O Vigia" />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" type="application/rss+xml" title="O Vigia" href="/feed.xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content="O Vigia" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content={title.replace(/ — O Vigia$/, '')} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  {publishedAt && <meta property="article:published_time" content={publishedAt} />}
+  {updatedAt && <meta property="article:modified_time" content={updatedAt} />}
+  {image && <meta property="og:image" content={image} />}
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+</head>
+<body>
+  <header class="site-header" data-pagefind-ignore>
+    <div class="utility-bar"><span>Porto Velho, Rondônia</span><nav aria-label="Links institucionais"><a href="/metodologia.html">Como apuramos</a><a href="/correcoes.html">Correções</a><a href="/feed.xml">RSS</a></nav></div>
+    {compact ? <div class="article-masthead"><a href="/" class="article-brand" aria-label="O Vigia — página inicial">O Vigia</a><a class="back-link" href="/">← Voltar à capa</a></div> : <div class="masthead"><a href="/" class="brand-logo" aria-label="O Vigia — página inicial"><span class="brand-title">O Vigia</span><span class="brand-kicker">Porto Velho</span></a><p class="masthead-tagline">{tagline}</p></div>}
+    {navItems.length > 0 && <nav class="section-nav" aria-label="Seções do jornal">{navItems.map((item) => <a href={item.href} aria-current={item.current ? 'page' : undefined}>{item.label}</a>)}</nav>}
+  </header>
+  <slot />
+  <footer data-pagefind-ignore><div class="footer-content"><div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div><div class="footer-links"><a href="/editorias.html">Editorias</a><a href="/territorios.html">Territórios</a><a href="/arquivo.html">Arquivo</a><a href="/metodologia.html">Metodologia</a><a href="/correcoes.html">Correções e erratas</a><a href="/feed.xml">RSS</a></div><p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p></div></footer>
+</body>
+</html>
