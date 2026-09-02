@@ -3,7 +3,7 @@ name: publication-review
 description: Avalia independentemente uma candidata article-ready fechada e decide publicar ou devolver trabalho à redação por issue.
 compatibility: ">=1.0.0"
 metadata:
-  version: "1.4.0"
+  version: "1.5.0"
   owner_role: "publication-agent"
 ---
 
@@ -42,12 +42,12 @@ Decidir se uma candidatura `article-ready` fechada pode ser colocada sob a marca
 A autoridade pública preserva a distinção entre origem viva e evidência arquivada produzida pela Redação:
 
 - quando a `source-observation` usada pela candidata contém `archive_url` válido e correspondente ao material verificado, o link público de proveniência deve apontar para esse snapshot do Internet Archive/Wayback Machine;
-- nesse caso, grave o snapshot em `source_url` do Markdown público para que as projeções e a interface apontem para a evidência temporalmente estável;
-- preserve a origem canônica/viva em `source_original_url`;
+- nesse caso, grave o snapshot em `source_url` do `PublicArticle` para que todas as superfícies derivadas apontem para a evidência temporalmente estável;
+- preserve a origem canônica/viva em `source_original_url` quando o contrato público admitir esse campo;
 - quando a observação registra `archive_failure` válido ou o recurso não é arquivável, use a origem viva em `source_url` e não invente um endereço Wayback;
 - não substitua um snapshot verificado por captura mais antiga ou mais recente apenas por conveniência: a cópia pública deve representar a evidência usada na apuração sempre que isso for tecnicamente possível.
 
-Essa seleção de URL é projeção de proveniência, não edição editorial do conteúdo aprovado.
+Essa seleção de URL é transformação de proveniência pública, não edição editorial do conteúdo aprovado.
 
 ## Portable records
 
@@ -76,17 +76,24 @@ O frontmatter sempre guarda `story_id` e digest integrais.
 1. Na transação reservada, grave decision `accepted` com um único `public_path`.
 2. Extraia body/title/description aprovados do envelope validado; não copie frontmatter privado inteiro.
 3. Aplique whitelist de metadados públicos e preserve `story_id`, source repo/commit/path/digest.
-4. Projete a proveniência conforme `Archived provenance`: prefira `archive_url` verificado como `source_url` público e preserve a origem em `source_original_url`; use a origem diretamente somente quando não houver snapshot válido.
+4. Projete a proveniência conforme `Archived provenance`: prefira `archive_url` verificado como `source_url` público e preserve a origem quando o contrato permitir; use a origem diretamente somente quando não houver snapshot válido.
 5. Resolva slug collision como metadado público; não rejeite só por colisão técnica.
-6. Atualize `content/articles/<slug>.md` e gere projeções estáticas.
-7. Integre a PR por Git normal.
-8. Depois do merge, confirme Pages/URL.
-9. Registre publication event posterior com kind, candidate key, commit, artefato/path, URL e timestamp.
-10. Se `accepted` já está em `main` sem event, retome o mesmo `public_path`; não reveja, não escolha outro slug e não publique uma segunda cópia.
+6. Materialize ou atualize `content/articles/<slug>.md` como `type: PublicArticle`. Qualquer `locality`/`bairro` usado deve resolver para `PublicTerritory` existente; crie/ajuste o conceito territorial apenas quando o território é factual e canônico, nunca por slugificação ad hoc.
+7. Rode o contrato público: `python scripts/check-astro-okf-contract.py`, `python scripts/check-public-surface.py`, `bun run check` e `bun run build`. Não gere `_news` nem outra cópia do artigo.
+8. Integre a PR por Git normal.
+9. Depois do merge, confirme Pages/URL.
+10. Registre publication event posterior com kind, candidate key, commit, artefato/path, URL e timestamp.
+11. Se `accepted` já está em `main` sem event, retome o mesmo `public_path`; não reveja, não escolha outro slug e não publique uma segunda cópia.
+
+## Public semantic boundary
+
+`content/` é um bundle OKF público. `okf-parser` é a autoridade sobre o TypeContract de `PublicArticle` e `PublicTerritory`; Astro apenas consome o Zod gerado e apresenta os conceitos.
+
+Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/Astro. Não trate `PublicTerritory.name` como rótulo de UI: `name` é chave relacional e `title` é apresentação humana.
 
 ## Corrections
 
-- projeção/metadado público sem mudança editorial: corrija aqui;
+- renderer/metadado público sem mudança editorial: corrija aqui;
 - mudança editorial material: issue na Redação → novo subject/gates/ready digest → nova review;
 - retirada urgente pode ocorrer aqui com event `withdrawn` porque este repo controla disponibilidade;
 - não apague histórico de publicação.
@@ -105,7 +112,8 @@ O frontmatter sempre guarda `story_id` e digest integrais.
 - editar conteúdo editorial materialmente;
 - tratar preferência estilística como blocker;
 - publicar fixture/demo como notícia real;
-- inventar snapshot, timestamp de arquivamento ou equivalência entre landing page e anexo não verificado.
+- inventar snapshot, timestamp de arquivamento ou equivalência entre landing page e anexo não verificado;
+- manter `_news`, schema manual ou parser de frontmatter paralelo ao `okf-parser`.
 
 ## Output
 

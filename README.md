@@ -11,29 +11,36 @@ publication-review
   ┌──┴──┐
 reject accept
   ↓      ↓
-issue   Markdown público
+issue   PublicArticle canônico
+          ↓
+      OKF → Astro
           ↓
       Pages / URL
 ```
 
-## Estado canônico e projeções
+## Estado canônico e renderer
 
 ```text
-content/articles/<slug>.md        # conteúdo público canônico
+content/articles/<slug>.md        # PublicArticle canônico
+content/territories/<slug>.md     # PublicTerritory canônico
 publication/reviews/...           # decisões accepted/rejected em main
 publication/events/...            # histórico público confirmado
 publication/<story>/<digest> PR   # reserva/transação in-flight
         ↓
-scripts/build-publication.py
+okf-parser
         ↓
-_news/<story_id>.md               # espelho byte-idêntico para a collection Jekyll
+src/generated/okf-schema.ts       # contrato gerado e versionado
         ↓
-GitHub Pages / Jekyll
+Astro Content Layer
         ↓
-/noticias/<story_id>/ + capa + editorias + arquivo + JSON + RSS + sitemap
+HTML + articles.json + RSS + sitemap + Pagefind
+        ↓
+GitHub Pages
 ```
 
-`content/articles/` continua sendo a única autoridade editorial pública. `_news/` é uma projeção determinística e o gate falha se algum arquivo deixar de ser byte-idêntico ao canônico. Jekyll é o renderer das projeções web; JavaScript só melhora busca, filtros, disclosure e compartilhamento.
+`content/` é o bundle OKF público. `okf-parser` possui a semântica do conteúdo e gera o Zod consumido pelo Astro; o frontend não mantém uma segunda definição do frontmatter. Astro possui apresentação e gera a superfície pública estaticamente. Não existe espelho `_news` nem renderer Jekyll/Liquid.
+
+Os conceitos públicos iniciais são `PublicArticle` e `PublicTerritory`. Artigos referenciam territórios explicitamente; a UI não inventa identidade territorial a partir de strings. `PublicTerritory.name` é chave relacional e `title` é o rótulo humano.
 
 A candidate key de publicação é:
 
@@ -58,13 +65,15 @@ A arquitetura visual segue a RFC 0002:
 ```text
 Cobogó core
 → tema de O Vigia
-→ composição editorial própria
-→ capa / matéria / editorias / arquivo / metodologia / correções
+→ composição editorial própria em Astro Components
+→ capa / matéria / editorias / territórios / arquivo / metodologia / correções
 ```
 
 Cobogó possui foundations compartilhadas; O Vigia continua dono de marca, tipografia editorial, densidade, hierarquia de notícias e semântica jornalística.
 
-A capa é composta por manchete, rail de destaques, últimas, Serviço e blocos de editoria. Matérias possuem URL estática, metadata social, `NewsArticle`, fonte verificável, proveniência progressiva, correções, relacionados e suporte opcional a mídia documental com crédito/origem.
+A capa é composta por manchete, rail de destaques, últimas, Serviço, Agenda/Acompanhe e blocos de editoria. Matérias possuem URL estática, metadata social, `NewsArticle`, fonte verificável, proveniência progressiva, correções, relacionados e suporte opcional a mídia documental com crédito/origem.
+
+Astro Components são o baseline. Não há framework UI hidratado por padrão. `astro-pagefind`, `@astrojs/rss` e `@astrojs/sitemap` substituem infraestrutura própria onde faz sentido.
 
 Leia:
 
@@ -81,13 +90,17 @@ Leia:
 Depois de adicionar ou alterar Markdown canônico:
 
 ```bash
-python scripts/build-publication.py
-python scripts/build-publication.py --check
+python scripts/check-astro-okf-contract.py
 python scripts/check-cobogo-core.py
 python scripts/check-public-surface.py
+bun install --frozen-lockfile
+bun run check
+bun run build
 ```
 
-O workflow `Visual capture` constrói o mesmo Jekyll usado pelo Pages e captura home, matéria, metodologia, correções, editorias e arquivo em desktop/mobile.
+`scripts/build-publication.py` permanece como alias de compatibilidade para sessões antigas e delega ao contrato OKF → Astro; ele não gera projeções.
+
+O workflow `Visual capture` executa os mesmos gates, constrói `dist/` com Astro e captura a superfície pública em desktop/mobile. O deploy de `main` usa `withastro/action` e `actions/deploy-pages`.
 
 ## Licenciamento
 

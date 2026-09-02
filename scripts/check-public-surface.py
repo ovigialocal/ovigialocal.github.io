@@ -35,6 +35,35 @@ def verify_budget() -> None:
         raise SystemExit(f"CSS budget exceeded: {css_size} > 90000 bytes")
 
 
+def verify_operational_contract() -> None:
+    agents = read("AGENTS.md")
+    readme = read("README.md")
+    skill = read("skills/publication-review/SKILL.md")
+    rfc = read("docs/rfc/0001-independent-publication-agent.md")
+    publication_readme = read("publication/README.md")
+    compatibility = read("scripts/build-publication.py")
+
+    for name, text in {
+        "AGENTS.md": agents,
+        "README.md": readme,
+        "publication-review": skill,
+        "RFC 0001": rfc,
+        "publication ledger": publication_readme,
+    }.items():
+        require(text, "PublicArticle", name)
+        require(text, "PublicTerritory", name)
+
+    require(agents, "The public renderer is Astro SSG, not Jekyll.", "AGENTS.md")
+    require(readme, "Astro Content Layer", "README.md")
+    require(skill, "Não gere `_news`", "publication-review")
+    require(rfc, "O renderer público é Astro SSG", "RFC 0001")
+    require(publication_readme, "Não existe `_news`", "publication ledger")
+
+    require(compatibility, "check-astro-okf-contract.py", "build-publication compatibility entrypoint")
+    forbid(compatibility, "REQUIRED =", "build-publication compatibility entrypoint")
+    forbid(compatibility, "KEY_RE", "build-publication compatibility entrypoint")
+
+
 def main() -> int:
     files = {
         "homepage": read("src/pages/index.astro"),
@@ -87,8 +116,9 @@ def main() -> int:
         forbid(files[name], "article.html?id", name)
 
     verify_no_jekyll()
+    verify_operational_contract()
     verify_budget()
-    print("Astro public newspaper surface: OK")
+    print("Astro public newspaper surface and operational contract: OK")
     return 0
 
 

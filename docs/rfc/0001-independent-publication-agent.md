@@ -1,7 +1,8 @@
 # RFC 0001 — Agente independente de publicação
 
 Status: Em revisão  
-Data: 31 de agosto de 2026
+Data: 31 de agosto de 2026  
+Atualizada: 1 de setembro de 2026 — cutover do renderer público para Astro + bundle OKF público
 
 ## 1. Decisão institucional
 
@@ -17,9 +18,11 @@ publication-review
    ┌───┴────┐
 reject     accept
   ↓           ↓
-issue      Markdown público canônico
+issue      PublicArticle canônico
               ↓
-       projeções estáticas
+       contrato OKF público
+              ↓
+       Astro Content Layer
               ↓
        commit / GitHub Pages
               ↓
@@ -37,9 +40,12 @@ Este repo é o único dono de:
 - `publication-review`;
 - reserva/in-flight state de uma candidatura durante uma sessão/PR;
 - decisão `accepted`/`rejected` para uma candidatura exata;
+- bundle OKF público em `content/`;
 - Markdown público canônico;
+- conceitos territoriais públicos;
 - slug/path e metadados de publicação;
-- HTML, `articles.json`, feed e sitemap derivados;
+- renderer Astro e suas superfícies derivadas;
+- HTML, `articles.json`, RSS, sitemap e índice Pagefind derivados;
 - commit que materializa publicação;
 - URL e confirmação pública;
 - disponibilidade pública;
@@ -77,12 +83,7 @@ A chave idempotente é:
 
 onde `article_ready_source_digest` é o `ConceptRecord.source_digest` do próprio envelope `article-ready`.
 
-Persistir também:
-
-- `source_commit`;
-- `source_path`.
-
-Mas commit/path são **locators e proveniência**, não identidade da decisão. Mover/renomear o mesmo ready não cria uma nova candidatura nem autorização para segunda publicação.
+Persistir também `source_commit` e `source_path`, mas commit/path são **locators e proveniência**, não identidade da decisão. Mover/renomear o mesmo ready não cria uma nova candidatura nem autorização para segunda publicação.
 
 Um novo ready digest do mesmo `story_id` é uma nova candidatura e exige nova review; aceite nunca é herdado.
 
@@ -90,16 +91,12 @@ Um novo ready digest do mesmo `story_id` é uma nova candidatura e exige nova re
 
 Digests reais têm forma como `sha256:<hex>`. `:` não é um filename portável para checkout Windows. Portanto os nomes de arquivos do ledger usam uma **codificação de path**, não um novo identificador/hash.
 
-Defina:
-
 ```text
 story_token  = percent-encode UTF-8 de story_id como um único path segment
 digest_token = percent-encode UTF-8 de article_ready_source_digest como um único path segment
 ```
 
-mantendo apenas caracteres unreserved portáveis (`A-Z a-z 0-9 - . _ ~`) sem escape. O valor integral original continua dentro do frontmatter e da candidate key.
-
-Exemplo:
+Manter apenas caracteres unreserved portáveis (`A-Z a-z 0-9 - . _ ~`) sem escape. O valor integral original continua dentro do frontmatter e da candidate key.
 
 ```text
 sha256:abc... → sha256%3Aabc...
@@ -126,7 +123,7 @@ A fila é a diferença derivada entre ofertas privadas válidas e estado públic
 
 ## 7. Reserva transacional Git antes da review
 
-Git é o banco, mas uma branch/PR não mergeada também é estado persistente. Para impedir duas sessões de iniciar a mesma review antes que exista decision em `main`, cada candidatura usa reserva determinística:
+Git é o banco, mas uma branch/PR não mergeada também é estado persistente. Cada candidatura usa reserva determinística:
 
 ```text
 branch: publication/<story_token>/<digest_token>
@@ -134,17 +131,15 @@ PR body marker:
 publication-candidate-key: <source_repository>|<story_id>|<article_ready_source_digest>
 ```
 
-### Regras
+Regras:
 
 1. antes de formar decisão/side effect, procure decision em `main` e PR/transação aberta com o marker exato;
 2. se houver transação aberta, **retome-a**;
 3. se não houver, crie a branch determinística a partir do `main` público atual e abra uma PR/draft de transação com o marker;
-4. criar a branch é a reserva Git da candidatura; duas sessões não devem criar duas branches alternativas para a mesma key;
-5. a reserva não significa `accepted`: significa apenas “review in-flight”;
-6. uma PR fechada sem merge e explicitamente marcada `aborted` libera a candidatura para nova review; seu histórico permanece auditável;
-7. depois do merge, o decision record em `main` é a fonte canônica e a branch pode ser removida normalmente.
-
-Esse protocolo não cria workflow engine. Usa apenas Git/PR para tornar a sessão recuperável e reduzir corrida entre agentes.
+4. criar a branch é a reserva Git da candidatura;
+5. a reserva significa “review in-flight”, não `accepted`;
+6. PR fechada sem merge e explicitamente marcada `aborted` libera a candidatura para nova review, preservando histórico;
+7. depois do merge, o decision record em `main` é a fonte canônica.
 
 ## 8. Ledger Git mínimo
 
@@ -160,15 +155,13 @@ Campos mínimos:
 - `source_repository`;
 - `source_commit`;
 - `source_path`;
-- `source_digest` (ready digest integral);
+- `source_digest`;
 - `decision: accepted | rejected`;
 - `decided_at`;
 - para rejeição: `newsroom_issue: pending | <issue-url>`;
 - para aceite: `public_path` alocado.
 
-Uma candidate key recebe exatamente uma decisão final, salvo override humano explícito que preserve a decisão anterior e explique a mudança.
-
-O decision record não prova que side effects terminaram.
+Uma candidate key recebe exatamente uma decisão final, salvo override humano explícito que preserve a decisão anterior e explique a mudança. O decision record não prova que side effects terminaram.
 
 ### 8.2 Publication event
 
@@ -178,34 +171,21 @@ Depois de uma decisão aceita ser efetivamente materializada/confirmada, registr
 publication/events/<story_token>/<YYYYMMDDTHHMMSSZ>-<kind>.md
 ```
 
-O timestamp de filename é UTC compacto para ser portável; o frontmatter preserva o timestamp ISO completo.
-
 Kinds:
 
 ```text
 published | corrected | updated | withdrawn | retracted | replaced
 ```
 
-Campos conforme aplicável:
-
-- candidate key integral;
-- `kind`;
-- `public_path`;
-- digest/hash do Markdown público ou artefato relevante;
-- commit público que materializou o fato;
-- URL;
-- `confirmed_at`;
-- relação com evento/publicação anterior.
-
-O event posterior evita circularidade: o SHA do commit publicado não precisa existir dentro dos bytes daquele próprio commit.
+O evento relaciona candidate key integral, kind, `public_path`, digest/artefato relevante, commit público, URL, `confirmed_at` e relação com versão anterior quando aplicável. O event posterior evita circularidade: o SHA do commit publicado não precisa existir dentro dos bytes daquele próprio commit.
 
 ## 9. Ordem de recuperação antes de trabalho novo
 
 Toda sessão começa reconciliando:
 
-1. **PR/transação aberta:** retomar a mesma candidate key; não criar segunda review;
+1. **PR/transação aberta:** retomar a mesma candidate key;
 2. **`rejected` + `newsroom_issue: pending`:** procurar issue pelo marker exato e criar só se ausente;
-3. **`accepted` sem event final:** verificar branch/PR/commit/Pages/URL já existentes e completar a mesma publicação no mesmo `public_path`;
+3. **`accepted` sem event final:** verificar branch/PR/commit/Pages/URL e completar a mesma publicação no mesmo `public_path`;
 4. **decision + event reconciliados:** nada a repetir;
 5. só então descobrir candidata sem state público.
 
@@ -215,12 +195,7 @@ Antes de criar qualquer side effect externo, procure evidência de que ele já e
 
 O publicador não repete a Redação inteira.
 
-Pode confiar como evidência de processo que:
-
-- a Redação declarou `article-ready`;
-- o envelope fixa profile/evaluations;
-- `okf-parser` fornece identidade/digests/relações;
-- o conjunto de gates passou pela validação estrutural da Redação.
+Pode confiar como evidência de processo que a Redação declarou `article-ready`, o envelope fixa profile/evaluations, `okf-parser` fornece identidade/digests/relações e o conjunto de gates passou pela validação estrutural da Redação.
 
 Mas deve formar julgamento próprio sobre colocar a versão sob a marca, verificando materialmente:
 
@@ -231,9 +206,7 @@ Mas deve formar julgamento próprio sobre colocar a versão sob a marca, verific
 - título/abertura materialmente desproporcionais;
 - condição estrutural/segurança mínima para exposição pública.
 
-Preferência cosmética não basta para rejeitar.
-
-Problema editorial volta à Redação. Problema apenas de slug, HTML, feed, sitemap, CSS, canonical URL ou metadado público é resolvido aqui.
+Preferência cosmética não basta para rejeitar. Problema editorial volta à Redação. Problema apenas de slug, renderer, feed, sitemap, CSS, canonical URL ou metadado público é resolvido aqui.
 
 ## 11. Rejeição e issue idempotente
 
@@ -259,29 +232,25 @@ source_digest: <ready-digest>
 review_record: <path/url deste repo>
 ```
 
-A issue inclui findings, evidence e required work.
-
 Se a sessão morrer depois da issue e antes de reconciliar o record, a busca pelo marker encontra a issue existente. Se morrer antes da issue, `pending` manda retomá-la. A review não é refeita.
-
-Novo digest da Redação é nova key e exige nova review; a decisão antiga permanece histórica.
 
 ## 12. Aceite e double publication
 
 Dentro da transação reservada:
 
 1. grave `accepted` com um único `public_path`;
-2. extraia corpo/editorial metadata do envelope validado;
-3. materialize `content/articles/<slug>.md`;
-4. derive HTML/`articles.json`/feed/sitemap;
-5. integre a PR por Git normal;
-6. depois do merge, confirme Pages/URL;
-7. grave o publication event posterior.
+2. extraia body/title/description do envelope validado e aplique a whitelist de metadados públicos;
+3. materialize ou atualize `content/articles/<slug>.md` como `type: PublicArticle`;
+4. materialize/ajuste `PublicTerritory` apenas quando necessário para uma relação factual `locality`/`bairro`; não inferir identidade por slugificação;
+5. valide o bundle público pelo `okf-parser` e o contrato gerado consumido pelo Astro;
+6. execute `astro check` e o build estático;
+7. integre a PR por Git normal;
+8. depois do merge, confirme Pages/URL;
+9. grave o publication event posterior.
 
-Uma key não pode mapear silenciosamente para dois paths.
+Não existe etapa de gerar `_news` nem cópia do artigo para o renderer. HTML/JSON/RSS/sitemap são derivados no build a partir do Content Layer.
 
-`accepted` em `main` sem event significa “decisão integrada, confirmação incompleta”. Retome o mesmo path; não faça nova review, novo slug ou segunda cópia.
-
-Se a PR de aceite ainda estiver aberta, ela é a única transação in-flight daquela key; retome-a em vez de criar outra.
+Uma key não pode mapear silenciosamente para dois paths. `accepted` em `main` sem event significa “decisão integrada, confirmação incompleta”: retome o mesmo path, sem nova review, novo slug ou segunda cópia.
 
 ## 13. O que significa copiar Markdown
 
@@ -293,31 +262,11 @@ O canônico público é:
 content/articles/<slug>.md
 ```
 
-O publicador extrai do envelope validado:
+O publicador extrai body editorial aprovado, `title`/`description` aprovados e apenas outros metadados explicitamente admitidos pela whitelist.
 
-- body editorial aprovado;
-- `title`/`description` aprovados;
-- apenas outros metadados editoriais explicitamente admitidos pela whitelist.
+Não copiar por default: self-review, findings internos, notas de apuração, instruções de agente, experience/wiki, frontmatter de workflow ou informação sensível não destinada ao leitor.
 
-Não copiar por default:
-
-- self-review;
-- findings internos;
-- notas de apuração;
-- instruções de agente;
-- experience/wiki;
-- frontmatter de workflow;
-- informação sensível não destinada ao leitor.
-
-O Markdown público preserva provenance suficiente:
-
-- `story_id`;
-- `source_repository`;
-- `source_commit`;
-- `source_path`;
-- `source_digest`.
-
-Slug, data/hora pública, URL e metadados de apresentação pertencem a este repo.
+O `PublicArticle` preserva proveniência suficiente, incluindo `story_id`, `source_repository`, `source_commit`, `source_path` e `source_digest`. Slug, data/hora pública, URL e metadados de apresentação pertencem a este repo.
 
 Uma reescrita material do body/título/description invalida o aceite e volta à Redação. Transformação mecânica de envelope/frontmatter não é reescrita editorial.
 
@@ -326,17 +275,17 @@ Uma reescrita material do body/título/description invalida o aceite e volta à 
 O slug pertence à publicação.
 
 - path livre: aloque-o no accepted record;
-- colisão com outro `story_id`: escolha alternativa determinística/legível e registre; não rejeite apenas por isso;
+- colisão com outro `story_id`: escolha alternativa determinística/legível e registre;
 - novo digest do mesmo story que corrige/atualiza publicação usa, por default, o mesmo `public_path`;
 - story novo deve ter identidade editorial própria;
-- se um novo ready chega com `story_id` já usado por matéria substantivamente distinta, trate como erro de identidade e devolva à Redação;
+- se novo ready chega com `story_id` já usado por matéria substantivamente distinta, trate como erro de identidade e devolva à Redação;
 - substituição deliberada é event `replaced`, nunca inferida de slug.
 
 ## 15. Correções, atualizações e retrações
 
-### 15.1 Defeito de projeção
+### 15.1 Defeito de renderer/projeção
 
-HTML/feed/sitemap/CSS/canonical/metadado público pode ser corrigido aqui quando conteúdo editorial aprovado não muda. Registre event se o fato público for material.
+HTML/RSS/sitemap/CSS/canonical/metadado público pode ser corrigido aqui quando conteúdo editorial aprovado não muda. Registre event se o fato público for material. Derivados devem ser corrigidos na fonte Astro/contrato, nunca editados em `dist/`.
 
 ### 15.2 Correção/atualização editorial
 
@@ -348,54 +297,61 @@ Erro factual, informação de serviço atualizada ou mudança material exige:
 4. atualização do mesmo `public_path` quando é continuação da mesma história;
 5. event `corrected` ou `updated` ligando versão anterior e nova.
 
-A Redação não precisa produzir type `article-published`/`article-correction`; o vínculo público vive aqui.
-
 ### 15.3 Withdrawal/retração urgente
 
-Este repo controla disponibilidade. Em risco urgente, pode retirar/tombstonar e registrar `withdrawn` antes de novo conteúdo editorial, além de abrir issue na Redação.
-
-Se é necessária justificativa/nota editorial material, a Redação produz novo conteúdo e nova oferta. O publicador avalia a nova candidatura e registra `retracted` quando aplicado. Histórico nunca é apagado silenciosamente.
+Este repo controla disponibilidade. Em risco urgente, pode retirar/tombstonar e registrar `withdrawn` antes de novo conteúdo editorial, além de abrir issue na Redação. Histórico nunca é apagado silenciosamente.
 
 ## 16. Publicação pública e OKF
 
-O repo público não vira segundo knowledge bundle só para espelhar a Redação.
+O uso real passou a justificar um bundle OKF público, mas **não** uma cópia do knowledge corpus privado.
 
-Markdown público + frontmatter mínimo + Git + decision/event records são suficientes enquanto o uso real não demonstrar necessidade maior.
-
-`okf-parser` é usado no boundary privado. Não criar concept IDs, grafo ou schema paralelo no público por antecipação.
-
-## 17. Site atual e migração
-
-Hoje a face pública possui HTML/JS estático, `articles.json`, feed e sitemap.
-
-Direção:
+O bundle público contém conceitos próprios da publicação:
 
 ```text
-content/articles/<slug>.md        # canônico
-publication/reviews/...           # decisões
-publication/events/...            # fatos públicos confirmados
-        ↓
-HTML + articles.json + feed + sitemap  # derivados
+PublicArticle
+PublicTerritory
 ```
 
-A migração do renderer é etapa de implementação posterior. Não introduzir backend permanente, CMS ou banco.
+A autoridade semântica é o `okf-parser`. O contrato físico/relacional vive nas specs/schema do bundle e é compilado para Zod Astro. Não criar lista paralela de campos/regras em Python, TypeScript ou Astro.
+
+Relações iniciais:
+
+```text
+PublicArticle.locality / bairro → PublicTerritory(name)
+PublicTerritory.parent_territory_id → PublicTerritory(territory_id)
+```
+
+`PublicTerritory.name` é chave relacional publicada; `title` é o rótulo humano. O renderer deve resolver a relação e falhar se ela estiver quebrada, em vez de inventar território a partir de uma string.
+
+## 17. Renderer público atual
+
+O renderer público é Astro SSG:
+
+```text
+content/articles/*.md + content/territories/*.md
+        ↓
+okf-parser check + schema Zod gerado
+        ↓
+Astro Content Layer
+        ↓
+src/pages/** + src/components/**
+        ↓
+HTML + articles.json + RSS + sitemap + Pagefind
+        ↓
+dist/ → GitHub Pages
+```
+
+`dist/` é descartável. Não existe `_news`, Liquid, Jekyll ou segundo Markdown projetado. O site continua sem backend permanente, CMS ou banco.
+
+Astro Components são o baseline. Framework hidratado só entra para uma ilha stateful concreta ou reutilização materialmente superior; não é baseline.
 
 ## 18. Modelo session-based
 
 Nenhum daemon é necessário.
 
-Uma sessão:
+Uma sessão reconstrói `main` + transações abertas, reconcilia side effects, fixa commit privado, descobre candidata livre, cria/retoma reserva determinística, forma julgamento, persiste decisão e efeitos retomáveis e termina.
 
-- reconstrói `main` + transações abertas;
-- reconcilia side effects;
-- fixa commit privado;
-- descobre uma candidata realmente livre;
-- cria/retoma reserva determinística;
-- forma julgamento;
-- persiste decisão e efeitos retomáveis;
-- termina.
-
-GitHub Actions pode continuar existindo para tarefas públicas auxiliares (por exemplo captura visual), mas não é handoff editorial nem substitui o agente independente.
+GitHub Actions pode existir para gates, build, deploy e captura visual, mas não é handoff editorial nem substitui o agente independente.
 
 ## 19. WikiSkill e independência
 
@@ -405,9 +361,7 @@ Este repo só deve criar wiki/evolução própria quando uso real justificar. A 
 
 ## 20. Primeira matéria
 
-`franklinbaldo/ovigia-redacao#30` termina em `article-ready` validado. A issue pública #12 conduz reserve/review/publicação/URL.
-
-O marco end-to-end cita ambos, sem autoridade compartilhada.
+`franklinbaldo/ovigia-redacao#30` termina em `article-ready` validado. A issue pública #12 conduziu reserve/review/publicação/URL. O marco end-to-end cita ambos, sem autoridade compartilhada.
 
 ## 21. Critérios de aceite
 
@@ -422,14 +376,16 @@ A arquitetura está provada quando:
 7. aceite fixa exatamente um `public_path`;
 8. accepted sem event retoma confirmação em vez de republicar;
 9. corpo público não vaza metadata privada nem diverge da versão aprovada;
-10. HTML/JSON/feed/sitemap derivam do Markdown canônico;
-11. publication event liga key, commit, artefato e URL;
-12. correção/retração preserva história e fronteira institucional;
-13. nenhuma sync, CMS, daemon, banco ou workflow engine é necessário.
+10. `PublicArticle` e suas relações passam pelo contrato OKF sem schema paralelo;
+11. Astro gera HTML/JSON/RSS/sitemap do mesmo Content Layer;
+12. nenhuma rota depende de `_news`, Jekyll ou Liquid;
+13. publication event liga key, commit, artefato e URL;
+14. correção/retração preserva história e fronteira institucional;
+15. nenhuma sync, CMS, daemon, banco ou workflow engine é necessário.
 
 ## 22. Não objetivos
 
-Não construir CMS, backend, banco, sincronizador permanente, espelho do knowledge corpus, segunda redação, publicação automática de todo ready, sistema de IDs paralelo ou fila escrita na Redação.
+Não construir CMS, backend, banco, sincronizador permanente, espelho do knowledge corpus privado, segunda redação, publicação automática de todo ready, sistema de IDs paralelo, schema paralelo, fila escrita na Redação ou framework hidratado sem caso concreto.
 
 ## 23. Regra curta
 
