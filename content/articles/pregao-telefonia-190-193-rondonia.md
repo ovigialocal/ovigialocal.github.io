@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Rondônia abre pregão de R$ 1,66 milhão para telefonia dos atendimentos 190 e 193"
 description: "Licitação da Sesdec prevê registro de preços para telefonia fixa, SIP e VoIP dos serviços de emergência e outras unidades; sessão está marcada para 2 de setembro."
 story_id: "rondonia-pregao-90054-190-193-2026"

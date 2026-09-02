@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Giro da Saúde terá consultas no CEM neste sábado; atendimento prioriza pacientes convocados"
 description: "Ação será das 8h às 14h em 5 de setembro, com oito especialidades; consultas especializadas priorizam quem já está na regulação municipal e for convocado."
 story_id: "porto-velho-giro-saude-cem-2026-09-05"

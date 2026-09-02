@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Sine de Porto Velho lista 27 vagas com prazos até 1º de outubro; 8 são para PCD"
 description: "Painel oficial tinha 27 postos dentro do prazo na noite de 1º de setembro, incluindo soldador, roçador, peixeiro, farmacêutico e vagas administrativas; oferta pode mudar conforme preenchimento."
 story_id: "porto-velho-sine-vagas-2026-09-01"

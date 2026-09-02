@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Rondônia tem 6% de subutilização da força de trabalho no 2º trimestre, aponta IBGE"
 description: "PNAD Contínua coloca o estado entre as menores taxas do país; indicador é mais amplo que desemprego e inclui subocupação e força de trabalho potencial."
 story_id: "rondonia-pnad-subutilizacao-2026q2"
