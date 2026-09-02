@@ -96,6 +96,7 @@ def main() -> int:
     corrections = read("correcoes.html")
     archive = read("arquivo.html")
     sections = read("editorias.html")
+    territories = read("territorios.html")
     temporal_contract = read("docs/editorial-temporal-contract.md")
     feed = read("feed.xml")
     sitemap = read("sitemap.xml")
@@ -107,6 +108,7 @@ def main() -> int:
         "correcoes.html": corrections,
         "arquivo.html": archive,
         "editorias.html": sections,
+        "territorios.html": territories,
     }.items():
         forbid(text, "Protótipo", path)
         forbid(text, "primeira edição em preparação", path)
@@ -135,6 +137,7 @@ def main() -> int:
         'rel="canonical"', 'property="og:type"', 'NewsArticle',
         "page.source_url", "page.source_name", "correcoes.html",
         "page.media_url", "media_source_url", "data-share-button",
+        "territorios.html", "page.locality", "page.bairro",
     ]:
         require(layout, needle, "_layouts/news.html")
 
@@ -146,6 +149,10 @@ def main() -> int:
 
     require(archive, "site.news", "arquivo.html")
     require(sections, "map: \"category\" | uniq", "editorias.html")
+    require(territories, 'group_by: "locality"', "territorios.html")
+    require(territories, 'group_by: "bairro"', "territorios.html")
+    require(territories, "Matéria estadual relevante", "territorios.html")
+    require(sitemap, "territorios.html", "sitemap.xml")
     for name, projection in {"articles.json": json_projection, "feed.xml": feed, "sitemap.xml": sitemap}.items():
         require(projection, "story.url", name)
         forbid(projection, "article.html?id", name)
