@@ -59,8 +59,12 @@ O filename usa timestamp UTC compacto `YYYYMMDDTHHMMSSZ`; o frontmatter preserva
 
 O commit público fica no **evento posterior**, não dentro dos próprios bytes da matéria que aquele commit materializa.
 
-## Canonical article
+## Canonical public bundle
 
-A matéria pública vive em `content/articles/<slug>.md`. HTML, `articles.json`, feed e sitemap são projeções derivadas.
+A matéria pública vive em `content/articles/<slug>.md` como `PublicArticle`. Territórios publicáveis vivem em `content/territories/<slug>.md` como `PublicTerritory`.
 
-Veja `docs/rfc/0001-independent-publication-agent.md`.
+`okf-parser` valida o bundle e gera o contrato Zod consumido pelo Astro. HTML, `articles.json`, RSS, sitemap, Pagefind e demais superfícies são derivados do Astro Content Layer; nenhum deles é estado canônico.
+
+`dist/` é descartável. Não existe `_news` nem outro espelho do Markdown canônico.
+
+Veja `docs/rfc/0001-independent-publication-agent.md` e `docs/rfc/0002-editorial-surface-cobogo.md`.

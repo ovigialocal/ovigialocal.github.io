@@ -9,7 +9,15 @@ on:
       - 'tsconfig.json'
       - 'src/**'
       - 'content/**'
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'publication/README.md'
+      - 'skills/publication-review/SKILL.md'
+      - 'docs/rfc/**'
+      - 'scripts/build-publication.py'
       - 'scripts/check-astro-okf-contract.py'
+      - 'scripts/check-public-surface.py'
+      - '.github/workflows/deploy.yml'
       - '.github/workflows/astro-contract.yml'
   push:
     branches: [main]
@@ -20,7 +28,15 @@ on:
       - 'tsconfig.json'
       - 'src/**'
       - 'content/**'
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'publication/README.md'
+      - 'skills/publication-review/SKILL.md'
+      - 'docs/rfc/**'
+      - 'scripts/build-publication.py'
       - 'scripts/check-astro-okf-contract.py'
+      - 'scripts/check-public-surface.py'
+      - '.github/workflows/deploy.yml'
       - '.github/workflows/astro-contract.yml'
   workflow_dispatch:
 
@@ -49,6 +65,9 @@ jobs:
 
       - name: Verify OKF → Astro semantic contract
         run: python scripts/check-astro-okf-contract.py
+
+      - name: Verify public surface and operational contract
+        run: python scripts/check-public-surface.py
 
       - name: Install locked Astro dependencies
         run: bun install --frozen-lockfile

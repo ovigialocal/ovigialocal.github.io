@@ -1,0 +1,14 @@
+---
+export const prerender = true;
+---
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8" /><meta name="robots" content="noindex" /><title>Redirecionando — O Vigia</title></head>
+<body>
+  <p>Esta URL é antiga. <a href="/">Voltar à capa</a>.</p>
+  <script is:inline>
+    const id = new URLSearchParams(location.search).get('id');
+    location.replace(id ? `/noticias/${encodeURIComponent(id)}/` : '/');
+  </script>
+</body>
+</html>

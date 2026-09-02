@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Small, explicit quality ratchet for O Vigia's public newspaper surface."""
+"""Static source-level ratchet for O Vigia's Astro public surface."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -21,146 +21,114 @@ def forbid(text: str, needle: str, context: str) -> None:
         raise SystemExit(f"{context}: forbidden stale contract {needle!r}")
 
 
-def parse_flat_frontmatter(path: Path) -> dict[str, str]:
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---\n"):
-        raise SystemExit(f"{path}: missing frontmatter")
-    try:
-        raw, _ = text[4:].split("\n---\n", 1)
-    except ValueError as exc:
-        raise SystemExit(f"{path}: unterminated frontmatter") from exc
-    meta: dict[str, str] = {}
-    for line in raw.splitlines():
-        if not line.strip() or line[:1].isspace():
-            continue
-        key, sep, value = line.partition(":")
-        if not sep:
-            continue
-        value = value.strip()
-        if len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}:
-            value = value[1:-1]
-        meta[key] = value
-    return meta
-
-
-def verify_projection_identity() -> None:
-    canonical = {}
-    for path in (ROOT / "content" / "articles").glob("*.md"):
-        meta = parse_flat_frontmatter(path)
-        canonical[meta["story_id"]] = path
-    projected = {path.stem: path for path in (ROOT / "_news").glob("*.md")}
-    if canonical.keys() != projected.keys():
-        missing = sorted(canonical.keys() - projected.keys())
-        extra = sorted(projected.keys() - canonical.keys())
-        raise SystemExit(f"Jekyll projection mismatch; missing={missing}, extra={extra}")
-    for story_id, source in canonical.items():
-        if source.read_bytes() != projected[story_id].read_bytes():
-            raise SystemExit(f"_news/{story_id}.md is not byte-identical to canonical public Markdown")
-
-
-def verify_optional_contracts() -> None:
-    media_required = {"media_alt", "media_credit", "media_source_url", "media_width", "media_height"}
-    temporal_required = {"next_event_kind", "next_event_label"}
-    for path in (ROOT / "content" / "articles").glob("*.md"):
-        meta = parse_flat_frontmatter(path)
-        if meta.get("media_url"):
-            missing = sorted(key for key in media_required if not meta.get(key))
-            if missing:
-                raise SystemExit(f"{path}: media_url requires {', '.join(missing)}")
-        if meta.get("next_event_at"):
-            missing = sorted(key for key in temporal_required if not meta.get(key))
-            if missing:
-                raise SystemExit(f"{path}: next_event_at requires {', '.join(missing)}")
+def verify_no_jekyll() -> None:
+    stale = ["_config.yml", "_layouts", "_news", "index.html", "editorias.html", "territorios.html", "arquivo.html", "metodologia.html", "correcoes.html", "feed.xml", "sitemap.xml", "articles.json"]
+    found = [path for path in stale if (ROOT / path).exists()]
+    if found:
+        raise SystemExit(f"legacy Jekyll/public projections still present: {', '.join(found)}")
 
 
 def verify_budget() -> None:
-    css_paths = [
-        "index.css", "editorial-cover.css", "article.css", "news-shell.css",
-        "mobile-editorial.css", "institutional.css", "cobogo-theme.css",
-        "temporal-modules.css",
-    ]
-    js_paths = ["app.js", "article.js", "article-interactions.js"]
+    css_paths = ["index.css", "editorial-cover.css", "article.css", "news-shell.css", "mobile-editorial.css", "institutional.css", "cobogo-theme.css", "temporal-modules.css"]
     css_size = sum((ROOT / path).stat().st_size for path in css_paths if (ROOT / path).exists())
-    js_size = sum((ROOT / path).stat().st_size for path in js_paths if (ROOT / path).exists())
     if css_size > 90_000:
         raise SystemExit(f"CSS budget exceeded: {css_size} > 90000 bytes")
-    if js_size > 30_000:
-        raise SystemExit(f"JS budget exceeded: {js_size} > 30000 bytes")
+
+
+def verify_operational_contract() -> None:
+    agents = read("AGENTS.md")
+    readme = read("README.md")
+    skill = read("skills/publication-review/SKILL.md")
+    rfc = read("docs/rfc/0001-independent-publication-agent.md")
+    publication_readme = read("publication/README.md")
+    compatibility = read("scripts/build-publication.py")
+    deploy = read(".github/workflows/deploy.yml")
+
+    for name, text in {
+        "AGENTS.md": agents,
+        "README.md": readme,
+        "publication-review": skill,
+        "RFC 0001": rfc,
+        "publication ledger": publication_readme,
+    }.items():
+        require(text, "PublicArticle", name)
+        require(text, "PublicTerritory", name)
+
+    require(agents, "The public renderer is Astro SSG, not Jekyll.", "AGENTS.md")
+    require(readme, "Astro Content Layer", "README.md")
+    require(skill, "Não gere `_news`", "publication-review")
+    require(rfc, "O renderer público é Astro SSG", "RFC 0001")
+    require(publication_readme, "Não existe `_news`", "publication ledger")
+
+    require(compatibility, "check-astro-okf-contract.py", "build-publication compatibility entrypoint")
+    forbid(compatibility, "REQUIRED =", "build-publication compatibility entrypoint")
+    forbid(compatibility, "KEY_RE", "build-publication compatibility entrypoint")
+
+    require(deploy, "withastro/action@v6", "Pages deploy")
+    require(deploy, "actions/deploy-pages@v5", "Pages deploy")
+    require(deploy, "bun-version: 1.3.8", "Pages deploy")
+    require(deploy, "package-manager: bun@1.3.8", "Pages deploy")
+    require(deploy, "bun install --frozen-lockfile", "Pages deploy")
 
 
 def main() -> int:
-    index = read("index.html")
-    app = read("app.js")
-    layout = read("_layouts/news.html")
-    methodology = read("metodologia.html")
-    corrections = read("correcoes.html")
-    archive = read("arquivo.html")
-    sections = read("editorias.html")
-    territories = read("territorios.html")
-    temporal_contract = read("docs/editorial-temporal-contract.md")
-    feed = read("feed.xml")
-    sitemap = read("sitemap.xml")
-    json_projection = read("articles.json")
+    files = {
+        "homepage": read("src/pages/index.astro"),
+        "article": read("src/pages/noticias/[story_id].astro"),
+        "legacy-article": read("src/pages/article.html.astro"),
+        "base": read("src/layouts/BaseLayout.astro"),
+        "editorias": read("src/pages/editorias.html.astro"),
+        "territorios": read("src/pages/territorios.html.astro"),
+        "territorio": read("src/pages/territorios/[territory_id].astro"),
+        "arquivo": read("src/pages/arquivo.html.astro"),
+        "metodologia": read("src/pages/metodologia.html.astro"),
+        "correcoes": read("src/pages/correcoes.html.astro"),
+        "article-card": read("src/components/concepts/PublicArticleCard.astro"),
+        "territory-card": read("src/components/concepts/PublicTerritoryCard.astro"),
+        "territory-header": read("src/components/concepts/PublicTerritoryHeader.astro"),
+        "search": read("src/components/SearchBox.astro"),
+        "json": read("src/pages/articles.json.ts"),
+        "feed": read("src/pages/feed.xml.ts"),
+        "sitemap": read("src/pages/sitemap.xml.ts"),
+    }
+    for name, text in files.items():
+        forbid(text, "Protótipo", name)
+        forbid(text, "opera exclusivamente", name)
 
-    for path, text in {
-        "index.html": index,
-        "metodologia.html": methodology,
-        "correcoes.html": corrections,
-        "arquivo.html": archive,
-        "editorias.html": sections,
-        "territorios.html": territories,
-    }.items():
-        forbid(text, "Protótipo", path)
-        forbid(text, "primeira edição em preparação", path)
-        forbid(text, "opera exclusivamente", path)
-        require(text, "<main", path)
-        require(text, "<nav", path)
+    for needle in ["getCollection('articles')", "front-lede", "service-desk", "temporal-desk", "source_url", "media_url"]:
+        require(files["homepage"], needle, "homepage")
+    for needle in ["getStaticPaths", "render(story)", "resolveStoryTerritory", "data-share-button"]:
+        require(files["article"], needle, "article")
+    require(files["legacy-article"], "URLSearchParams", "legacy article redirect")
+    require(files["legacy-article"], "/noticias/", "legacy article redirect")
+    for needle in ["NewsArticle", 'rel="sitemap"', "data-pagefind-ignore"]:
+        require(files["base"], needle, "BaseLayout")
 
-    require(index, "site.news", "index.html")
-    require(index, "front-lede", "index.html")
-    require(index, "service-desk", "index.html")
-    require(index, "lead.media_url", "index.html")
-    require(index, "editorias.html", "index.html")
-    require(index, "arquivo.html", "index.html")
-    require(index, "next_event_at", "index.html")
-    require(index, "temporal-desk", "index.html")
-    require(index, 'next_event_kind == "acompanhamento"', "index.html")
-    require(index, "story.source_url", "index.html")
-    require(index, "temporal-modules.css", "index.html")
-    require(temporal_contract, "não tenta adivinhar prazos", "docs/editorial-temporal-contract.md")
-    require(temporal_contract, "Agenda — Hoje / próximos dias", "docs/editorial-temporal-contract.md")
-    require(temporal_contract, "Acompanhe — Histórias abertas", "docs/editorial-temporal-contract.md")
-    forbid(app, 'fetch("articles.json")', "app.js")
-    forbid(app, "fetch('articles.json')", "app.js")
+    require(files["metodologia"], "Fonte oficial não é sinônimo de verdade automática", "metodologia")
+    require(files["metodologia"], "Fato, inferência e incerteza", "metodologia")
+    require(files["correcoes"], "issues/new", "correcoes")
+    require(files["correcoes"], "Correção, atualização e retração", "correcoes")
 
-    for needle in [
-        'rel="canonical"', 'property="og:type"', 'NewsArticle',
-        "page.source_url", "page.source_name", "correcoes.html",
-        "page.media_url", "media_source_url", "data-share-button",
-        "territorios.html", "page.locality", "page.bairro",
-    ]:
-        require(layout, needle, "_layouts/news.html")
+    require(files["editorias"], "groupBy(stories, 'category')", "editorias")
+    require(files["territorios"], "getCollection('territories')", "territorios")
+    require(files["territorios"], "PublicTerritoryCard", "territorios")
+    require(files["territorio"], "PublicTerritoryHeader", "territorio detail")
+    require(files["territorio"], "PublicArticleCard", "territorio detail")
+    require(files["territorio"], "getStaticPaths", "territorio detail")
+    require(files["article-card"], "CollectionEntry<'articles'>", "PublicArticleCard")
+    require(files["territory-card"], "CollectionEntry<'territories'>", "PublicTerritoryCard")
+    require(files["territory-header"], "CollectionEntry<'territories'>", "PublicTerritoryHeader")
+    require(files["search"], "PagefindConfig", "SearchBox")
+    require(files["search"], "pagefind-searchbox", "SearchBox")
 
-    require(methodology, "fontes verificáveis", "metodologia.html")
-    require(methodology, "Fonte oficial não é sinônimo de verdade automática", "metodologia.html")
-    require(methodology, "Fato, inferência e incerteza", "metodologia.html")
-    require(corrections, "issues/new", "correcoes.html")
-    require(corrections, "Correção, atualização e retração", "correcoes.html")
+    for name in ("json", "feed", "sitemap"):
+        require(files[name], "storyUrl", name)
+        forbid(files[name], "article.html?id", name)
 
-    require(archive, "site.news", "arquivo.html")
-    require(sections, "map: \"category\" | uniq", "editorias.html")
-    require(territories, 'group_by: "locality"', "territorios.html")
-    require(territories, 'group_by: "bairro"', "territorios.html")
-    require(territories, "Matéria estadual relevante", "territorios.html")
-    require(sitemap, "territorios.html", "sitemap.xml")
-    for name, projection in {"articles.json": json_projection, "feed.xml": feed, "sitemap.xml": sitemap}.items():
-        require(projection, "story.url", name)
-        forbid(projection, "article.html?id", name)
-
-    verify_projection_identity()
-    verify_optional_contracts()
+    verify_no_jekyll()
+    verify_operational_contract()
     verify_budget()
-    print("public newspaper surface: OK")
+    print("Astro public newspaper surface and operational contract: OK")
     return 0
 
 

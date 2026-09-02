@@ -30,19 +30,33 @@ capture_pair() {
   capture "390,844" "$BASE$route" "$OUT/${name}-mobile.png"
 }
 
+first_route_dir() {
+  local directory="$1"
+  find "$directory" -mindepth 1 -maxdepth 1 -type d | sort | head -n 1 || true
+}
+
 capture_pair "/" "home"
 
-ARTICLE_DIR="$(find "$SITE_ROOT/noticias" -mindepth 1 -maxdepth 1 -type d | sort | head -n 1 || true)"
+ARTICLE_DIR="$(first_route_dir "$SITE_ROOT/noticias")"
 if [[ -z "$ARTICLE_DIR" ]]; then
   echo "No rendered article found under $SITE_ROOT/noticias" >&2
   exit 1
 fi
 ARTICLE_SLUG="$(basename "$ARTICLE_DIR")"
 capture_pair "/noticias/$ARTICLE_SLUG/" "article"
+
+TERRITORY_DIR="$(first_route_dir "$SITE_ROOT/territorios")"
+if [[ -z "$TERRITORY_DIR" ]]; then
+  echo "No rendered PublicTerritory found under $SITE_ROOT/territorios" >&2
+  exit 1
+fi
+TERRITORY_ID="$(basename "$TERRITORY_DIR")"
+capture_pair "/territorios/$TERRITORY_ID/" "territory-detail"
+
 capture_pair "/metodologia.html" "methodology"
 capture_pair "/correcoes.html" "corrections"
 capture_pair "/editorias.html" "sections"
 capture_pair "/territorios.html" "territories"
 capture_pair "/arquivo.html" "archive"
 
-printf 'Captured 14 public-surface views in %s\n' "$OUT"
+printf 'Captured 16 public-surface views in %s\n' "$OUT"

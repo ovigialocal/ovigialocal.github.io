@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  territory: CollectionEntry<'territories'>;
+  articleCount?: number;
+  childCount?: number;
+}
+
+const { territory, articleCount = 0, childCount = 0 } = Astro.props;
+const href = `/territorios/${territory.data.territory_id}/`;
+---
+<article class="news-card news-card-brief territory-card">
+  <div class="card-header"><span class="badge-tag">{territory.data.kind}</span><span>{articleCount} {articleCount === 1 ? 'matéria' : 'matérias'}</span></div>
+  <h2 class="card-title"><a href={href}>{territory.data.title}</a></h2>
+  <p class="card-excerpt">{territory.data.description}</p>
+  <div class="card-metadata">
+    {childCount > 0 && <span class="source-badge">{childCount} {childCount === 1 ? 'território relacionado' : 'territórios relacionados'}</span>}
+    <a class="btn-provenance" href={href}>Ver território →</a>
+  </div>
+</article>

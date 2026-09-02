@@ -1,0 +1,13 @@
+---
+import PagefindConfig from 'astro-pagefind/components/PagefindConfig.astro';
+
+interface Props {
+  instance?: string;
+  label?: string;
+}
+const { instance = 'vigia-search', label = 'Buscar em O Vigia' } = Astro.props;
+---
+<div class="search-box pagefind-search" role="search" aria-label={label}>
+  <PagefindConfig instance={instance} lang="pt" preload={false} />
+  <pagefind-searchbox instance={instance}></pagefind-searchbox>
+</div>

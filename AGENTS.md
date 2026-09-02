@@ -17,7 +17,8 @@ reconcile open publication transaction / pending side effects
   → independent publication-review
       ├─ reject → decision record → exactly one newsroom issue
       └─ accept → decision record + fixed public_path
-                    → public Markdown + projections
+                    → canonical PublicArticle Markdown
+                    → OKF contract → Astro static build
                     → merge / Pages / URL confirmation
                     → publication event
 ```
@@ -82,57 +83,76 @@ Copy approved **editorial content**, not the private file byte-for-byte. Whiteli
 
 A material body/title/description edit requires a new newsroom ready digest.
 
-## Derived projections
+## Public OKF contract
 
-`content/articles/<slug>.md` is the canonical public article. The renderer boundary is:
+`content/` is the public OKF bundle. The initial public concepts are:
+
+- `PublicArticle` in `content/articles/*.md`;
+- `PublicTerritory` in `content/territories/*.md`.
+
+`okf-parser` owns their semantic contract. Astro owns presentation. Do not maintain a second hand-written frontmatter schema in Python, TypeScript or Astro.
+
+The current relation is explicit:
 
 ```text
-content/articles/<slug>.md
-  → scripts/build-publication.py
-  → _news/<story_id>.md          # byte-identical Jekyll collection projection
-  → GitHub Pages / Jekyll
-  → /noticias/<story_id>/
-     index.html
-     editorias.html
-     arquivo.html
-     articles.json
-     feed.xml
-     sitemap.xml
+PublicArticle.locality / bairro → PublicTerritory(name)
+PublicTerritory.parent_territory_id → PublicTerritory(territory_id)
 ```
 
-Do not maintain `_news` by hand and never patch a projected article separately from its canonical Markdown. `scripts/build-publication.py --check` verifies the byte-identity and file set.
+`PublicTerritory.name` is a relational key; `title` is the human-facing label. Presentation must not infer territory identity by slugifying arbitrary article text.
 
-`articles.json`, feed and sitemap are Jekyll/Liquid templates over `site.news`; they must use `story.url` so all discovery surfaces expose the same canonical `/noticias/<story_id>/` URL.
+## Renderer boundary
 
-Every public article must include the flat public metadata required by `scripts/build-publication.py`, including `source_name` and `source_url` in addition to provenance fields. After adding or changing canonical public Markdown, run:
+The public renderer is Astro SSG, not Jekyll.
 
 ```text
-python scripts/build-publication.py
-python scripts/build-publication.py --check
+content/articles/*.md + content/territories/*.md
+  → okf-parser check + generated Astro Zod contract
+  → Astro Content Layer
+  → src/pages/** + src/components/**
+  → dist/
+  → GitHub Pages
+```
+
+Derived public surfaces — article HTML, home, editorias, territories, archive, `articles.json`, RSS and sitemap — all consume the same Content Layer. `dist/` is an ephemeral build artifact, never canonical state.
+
+There is no `_news` mirror and no Liquid/Jekyll projection. `scripts/build-publication.py` remains only as a compatibility entrypoint for older publication sessions; it delegates to the authoritative OKF → Astro contract and generates nothing.
+
+After adding or changing canonical public Markdown, run:
+
+```text
+python scripts/check-astro-okf-contract.py
 python scripts/check-cobogo-core.py
 python scripts/check-public-surface.py
+bun install --frozen-lockfile
+bun run check
+bun run build
 ```
 
-All checks must pass before merge.
+All gates must pass before merge.
 
 ## UI authority boundary
 
 Shared foundations come from the pinned Cobogó core. O Vigia remains authoritative over newspaper identity, typography, composition, editorias, article semantics, service modules and trust copy. Do not recreate generic focus/reduced-motion contracts locally; do not push newspaper-specific organisms into Cobogó merely because this repo needs them.
 
+Astro Components are the baseline presentation unit. Svelte or another hydrated framework requires a concrete stateful island or materially superior reusable Cobogó component; do not add framework runtime by default.
+
 ## Corrections
 
-- projection/public-metadata bugs can be fixed here if accepted editorial content is unchanged;
+- renderer/public-metadata bugs can be fixed here if accepted editorial content is unchanged;
 - material editorial corrections/updates require newsroom work → new closed `article-ready` → new review;
 - this repo may withdraw/tombstone urgently because it owns public availability, but substantive retraction wording belongs to editorial work in the newsroom;
 - preserve public history through `publication/events/` and Git.
 
 ## Canonical public state
 
-- `content/articles/<slug>.md`: public article Markdown;
+- `content/articles/<slug>.md`: canonical `PublicArticle`;
+- `content/territories/<slug>.md`: canonical `PublicTerritory`;
 - `publication/reviews/...`: integrated decisions and side-effect state;
 - open deterministic publication PR: in-flight reservation/transaction;
 - `publication/events/...`: confirmed public history;
-- `_news/`: byte-identical renderer projection;
-- HTML/JSON/RSS/sitemap: Jekyll-derived public projections.
+- `src/generated/okf-schema.ts`: versioned generated contract, guarded against drift;
+- `src/pages/**` and `src/components/**`: renderer source, not editorial authority;
+- `dist/`: disposable derived output.
 
 See `docs/rfc/0001-independent-publication-agent.md`, `docs/rfc/0002-editorial-surface-cobogo.md` and `skills/publication-review/SKILL.md`.

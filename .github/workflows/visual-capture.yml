@@ -3,34 +3,40 @@ name: Visual capture
 on:
   pull_request:
     paths:
-      - '**.html'
+      - 'src/**'
+      - 'content/**'
       - '**.css'
-      - '**.js'
-      - '_config.yml'
-      - '_layouts/**'
-      - '_news/**'
-      - 'content/articles/**'
-      - 'vendor/cobogo/**'
+      - 'astro.config.mjs'
+      - 'package.json'
+      - 'bun.lock'
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'publication/README.md'
+      - 'skills/publication-review/SKILL.md'
+      - 'docs/rfc/**'
       - 'scripts/build-publication.py'
+      - 'scripts/check-astro-okf-contract.py'
       - 'scripts/check-cobogo-core.py'
       - 'scripts/check-public-surface.py'
       - 'scripts/capture-public-surface.sh'
+      - '.github/workflows/deploy.yml'
       - '.github/workflows/visual-capture.yml'
   push:
     branches: [main]
     paths:
-      - '**.html'
+      - 'src/**'
+      - 'content/**'
       - '**.css'
-      - '**.js'
-      - '_config.yml'
-      - '_layouts/**'
-      - '_news/**'
-      - 'content/articles/**'
-      - 'vendor/cobogo/**'
-      - 'scripts/build-publication.py'
-      - 'scripts/check-cobogo-core.py'
-      - 'scripts/check-public-surface.py'
-      - 'scripts/capture-public-surface.sh'
+      - 'astro.config.mjs'
+      - 'package.json'
+      - 'bun.lock'
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'publication/README.md'
+      - 'skills/publication-review/SKILL.md'
+      - 'docs/rfc/**'
+      - 'scripts/**'
+      - '.github/workflows/deploy.yml'
       - '.github/workflows/visual-capture.yml'
   workflow_dispatch:
 
@@ -40,26 +46,32 @@ permissions:
 jobs:
   capture:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - name: Verify publication projections
-        run: python scripts/build-publication.py --check
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v10.0.1
+        with:
+          version: 0.12.9
+          enable-cache: false
+      - uses: oven-sh/setup-bun@v2.2.0
+        with:
+          bun-version: 1.3.8
+      - name: Verify OKF → Astro contract
+        run: python scripts/check-astro-okf-contract.py
       - name: Verify Cobogó foundation boundary
         run: python scripts/check-cobogo-core.py
       - name: Verify public newspaper contract
         run: python scripts/check-public-surface.py
-      - name: Build the GitHub Pages surface
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+      - name: Install locked dependencies
+        run: bun install --frozen-lockfile
+      - name: Typecheck Astro
+        run: bun run check
+      - name: Build Astro surface
+        run: bun run build
       - name: Install Chromium
-        run: npx --yes playwright@1.55.0 install --with-deps chromium
+        run: bunx playwright@1.55.0 install --with-deps chromium
       - name: Capture rendered public surface
-        run: bash scripts/capture-public-surface.sh _site
+        run: bash scripts/capture-public-surface.sh dist
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
