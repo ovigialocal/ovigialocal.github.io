@@ -42,6 +42,7 @@ def verify_operational_contract() -> None:
     rfc = read("docs/rfc/0001-independent-publication-agent.md")
     publication_readme = read("publication/README.md")
     compatibility = read("scripts/build-publication.py")
+    deploy = read(".github/workflows/deploy.yml")
 
     for name, text in {
         "AGENTS.md": agents,
@@ -63,11 +64,18 @@ def verify_operational_contract() -> None:
     forbid(compatibility, "REQUIRED =", "build-publication compatibility entrypoint")
     forbid(compatibility, "KEY_RE", "build-publication compatibility entrypoint")
 
+    require(deploy, "withastro/action@v6", "Pages deploy")
+    require(deploy, "actions/deploy-pages@v5", "Pages deploy")
+    require(deploy, "bun-version: 1.3.8", "Pages deploy")
+    require(deploy, "package-manager: bun@1.3.8", "Pages deploy")
+    require(deploy, "bun install --frozen-lockfile", "Pages deploy")
+
 
 def main() -> int:
     files = {
         "homepage": read("src/pages/index.astro"),
         "article": read("src/pages/noticias/[story_id].astro"),
+        "legacy-article": read("src/pages/article.html.astro"),
         "base": read("src/layouts/BaseLayout.astro"),
         "editorias": read("src/pages/editorias.html.astro"),
         "territorios": read("src/pages/territorios.html.astro"),
@@ -91,6 +99,8 @@ def main() -> int:
         require(files["homepage"], needle, "homepage")
     for needle in ["getStaticPaths", "render(story)", "resolveStoryTerritory", "data-share-button"]:
         require(files["article"], needle, "article")
+    require(files["legacy-article"], "URLSearchParams", "legacy article redirect")
+    require(files["legacy-article"], "/noticias/", "legacy article redirect")
     for needle in ["NewsArticle", 'rel="sitemap"', "data-pagefind-ignore"]:
         require(files["base"], needle, "BaseLayout")
 
