@@ -1,438 +1,278 @@
 # RFC 0002 — Superfície editorial de O Vigia sobre Cobogó
 
-Status: Em revisão  
-Data: 1 de setembro de 2026  
+Status: **Implementada**  
+Data da decisão: 1 de setembro de 2026  
+Implementação concluída: 1 de setembro de 2026  
 Épica: #39
+
+> Esta revisão consolida o estado implementado da RFC. O plano fase a fase anterior permanece preservado no histórico Git.
 
 ## 1. Decisão
 
-O Vigia adotará **Cobogó como autoridade compartilhada de foundations web**, sem transformar Cobogó em framework de jornal e sem terceirizar para o design system decisões editoriais próprias do produto.
+O Vigia usa **Cobogó como autoridade compartilhada de foundations web**, sem transformar Cobogó em framework jornalístico e sem terceirizar para o design system decisões editoriais próprias do produto.
 
-A arquitetura visual passa a obedecer esta ordem:
+A arquitetura final é:
 
 ```text
-Cobogó core / contracts compartilhados
+Cobogó core pinado
         ↓
-tema e mapeamentos próprios de O Vigia
+tema/mapeamento de O Vigia
         ↓
-composição editorial própria de O Vigia
+gramática editorial de O Vigia
         ↓
-superfícies: capa, editorias, matéria, metodologia, correções
+Jekyll / GitHub Pages
+        ↓
+capa + matérias + editorias + territórios + arquivo + páginas institucionais
 ```
 
-A meta não é fazer O Vigia “parecer Cobogó”. A meta é parar de manter localmente foundations genéricas que já têm autoridade compartilhada e usar essa base para construir uma identidade jornalística própria, mais madura e mais coerente.
-
-Esta RFC é também o **plano vivo de implementação** da transformação visual e de produto iniciada na épica #39. Cada PR relevante deve declarar qual fase/critério desta RFC implementa e atualizar o status quando uma decisão material mudar.
+A meta nunca foi fazer O Vigia “parecer Cobogó”. Cobogó possui relações genéricas reutilizáveis; O Vigia possui a identidade e a composição jornalística.
 
 ## 2. Princípio editorial de produto
 
 O Vigia é um jornal local cuja confiança nasce da possibilidade de verificar a sustentação factual de suas matérias.
 
-Não existe uma fonte privilegiada por fornecedor. Uma matéria pode nascer de prefeitura, governo estadual, Diário Oficial, IBGE, tribunal de contas, universidade, base pública, documento, conjunto de dados ou outra fonte adequada, desde que as afirmações publicadas sejam sustentáveis pela evidência disponível e essa sustentação seja recuperável pelo leitor.
+Não existe fonte privilegiada por fornecedor. Uma matéria pode nascer de prefeitura, governo estadual, Diário Oficial, IBGE, tribunal de contas, universidade, base pública, documento ou outra fonte adequada, desde que a formulação publicada seja sustentada pela evidência disponível e essa sustentação seja recuperável pelo leitor.
 
-A UI deve tornar essa confiança legível sem transformar o jornal em dashboard de auditoria.
-
-Em termos de experiência:
+A experiência segue a regra:
 
 > primeiro jornal; depois transparência técnica progressivamente disponível.
 
-## 3. Problema atual
+Fonte oficial não é tratada como verdade automática. O produto distingue fato documentado, cálculo, inferência, incerteza, atualização e correção.
 
-A superfície atual já possui boa direção inicial — papel quente, tinta escura, serifas, regras e contraste entre manchete/itens secundários —, mas ainda não opera como um sistema editorial completo.
+## 3. Fronteira de autoridade
 
-Os principais limites são:
+### 3.1 Cobogó possui
 
-1. O Vigia mantém um mini-sistema de foundations próprio em CSS, apesar de Cobogó existir precisamente para compartilhar esse tipo de contrato.
-2. A capa é uma lista única de artigos cuja hierarquia é majoritariamente derivada da posição do item (`lead`, `secondary`, `brief`).
-3. A barra de editorias ainda funciona mais como decoração do que como arquitetura real de navegação.
-4. A experiência é quase toda tipográfica e não possui contrato maduro para foto, gráfico, mapa ou documento editorial.
-5. A página de matéria ainda não oferece toda a continuidade esperada de um jornal: contexto editorial, relacionados, compartilhamento, atualização, navegação por editoria/território.
-6. O mobile é principalmente a composição desktop empilhada em uma coluna.
-7. Metodologia e outras páginas institucionais ainda carregam identidade/estrutura legadas e linguagem de protótipo.
-8. Conteúdo essencial ainda depende excessivamente de JavaScript para ser materializado na superfície pública.
-
-## 4. Fronteira de autoridade
-
-### 4.1 Cobogó deve possuir
-
-Cobogó é candidato natural a autoridade sobre relações genéricas e reutilizáveis, como:
-
-- baseline semântico e tipográfico genérico;
+- baseline e contracts web genéricos;
 - roles/tokens compartilhados de superfície, texto, foco e estado;
-- `focus-visible` e contratos genéricos de acessibilidade;
-- reduced motion;
-- comportamento estrutural genérico de elementos HTML semânticos;
-- padrões reutilizáveis de `figure`/`figcaption`, inscrição, provenance mark ou outros elementos quando houver evidência de uso além de O Vigia;
-- contracts de foundation que possam ser consumidos sem impor identidade visual ou skeleton de página.
+- `focus-visible` e contracts genéricos de acessibilidade;
+- reduced motion e comportamento estrutural reutilizável;
+- foundations que possam ser consumidas sem impor identidade ou skeleton de jornal.
 
-O Vigia deve consumir essas relações de forma pinada/reproduzível e não copiar/editar localmente a authority compartilhada.
+O core é consumido de forma pinada e verificável. O CI impede drift silencioso da cópia vendorizada e retorno de contracts genéricos removidos localmente.
 
-### 4.2 O Vigia deve possuir
+### 3.2 O Vigia possui
 
-Continuam locais e deliberadamente fora do Cobogó:
-
-- marca O Vigia e identidade jornalística;
-- paleta final/tema quando específica do produto;
-- escolhas tipográficas editoriais próprias;
-- densidade e ritmo de capa;
-- composição da manchete;
-- módulos de secundárias, últimas, briefs, serviço e acompanhamento;
-- ordem editorial entre matérias;
-- taxonomia de editorias, assuntos e bairros;
-- regras de mídia jornalística;
-- página de matéria enquanto produto editorial;
+- marca, paleta e tipografia editorial final;
+- masthead, densidade, ritmo e composição da capa;
+- manchete, secundárias, últimas, serviço, agenda e acompanhamento;
+- taxonomia de editorias e territórios;
+- contrato de mídia jornalística;
+- página de matéria;
 - semântica de publicação, atualização, correção e retirada;
-- SEO, canonical, feed, sitemap e runtime/build;
-- critérios editoriais de mobile;
+- SEO, canonical, RSS, sitemap e build;
+- composição mobile;
 - linguagem de metodologia e confiança.
 
-### 4.3 Regra de promoção upstream
+### 3.3 Resultado do upstream
 
-Não criar antecipadamente em Cobogó componentes como `HeadlineCard`, `NewsRail`, `NewspaperMasthead` ou equivalentes apenas porque O Vigia precisa deles.
+Nenhum `HeadlineCard`, `NewsRail`, `NewspaperMasthead` ou componente jornalístico equivalente foi promovido para Cobogó apenas porque O Vigia passou a usá-lo.
 
-O fluxo é:
+A avaliação de extração foi feita e o resultado foi **não promover ainda**. Relações genéricas só sobem quando houver evidência de reutilização fora do substantivo “notícia”.
 
-```text
-necessidade aparece no Vigia
-   ↓
-implementação local semanticamente limpa
-   ↓
-uso real demonstra relação não jornal-específica
-   ↓
-extração upstream para Cobogó
-   ↓
-Vigia passa a consumir a authority compartilhada
-```
+## 4. Estado público canônico
 
-Só sobe o que continuar fazendo sentido quando o substantivo “notícia” for substituído por outro conteúdo público/cívico.
-
-## 5. Estratégia de adoção do Cobogó
-
-A migração seguirá o padrão brownfield já estabelecido pelo próprio Cobogó.
-
-### 5.1 Classificar antes de importar
-
-Inventariar o CSS atual e marcar cada contrato como:
-
-- `shared-foundation` — pode ser propriedade do Cobogó;
-- `vigia-theme` — valor de identidade local;
-- `vigia-editorial` — composição/semântica jornalística;
-- `compatibility` — ponte temporária necessária;
-- `delete` — duplicação/histórico sem função atual.
-
-### 5.2 Adotar em uma superfície real
-
-A primeira superfície de pressão será a **home pública real**, não um demo.
-
-A adoção deve comparar antes/depois com o mesmo conteúdo publicado.
-
-### 5.3 Ordem das camadas
-
-Obrigatória:
+O conteúdo público canônico continua sendo:
 
 ```text
-Cobogó core
-→ mapeamento/tema de O Vigia
-→ composição editorial local
+content/articles/<slug>.md
 ```
 
-Não patchar uma cópia vendorizada do Cobogó para “fazer caber” O Vigia.
+A collection Jekyll é uma projeção byte-idêntica:
 
-Se o comportamento é genérico e falta upstream, corrige-se Cobogó.
-Se é identidade/produto, fica downstream.
+```text
+content/articles/<slug>.md
+        ↓ scripts/build-publication.py
+_news/<story_id>.md
+        ↓ Jekyll / Pages
+/noticias/<story_id>/
+```
 
-### 5.4 Evidência mínima de adoção
+`articles.json`, RSS e sitemap são templates derivados de `site.news`; não são fontes independentes de verdade.
 
-A primeira PR de adoção só conta como adoção real se:
+O quality ratchet verifica identidade byte a byte entre `content/articles` e `_news`.
 
-- a authority compartilhada estiver pinada/reproduzível;
-- a ordem das camadas estiver explícita;
-- duplicação genérica local tiver sido de fato removida;
-- a home real continuar funcional;
-- houver comparação visual reproduzível antes/depois;
-- acessibilidade e comportamento essencial não regridam;
-- a PR liste explicitamente o que permaneceu local.
+## 5. Publicação estática e distribuição
 
-## 6. Arquitetura da capa
+Conteúdo essencial existe no HTML entregue. JavaScript é melhoria progressiva para busca, filtros, disclosure e compartilhamento; não é requisito para a notícia existir.
 
-A capa não será mais modelada como “uma grade de cards de tamanhos diferentes”.
+Cada matéria possui:
 
-Ela será uma composição editorial por módulos independentes e recombináveis.
+- URL estável `/noticias/<story_id>/`;
+- `<title>` e description próprios;
+- canonical;
+- Open Graph;
+- JSON-LD `NewsArticle`;
+- data de publicação e atualização quando aplicável;
+- autoria institucional;
+- fonte verificável;
+- URL canônica usada também por compartilhamento, RSS, sitemap e JSON.
 
-Módulos previstos:
+A rota legada `article.html?id=...` permanece apenas como compatibilidade/redirecionamento e não é distribuída como URL pública principal.
 
-- **manchete** — matéria de maior prioridade editorial, com ou sem mídia;
-- **secundárias** — conjunto menor de histórias de alta prioridade;
-- **últimas** — recência e alta densidade;
-- **editorias** — blocos temáticos conforme acervo real;
-- **serviço** — conteúdo que pede ação ou atenção prática;
-- **acompanhe** — temas ainda abertos com próximo marco verificável;
-- **briefs/notas** — chamadas curtas para ampliar cobertura sem homogeneizar a página;
-- **território/bairros** — quando houver massa editorial suficiente.
+## 6. Capa editorial
 
-A composição precisa funcionar com 3, 6, 12 ou mais matérias sem inventar conteúdo nem produzir buracos artificiais.
+A capa deixou de ser uma grade uniforme de cards e passou a ser composição por módulos com papéis distintos:
 
-A importância editorial não pode depender exclusivamente da posição no array.
+- **manchete** dominante, com ou sem mídia;
+- **destaques secundários** em rail;
+- **últimas** em alta densidade;
+- blocos por **editoria** derivados do acervo real;
+- **Serviço** para informação prática;
+- **Agenda — Hoje / próximos dias** para marcos futuros estruturados;
+- **Acompanhe — Histórias abertas** para próximos marcos de acompanhamento;
+- acesso persistente a **Territórios** e **Arquivo**.
 
-Issue principal: #40.
+Hierarquia não depende apenas da classe visual de um card genérico. Tipo e semântica do conteúdo determinam superfícies diferentes.
 
-## 7. Arquitetura de informação
+## 7. Editorias, territórios e arquivo
 
-Editorias, assuntos, bairros e arquivo passam a ser rotas/estruturas reais quando justificadas por conteúdo, não apenas rótulos visuais.
+A arquitetura de descoberta é pública e persistente:
 
-Regras:
+- `editorias.html` deriva categorias reais de `site.news`;
+- `territorios.html` agrupa por `locality` e, separadamente, por `bairro` quando esse campo existe;
+- `arquivo.html` oferece o acervo cronológico;
+- matéria liga para sua editoria e para seu território real;
+- capa oferece rotas para editorias, territórios e arquivo.
 
-- taxonomia derivada do conteúdo real;
-- sem listas hardcoded que divergem do acervo;
-- uma matéria estadual relevante para Porto Velho não precisa receber bairro fictício;
-- links de editoria/território devem existir na capa e na matéria;
-- “últimas” e arquivo devem suportar crescimento do acervo;
-- URLs devem ser estáveis e compartilháveis.
-
-Issues principais: #41 e #47.
+Uma matéria estadual relevante para Porto Velho não recebe bairro fictício. Granularidade territorial só aumenta quando o estado canônico realmente a informa.
 
 ## 8. Mídia editorial
 
-O Vigia deve continuar funcionando bem sem imagens, mas passa a suportar mídia quando ela acrescentar informação.
+Mídia é opcional e informativa, não decoração para simular aparência de jornal.
 
-Tipos iniciais:
+Quando `media_url` existe, o contrato exige metadados mínimos como:
 
-- fotografia documental;
-- imagem oficial relevante;
-- gráfico/visualização de dados;
-- mapa;
-- recorte ou documento primário.
+- `media_alt`;
+- `media_credit`;
+- `media_source_url`;
+- dimensões estáveis;
+- legenda quando aplicável.
 
-Metadados mínimos, quando aplicáveis:
-
-- origem/URL ou artefato verificável;
-- autoria/crédito;
-- licença/permissão;
-- legenda factual;
-- texto alternativo;
-- relação clara com a matéria;
-- dimensões para layout estável.
-
-Imagem decorativa/stock usada apenas para “dar cara de jornal” não é objetivo.
-
-A parte genérica de apresentação de `figure`/`figcaption` pode virar upstream do Cobogó se a implementação provar reutilização além de notícia.
-
-Issue principal: #42.
+Capa e matéria suportam a mesma mídia verificável. O gate rejeita mídia que declara URL sem completar o contrato obrigatório.
 
 ## 9. Página de matéria
 
-Uma matéria aberta por URL direta deve se sustentar como página completa de jornal.
-
-Elementos esperados:
+Uma URL direta se sustenta como página completa de jornal, com:
 
 - editoria e território navegáveis;
-- publicação e atualização quando houver;
-- autoria institucional sem inventar pessoa física;
-- título e linha fina;
-- corpo editorial de leitura confortável;
-- mídia com legenda/crédito;
+- publicação e atualização;
+- autoria institucional `O Vigia`;
+- título, linha fina e longform;
+- mídia, legenda, crédito e origem quando houver;
 - fonte principal visível;
-- fontes adicionais/proveniência em disclosure progressivo;
-- correções/estado quando aplicável;
-- compartilhamento usando URL canônica;
-- relacionados ou continuação do assunto;
-- retorno útil para editoria/capa.
+- proveniência técnica em disclosure progressivo;
+- correções;
+- compartilhamento canônico;
+- matérias relacionadas;
+- caminhos para continuar por editoria, território e metodologia.
 
-Hash/digest é detalhe auditável, não linguagem primária de confiança.
-
-Issue principal: #43.
+Hash/digest continua sendo detalhe auditável, não linguagem primária de confiança.
 
 ## 10. Mobile
 
-Mobile é uma edição própria da mesma decisão editorial, não apenas desktop em uma coluna.
+Mobile é uma edição deliberada da mesma decisão editorial.
 
-Invariantes:
+Há composição específica para telefone, incluindo:
 
-- a manchete permanece dominante no primeiro viewport;
-- a ordem editorial sobrevive ao reflow;
-- últimas/serviço não exigem rolagem desproporcional;
-- metadata é compacta, não ausente;
-- títulos não consomem múltiplas telas sem necessidade;
-- navegação territorial/editorial continua acessível;
-- mídia não domina a leitura;
-- fonte ampliada e teclado/foco continuam válidos.
+- manchete dominante sem ocupar vários viewports;
+- rail secundário refluído conscientemente;
+- últimas em alta densidade;
+- Serviço e próximos marcos com fluxo próprio;
+- metadata compacta;
+- alvos de toque adequados;
+- escalas específicas para headline, corpo, citações, mídia e compartilhamento.
 
-Issue principal: #45.
+## 11. Serviço, Agenda e Acompanhe
 
-## 11. Publicação estática e distribuição
+O frontend não extrai datas de títulos ou corpos por heurística.
 
-Conteúdo essencial deve estar presente no HTML entregue.
+O contrato temporal é explícito:
 
-O build deve materializar:
-
-- homepage com conteúdo real;
-- URL canônica por matéria;
-- `<title>` e description específicos;
-- Open Graph/social metadata;
-- canonical;
-- dados estruturados quando aplicáveis;
-- feed e sitemap derivados da mesma fonte pública canônica.
-
-JavaScript deve atuar como melhoria progressiva para busca, filtros e disclosure, não como requisito para o jornal existir.
-
-Issue principal: #46.
-
-## 12. Confiança, metodologia e correções
-
-A metodologia pública deve explicar um modelo baseado em **fontes verificáveis**, sem amarrar a missão a um fornecedor ou base específica.
-
-A UI de confiança deve priorizar:
-
-1. nome da fonte;
-2. link/artefato verificável;
-3. contexto de verificação relevante;
-4. correções/atualizações;
-5. digest/hash como detalhe técnico de auditoria.
-
-Documentos oficiais são fontes, não verdade automática. A redação continua responsável por distinguir fato documentado, interpretação, inferência e incerteza.
-
-Issue principal: #44.
-
-## 13. Qualidade visual e acessibilidade
-
-A transformação não termina quando “fica bonito”.
-
-Cada fase visual relevante deve preservar ou melhorar:
-
-- landmarks e headings;
-- teclado e foco;
-- contraste;
-- zoom/fonte ampliada;
-- alt/legendas;
-- estabilidade de layout;
-- ausência de overflow involuntário;
-- performance compatível com jornal leve;
-- conteúdo essencial sem JS;
-- evidência visual reproduzível de desktop e mobile.
-
-Contratos genéricos de acessibilidade pertencem ao Cobogó quando compartilháveis. Critérios editoriais como dominância de manchete ou ordem de módulos pertencem ao Vigia.
-
-Issue principal: #50.
-
-## 14. Fases de implementação
-
-### Fase 0 — RFC e fronteira de autoridade
-
-- [x] registrar a decisão Cobogó × Vigia;
-- [x] mapear backlog inicial #40–#50;
-- [ ] integrar esta RFC em `main`;
-- [ ] ajustar issues que ainda tratem O Vigia como dono de um design system próprio.
-
-### Fase 1 — Foundation brownfield Cobogó
-
-Issue âncora: #48.
-
-- [ ] inventário de contracts CSS locais;
-- [ ] classificar shared/theme/editorial/compat/delete;
-- [ ] adotar `cobogo/core` pinado;
-- [ ] remover duplicação genericamente substituída;
-- [ ] registrar remainder local;
-- [ ] captura before/after da home real;
-- [ ] ratchet mínimo para evitar retorno da duplicação.
-
-### Fase 2 — HTML público e shell
-
-Issues: #46, #41, #47.
-
-- [ ] conteúdo essencial estático no HTML;
-- [ ] URLs canônicas;
-- [ ] masthead compartilhado entre superfícies;
-- [ ] navegação real por editoria/território;
-- [ ] taxonomia e arquivo estáveis.
-
-### Fase 3 — Capa editorial
-
-Issue: #40.
-
-- [ ] introduzir modelo de composição que não dependa só do índice;
-- [ ] manchete + secundárias + últimas;
-- [ ] módulos de editoria/briefs;
-- [ ] estados para poucos/muitos artigos;
-- [ ] validar desktop e mobile.
-
-### Fase 4 — Mídia e matéria
-
-Issues: #42 e #43.
-
-- [ ] contrato de mídia;
-- [ ] figura/legenda/crédito/origem;
-- [ ] matéria completa;
-- [ ] relacionados/continuidade;
-- [ ] compartilhamento/canonical;
-- [ ] avaliar extrações genéricas para Cobogó.
-
-### Fase 5 — Mobile e utilidade local
-
-Issues: #45 e #49.
-
-- [ ] composição mobile deliberada;
-- [ ] módulos de serviço;
-- [ ] agenda/próximos marcos quando verificáveis;
-- [ ] acompanhamento de histórias abertas.
-
-### Fase 6 — Confiança e gate de excelência
-
-Issues: #44 e #50.
-
-- [ ] metodologia revisada;
-- [ ] provenance legível;
-- [ ] gate visual/acessibilidade/performance;
-- [ ] eliminar linguagem residual de protótipo;
-- [ ] auditoria final contra critérios desta RFC.
-
-## 15. Política de PRs
-
-A implementação deve ocorrer em PRs pequenas e cumulativas.
-
-Cada PR desta iniciativa deve incluir no corpo:
-
-```text
-RFC-0002 phase: <n>
-RFC-0002 criteria: <itens implementados>
-Parent: #39
-Issues: #...
+```yaml
+next_event_at: "2026-09-03T08:30:00-04:00"
+next_event_kind: "prazo"
+next_event_label: "Atendimento até 3 de setembro"
 ```
 
-Se a PR alterar uma decisão estrutural desta RFC, ela deve atualizar o documento no mesmo PR ou em uma PR de RFC imediatamente anterior.
+Marcos futuros de `prazo`, `sessao`, `evento` e `vigencia` entram em Agenda. `acompanhamento` entra em Acompanhe. Itens expirados e matérias sem metadata não ocupam o módulo.
 
-Se apenas executar um critério já decidido, a RFC não precisa receber edição cosmética para cada commit.
+Cada item oferece caminho tanto para a matéria quanto para a fonte verificável.
 
-## 16. Não objetivos
+## 12. Confiança e correções
 
-Esta RFC não propõe:
+`metodologia.html` descreve um modelo baseado em fontes verificáveis em geral e permanece verdadeiro independentemente do fornecedor da próxima matéria.
 
-- transformar Cobogó em CMS ou framework jornalístico;
-- introduzir Svelte/Astro no Vigia apenas para consumir Cobogó;
-- imitar visualmente um veículo existente;
-- usar imagem decorativa para simular aparência de jornal;
-- centralizar no Cobogó semântica de notícia/editoria/bairro;
-- mover decisão editorial para o design system;
-- criar backend permanente para resolver a UI;
-- abandonar a simplicidade de hospedagem estática no GitHub Pages.
+`correcoes.html` distingue:
 
-## 17. Critério de conclusão
+- correção;
+- atualização;
+- retirada/retração;
+- bug de projeção.
 
-A RFC pode ser marcada como Implementada quando:
+A interface prioriza nome e link da fonte antes de digest técnico.
 
-1. O Vigia consumir Cobogó como foundation compartilhada sem fork local da authority adotada;
-2. a home for reconhecível como composição de jornal, não como grade de cards;
-3. editorias/territórios forem arquitetura navegável;
-4. matéria direta for uma experiência completa;
-5. mídia verificável tiver contrato claro;
-6. mobile tiver composição deliberada;
-7. metodologia refletir fontes verificáveis em geral;
-8. HTML/canonical/social metadata existirem sem dependência de JS para conteúdo essencial;
-9. gates mínimos de acessibilidade/performance/visual estiverem ativos;
-10. qualquer upstream para Cobogó tiver sido feito somente onde a reutilização foi demonstrada.
+## 13. Gate de excelência
 
-## 18. Relação com issues existentes
+`scripts/check-public-surface.py` e o workflow visual ratcheiam a arquitetura implementada.
 
-- #39 — épica e acompanhamento geral;
+Entre outras coisas, verificam:
+
+- ausência de linguagem residual de protótipo;
+- conteúdo essencial estático;
+- JS progressivo;
+- canonical, OG e `NewsArticle`;
+- identidade `content/articles ↔ _news`;
+- contrato de mídia;
+- contrato temporal;
+- editorias, territórios e arquivo;
+- ausência da URL legada nas projeções distribuídas;
+- budgets simples de CSS/JS.
+
+A captura visual cobre desktop e mobile de:
+
+- capa;
+- matéria;
+- metodologia;
+- correções;
+- editorias;
+- territórios;
+- arquivo.
+
+## 14. Ledger de implementação
+
+| Fase | Entrega | PR |
+| --- | --- | --- |
+| 0 | decisão arquitetural e plano vivo | #51 |
+| 1 | adoção brownfield do Cobogó core | #52 |
+| 2 | HTML estático, URLs e shell de publicação | #53 |
+| 3 | composição modular da capa | #54 |
+| 4 | matéria completa e contrato de mídia | #55 |
+| 5 | edição mobile e contrato temporal | #56 |
+| 6 | metodologia, correções e gate de excelência | #57 |
+| follow-up | distribuição canônica, editorias e arquivo | #58 |
+| fechamento fase 5 | Agenda/Acompanhe estruturados | #66 |
+| fechamento fase 2 | navegação territorial persistente | #67 |
+
+## 15. Critérios de conclusão
+
+- [x] O Vigia consome Cobogó como foundation compartilhada sem fork local da authority adotada.
+- [x] A home é composição de jornal, não grade uniforme de cards.
+- [x] Editorias e territórios são arquitetura navegável.
+- [x] Arquivo e recência têm rota persistente.
+- [x] Matéria direta é experiência completa.
+- [x] Mídia verificável possui contrato claro e é opcional.
+- [x] Mobile possui composição deliberada.
+- [x] Serviço, Agenda e Acompanhe possuem semântica estruturada.
+- [x] Metodologia reflete fontes verificáveis em geral.
+- [x] HTML, canonical e metadata social existem sem JS para conteúdo essencial.
+- [x] RSS, sitemap e JSON distribuem a mesma URL canônica.
+- [x] Gates mínimos de integridade, acessibilidade estrutural, budget e evidência visual estão ativos.
+- [x] Upstream para Cobogó só ocorreu onde havia authority genérica demonstrada; não houve promoção especulativa de componentes jornalísticos.
+
+## 16. Issues da iniciativa
+
+- #39 — épica;
 - #40 — composição editorial da capa;
 - #41 — masthead e navegação;
 - #42 — mídia editorial;
@@ -440,9 +280,9 @@ A RFC pode ser marcada como Implementada quando:
 - #44 — metodologia/confiança;
 - #45 — mobile;
 - #46 — publicação estática/SEO/distribuição;
-- #47 — arquitetura de informação;
+- #47 — arquitetura de informação e territórios;
 - #48 — adoção de foundation/design authority;
 - #49 — serviço/agenda/acompanhamento;
 - #50 — gate visual/acessibilidade/performance.
 
-As issues são unidades de execução. Esta RFC é a autoridade de arquitetura e sequência para a iniciativa.
+Com os critérios acima integrados e validados, a RFC 0002 passa de plano vivo para **registro da arquitetura implementada**.
