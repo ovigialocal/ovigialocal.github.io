@@ -14,8 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES = ROOT / "content" / "articles"
 GENERATED_SCHEMA = ROOT / "src" / "generated" / "okf-schema.ts"
-OKF_COMMIT = "5ee72add40d3372682e528fd70641455143269ce"
-OKF_SOURCE = f"git+https://github.com/franklinbaldo/okf-parser.git@{OKF_COMMIT}"
+OKF_VERSION = "0.45.1"
 SPEC_TEMPLATE = "docs/types/{slug}.md"
 EXCLUDED_SPECS = "docs/types/**"
 
@@ -60,10 +59,10 @@ def main() -> int:
     # Keep production Jekyll healthy until the cutover PR removes this mirror.
     run("python", "scripts/build-publication.py")
 
-    # The Python distribution at this revision is not yet present on the package index.
-    # Pin the repository commit that contains the 0.45.4 Astro-Zod target instead of
-    # silently falling back to an older published parser.
-    okf = ("uvx", "--from", OKF_SOURCE, "okf-parser")
+    # Use the published parser version already consumed by Astronauta. This
+    # release includes the Astro-specific Zod target, so presentation still
+    # consumes the parser's semantic contract without compiling a source checkout.
+    okf = ("uvx", "--from", f"okf-parser=={OKF_VERSION}", "okf-parser")
     run(
         *okf,
         "check",
