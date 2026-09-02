@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Distrito Industrial de Porto Velho passa a ter ISSQN de 2,5% em 2026; regra cai até 1,5% em 2028"
 description: "Lei Complementar nº 1.079 muda as alíquotas e o procedimento dos incentivos fiscais para empresas instaladas ou interessadas no Distrito Industrial."
 story_id: "porto-velho-distrito-industrial-incentivos-issqn-2026"
