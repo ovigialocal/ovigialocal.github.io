@@ -7,11 +7,12 @@ locality: "Porto Velho, RO"
 category: "Economia"
 published_at: "2026-09-02T04:48:00+00:00"
 source_repository: "franklinbaldo/ovigia-redacao"
-source_commit: "8acbdd16f8e1f1245a4831c72cbcd697c4599bea"
-source_path: "knowledge/porto-velho/articles/2026/09/porto-velho-refis-2026-prorrogacao-arrecadacao/ready-v2.md"
-source_digest: "sha256:3f2cdcb9e7e9d52e6c4ce01ac3e62019f2c108e6f2762ac6d439f13f66523e9e"
+source_commit: "bfed7e4056afe24a61c9a2224ce892915b0e1893"
+source_path: "knowledge/porto-velho/articles/2026/09/porto-velho-refis-2026-prorrogacao-arrecadacao/ready-v3.md"
+source_digest: "sha256:9566b96ac772a967ad6f94b4a557c2d7682818e39360b75530c9913a0d07d0f6"
 source_name: "Câmara Municipal de Porto Velho — Decreto nº 22.294/2026"
-source_url: "https://sapl.portovelho.ro.leg.br/ta/9689/text"
+source_url: "https://web.archive.org/web/20260902194526/https://sapl.portovelho.ro.leg.br/ta/9689/text"
+source_original_url: "https://sapl.portovelho.ro.leg.br/ta/9689/text"
 ---
 
 # Decreto que prorrogou Refis diz que procura e objetivos de arrecadação ficaram muito abaixo do previsto
@@ -24,7 +25,7 @@ A justificativa está no Decreto nº 22.294, de 30 de julho. O ato não informa 
 
 ## A reforma tributária entra na justificativa
 
-O mesmo decreto relaciona a prorrogação à transição da reforma tributária. Segundo o texto, a média da receita efetiva de ISSQN entre **2019 e 2026** será usada como parâmetro na futura recomposição de receitas caso o Município perca arrecadação com a implantação do Imposto sobre Bens e Serviços (IBS), prevista para o período posterior.
+O mesmo decreto relaciona a prorrogação à transição da reforma tributária. Segundo o texto, a média da receita efetiva de ISSQN entre **2019 e 2026** será usada como parâmetro na futura recomposição de receitas caso o Município perca arrecadação com a implantação do Imposto sobre Bens e Serviços (IBS), no período de 2029 a 2077.
 
 Na prática, o Executivo registra no próprio ato que há interesse fiscal em elevar a arrecadação de ISSQN ainda dentro da janela que compõe essa média.
 
@@ -34,11 +35,11 @@ A omissão não torna o release falso. Ela muda, porém, a compreensão da decis
 
 ## Programa foi ampliado em maio
 
-O Refis começou com regras mais restritas. A LC nº 1.048/2025 alcançava, em sua redação original, débitos vencidos até o fim de 2024. Em maio, a LC nº 1.057 ampliou o corte para **31 de dezembro de 2025**, revogou a exigência original de que IPTU e taxa de resíduos de 2025 estivessem pagos e autorizou o Executivo a estender o prazo de adesão até o fim do ano.
+O Refis começou com regras mais restritas. A LC nº 1.048/2025 alcançava, em sua redação original, débitos vencidos até o fim de 2024. Em maio, a LC nº 1.057 ampliou o corte para **31 de dezembro de 2025**, revogou a exigência original vinculada ao pagamento de IPTU e TRSD de 2025 e autorizou o Executivo a estender o prazo de adesão até o fim do ano.
 
 O Decreto 22.294 exerceu essa autorização e fez a prorrogação produzir efeitos desde 1º de agosto.
 
-A página atual do serviço municipal, conferida nesta quarta-feira (2), continua mostrando **31 de dezembro** como prazo final e informa que a adesão é feita presencialmente na Subprocuradoria da Dívida Ativa da PGM.
+A página atual do serviço municipal, revalidada nesta quarta-feira (2), continua mostrando **31 de dezembro** como prazo final e informa que a adesão é feita presencialmente na Subprocuradoria da Dívida Ativa da PGM, na Avenida Sete de Setembro, 1044, Centro. A orientação operacional atual também diz que IPTU 2026 e Taxa de Lixo 2026 devem estar pagos para a adesão.
 
 ## "Até 100%" não vale da mesma forma para tudo
 
