@@ -84,16 +84,40 @@ A material body/title/description edit requires a new newsroom ready digest.
 
 ## Derived projections
 
-`content/articles/<slug>.md` is the canonical public article. `articles.json`, feed and sitemap are generated projections and must not be maintained independently by hand.
+`content/articles/<slug>.md` is the canonical public article. The renderer boundary is:
 
-Every public article must include the flat public metadata required by `scripts/build-publication.py`, including `source_name` and `source_url` in addition to the provenance fields. After adding or changing canonical public Markdown, run:
+```text
+content/articles/<slug>.md
+  → scripts/build-publication.py
+  → _news/<story_id>.md          # byte-identical Jekyll collection projection
+  → GitHub Pages / Jekyll
+  → /noticias/<story_id>/
+     index.html
+     editorias.html
+     arquivo.html
+     articles.json
+     feed.xml
+     sitemap.xml
+```
+
+Do not maintain `_news` by hand and never patch a projected article separately from its canonical Markdown. `scripts/build-publication.py --check` verifies the byte-identity and file set.
+
+`articles.json`, feed and sitemap are Jekyll/Liquid templates over `site.news`; they must use `story.url` so all discovery surfaces expose the same canonical `/noticias/<story_id>/` URL.
+
+Every public article must include the flat public metadata required by `scripts/build-publication.py`, including `source_name` and `source_url` in addition to provenance fields. After adding or changing canonical public Markdown, run:
 
 ```text
 python scripts/build-publication.py
 python scripts/build-publication.py --check
+python scripts/check-cobogo-core.py
+python scripts/check-public-surface.py
 ```
 
-The second command must pass before merge. The builder is stdlib-only and deliberately renders the small Markdown subset used by the public surface; unsupported public metadata should fail closed rather than silently invent projection state.
+All checks must pass before merge.
+
+## UI authority boundary
+
+Shared foundations come from the pinned Cobogó core. O Vigia remains authoritative over newspaper identity, typography, composition, editorias, article semantics, service modules and trust copy. Do not recreate generic focus/reduced-motion contracts locally; do not push newspaper-specific organisms into Cobogó merely because this repo needs them.
 
 ## Corrections
 
@@ -108,6 +132,7 @@ The second command must pass before merge. The builder is stdlib-only and delibe
 - `publication/reviews/...`: integrated decisions and side-effect state;
 - open deterministic publication PR: in-flight reservation/transaction;
 - `publication/events/...`: confirmed public history;
-- HTML/`articles.json`/feed/sitemap: derived projections.
+- `_news/`: byte-identical renderer projection;
+- HTML/JSON/RSS/sitemap: Jekyll-derived public projections.
 
-See `docs/rfc/0001-independent-publication-agent.md` and `skills/publication-review/SKILL.md`.
+See `docs/rfc/0001-independent-publication-agent.md`, `docs/rfc/0002-editorial-surface-cobogo.md` and `skills/publication-review/SKILL.md`.

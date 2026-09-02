@@ -2,7 +2,6 @@
 """Small, explicit quality ratchet for O Vigia's public newspaper surface."""
 from __future__ import annotations
 
-import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,13 +48,11 @@ def verify_projection_identity() -> None:
     for path in (ROOT / "content" / "articles").glob("*.md"):
         meta = parse_flat_frontmatter(path)
         canonical[meta["story_id"]] = path
-
     projected = {path.stem: path for path in (ROOT / "_news").glob("*.md")}
     if canonical.keys() != projected.keys():
         missing = sorted(canonical.keys() - projected.keys())
         extra = sorted(projected.keys() - canonical.keys())
         raise SystemExit(f"Jekyll projection mismatch; missing={missing}, extra={extra}")
-
     for story_id, source in canonical.items():
         if source.read_bytes() != projected[story_id].read_bytes():
             raise SystemExit(f"_news/{story_id}.md is not byte-identical to canonical public Markdown")
@@ -96,11 +93,18 @@ def main() -> int:
     layout = read("_layouts/news.html")
     methodology = read("metodologia.html")
     corrections = read("correcoes.html")
+    archive = read("arquivo.html")
+    sections = read("editorias.html")
+    feed = read("feed.xml")
+    sitemap = read("sitemap.xml")
+    json_projection = read("articles.json")
 
     for path, text in {
         "index.html": index,
         "metodologia.html": methodology,
         "correcoes.html": corrections,
+        "arquivo.html": archive,
+        "editorias.html": sections,
     }.items():
         forbid(text, "Protótipo", path)
         forbid(text, "primeira edição em preparação", path)
@@ -109,9 +113,11 @@ def main() -> int:
         require(text, "<nav", path)
 
     require(index, "site.news", "index.html")
-    require(index, "data-news-card", "index.html")
     require(index, "front-lede", "index.html")
     require(index, "service-desk", "index.html")
+    require(index, "lead.media_url", "index.html")
+    require(index, "editorias.html", "index.html")
+    require(index, "arquivo.html", "index.html")
     forbid(app, 'fetch("articles.json")', "app.js")
     forbid(app, "fetch('articles.json')", "app.js")
 
@@ -128,10 +134,15 @@ def main() -> int:
     require(corrections, "issues/new", "correcoes.html")
     require(corrections, "Correção, atualização e retração", "correcoes.html")
 
+    require(archive, "site.news", "arquivo.html")
+    require(sections, "map: \"category\" | uniq", "editorias.html")
+    for name, projection in {"articles.json": json_projection, "feed.xml": feed, "sitemap.xml": sitemap}.items():
+        require(projection, "story.url", name)
+        forbid(projection, "article.html?id", name)
+
     verify_projection_identity()
     verify_optional_contracts()
     verify_budget()
-
     print("public newspaper surface: OK")
     return 0
 
