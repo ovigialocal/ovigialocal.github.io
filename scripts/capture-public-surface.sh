@@ -14,26 +14,23 @@ SERVER_PID=$!
 trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
 
 for _ in $(seq 1 30); do
-  if curl --fail --silent "$BASE/" >/dev/null; then
-    break
-  fi
+  if curl --fail --silent "$BASE/" >/dev/null; then break; fi
   sleep 0.2
 done
 curl --fail --silent "$BASE/" >/dev/null
 
 capture() {
-  local viewport="$1"
-  local url="$2"
-  local target="$3"
-  npx --yes playwright@1.55.0 screenshot \
-    --browser chromium \
-    --viewport-size "$viewport" \
-    --full-page \
-    "$url" "$target"
+  local viewport="$1" url="$2" target="$3"
+  npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "$viewport" --full-page "$url" "$target"
 }
 
-capture "1280,900" "$BASE/" "$OUT/home-desktop.png"
-capture "390,844" "$BASE/" "$OUT/home-mobile.png"
+capture_pair() {
+  local route="$1" name="$2"
+  capture "1280,900" "$BASE$route" "$OUT/${name}-desktop.png"
+  capture "390,844" "$BASE$route" "$OUT/${name}-mobile.png"
+}
+
+capture_pair "/" "home"
 
 ARTICLE_DIR="$(find "$SITE_ROOT/noticias" -mindepth 1 -maxdepth 1 -type d | sort | head -n 1 || true)"
 if [[ -z "$ARTICLE_DIR" ]]; then
@@ -41,12 +38,10 @@ if [[ -z "$ARTICLE_DIR" ]]; then
   exit 1
 fi
 ARTICLE_SLUG="$(basename "$ARTICLE_DIR")"
-capture "1280,900" "$BASE/noticias/$ARTICLE_SLUG/" "$OUT/article-desktop.png"
-capture "390,844" "$BASE/noticias/$ARTICLE_SLUG/" "$OUT/article-mobile.png"
+capture_pair "/noticias/$ARTICLE_SLUG/" "article"
+capture_pair "/metodologia.html" "methodology"
+capture_pair "/correcoes.html" "corrections"
+capture_pair "/editorias.html" "sections"
+capture_pair "/arquivo.html" "archive"
 
-capture "1280,900" "$BASE/metodologia.html" "$OUT/methodology-desktop.png"
-capture "390,844" "$BASE/metodologia.html" "$OUT/methodology-mobile.png"
-capture "1280,900" "$BASE/correcoes.html" "$OUT/corrections-desktop.png"
-capture "390,844" "$BASE/correcoes.html" "$OUT/corrections-mobile.png"
-
-printf 'Captured 8 public-surface views in %s\n' "$OUT"
+printf 'Captured 12 public-surface views in %s\n' "$OUT"
