@@ -1,0 +1,97 @@
+.temporal-desk {
+  margin: 3.25rem 0 .25rem;
+  padding: 1.5rem 0 2rem;
+  border-top: 1px solid var(--ink);
+  border-bottom: 3px double var(--ink);
+  scroll-margin-top: 1rem;
+}
+.temporal-desk-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: 1.5rem;
+}
+.temporal-desk-header h2 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  line-height: .92;
+  font-weight: 500;
+}
+.temporal-desk-header > p {
+  max-width: 32rem;
+  margin: 0;
+  color: var(--muted);
+  text-align: right;
+  font-size: .88rem;
+}
+.temporal-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem;
+}
+.temporal-module + .temporal-module { border-left: 1px solid var(--rule); padding-left: 2.5rem; }
+.temporal-module h3 {
+  margin: 0 0 1rem;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 600;
+}
+.temporal-list { display: grid; gap: 0; }
+.temporal-story {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--rule);
+}
+.temporal-story:first-child { border-top: 0; padding-top: 0; }
+.temporal-story > time {
+  color: var(--accent);
+  font-size: .72rem;
+  font-weight: 800;
+}
+.temporal-story span {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: .62rem;
+  font-weight: 800;
+}
+.temporal-story h4 {
+  margin: .25rem 0 .35rem;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  line-height: 1.08;
+}
+.temporal-story h4 a { text-decoration: none; }
+.temporal-story h4 a:hover { color: var(--accent); }
+.temporal-story p {
+  margin: 0 0 .55rem;
+  color: var(--muted);
+  font-size: .82rem;
+}
+.temporal-links,
+.service-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem 1rem;
+  font-size: .74rem;
+  font-weight: 800;
+}
+.temporal-links a,
+.service-links a { color: var(--accent); text-decoration: none; }
+@media (max-width: 760px) {
+  .temporal-desk-header { display: block; }
+  .temporal-desk-header > p { margin-top: .7rem; text-align: left; }
+  .temporal-columns { grid-template-columns: 1fr; gap: 1.5rem; }
+  .temporal-module + .temporal-module { border-left: 0; border-top: 1px solid var(--ink); padding: 1.5rem 0 0; }
+  .temporal-story { grid-template-columns: 5.5rem minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .temporal-desk { margin-top: 2.2rem; }
+  .temporal-story { grid-template-columns: 1fr; gap: .25rem; }
+  .temporal-story h4 { font-size: 1.25rem; }
+}
