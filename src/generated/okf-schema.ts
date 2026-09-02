@@ -2,10 +2,10 @@
 import { z } from 'astro:content';
 
 export const PublicArticleSchema = z.object({
-  "bairro": z.string().optional(),
+  "bairro": z.string().describe("references PublicTerritory(name)").optional(),
   "category": z.string(),
   "description": z.string(),
-  "locality": z.string(),
+  "locality": z.string().describe("references PublicTerritory(name)"),
   "media_alt": z.string().optional(),
   "media_caption": z.string().optional(),
   "media_credit": z.string().optional(),
@@ -27,4 +27,14 @@ export const PublicArticleSchema = z.object({
   "title": z.string(),
   "type": z.literal("PublicArticle"),
   "updated_at": z.iso.datetime({ offset: true }).optional()
+});
+
+export const PublicTerritorySchema = z.object({
+  "description": z.string(),
+  "kind": z.string(),
+  "name": z.string(),
+  "parent_territory_id": z.string().describe("references PublicTerritory(territory_id)").optional(),
+  "territory_id": z.string(),
+  "title": z.string(),
+  "type": z.literal("PublicTerritory")
 });
