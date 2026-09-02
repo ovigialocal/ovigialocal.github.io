@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('articles');
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex" />
+    <title>Astro foundation — O Vigia</title>
+  </head>
+  <body>
+    <main>
+      <h1>Astro foundation</h1>
+      <p>{articles.length} matérias validadas pelo contrato OKF.</p>
+      <ul>
+        {articles.map((article) => <li>{article.data.story_id}</li>)}
+      </ul>
+    </main>
+  </body>
+</html>

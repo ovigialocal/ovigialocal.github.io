@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Atendimento odontológico gratuito em Porto Velho segue até 3 de setembro"
 description: "Expedição Novos Sorrisos atende no bairro Lagoa das 8h30 às 16h; vagas são limitadas e o agendamento pode ser feito na unidade móvel ou pelo site do projeto."
 story_id: "porto-velho-novos-sorrisos-2026-09-03"

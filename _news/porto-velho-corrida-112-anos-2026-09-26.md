@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Corrida dos 112 anos de Porto Velho abre 3 mil vagas; prova será em 26 de setembro"
 description: "Inscrições estão abertas para a prova municipal marcada para 17h; a Prefeitura divulgou 3 mil vagas e o link de cadastro."
 story_id: "porto-velho-corrida-112-anos-2026-09-26"

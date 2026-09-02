@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Sine de Porto Velho tem 32 vagas para auxiliar de serviços gerais; prazo exibido vai até segunda"
 description: "Oferta pede ensino fundamental completo, moto própria e início às 7h; lista atual também reúne vagas PCD e outras oportunidades com prazo até 31 de agosto."
 story_id: "porto-velho-sine-vagas-2026-08-19"

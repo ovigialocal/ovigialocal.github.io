@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Porto Velho exige cadastro digital de grandes geradores de resíduos; veja quem deve se regularizar"
 description: "Empreendimentos acima de 200 litros diários no Distrito Sede ou 400 litros nos demais distritos devem usar o SUL; cadastro e certificado não têm taxa, segundo a Prefeitura."
 story_id: "porto-velho-grandes-geradores-residuos-cadastro-2026-08-26"

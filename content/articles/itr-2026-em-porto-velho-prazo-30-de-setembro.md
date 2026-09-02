@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "ITR 2026: declaração de imóveis rurais em Porto Velho vai até 30 de setembro"
 description: "Prazo termina às 23h59min59s no horário de Brasília; atraso gera multa mínima de R$ 50 e a Prefeitura publicou os valores de terra nua de 2026 usados como referência."
 story_id: "porto-velho-itr-2026-prazo-30-setembro"

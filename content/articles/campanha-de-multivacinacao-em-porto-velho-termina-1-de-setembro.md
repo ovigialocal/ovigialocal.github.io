@@ -1,4 +1,5 @@
 ---
+type: PublicArticle
 title: "Campanha de multivacinação em Porto Velho termina terça-feira, 1º de setembro"
 description: "Campanha para crianças e adolescentes menores de 15 anos segue até terça. Responsáveis podem procurar as unidades de saúde para conferir a caderneta e atualizar doses pendentes."
 story_id: "porto-velho-dia-d-vacinacao-2026-08-22"
