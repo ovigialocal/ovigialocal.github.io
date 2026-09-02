@@ -15,27 +15,28 @@ const territories = await getCollection('territories');
 const territory = resolveStoryTerritory(story, territories);
 const related = allStories.filter((item) => item.data.category === story.data.category && item.data.story_id !== story.data.story_id).slice(0, 3);
 const canonicalPath = storyUrl(story);
+const canonicalUrl = new URL(canonicalPath, Astro.site ?? new URL('https://ovigialocal.github.io/')).toString();
 const navItems = [
   { href: '/', label: 'Capa' },
   { href: `/editorias.html#editoria-${slugify(story.data.category)}`, label: story.data.category },
-  { href: territoryUrl(territory), label: territory.data.name },
+  { href: territoryUrl(territory), label: territory.data.title },
   { href: '/arquivo.html', label: 'Arquivo' },
 ];
 ---
 <BaseLayout title={`${story.data.title} — O Vigia`} description={story.data.description} canonicalPath={canonicalPath} compact navItems={navItems} ogType="article" image={story.data.media_url} publishedAt={story.data.published_at} updatedAt={story.data.updated_at} sourceUrl={story.data.source_url}>
   <main class="article-page"><article class="article-shell">
     <header class="article-header">
-      <p class="article-meta"><a href={`/editorias.html#editoria-${slugify(story.data.category)}`}>{story.data.category}</a><span aria-hidden="true"> · </span><a href={territoryUrl(territory)}>{territory.data.name}</a><span aria-hidden="true"> · </span><time datetime={story.data.published_at}>{formatDateTime(story.data.published_at)}</time></p>
+      <p class="article-meta"><a href={`/editorias.html#editoria-${slugify(story.data.category)}`}>{story.data.category}</a><span aria-hidden="true"> · </span><a href={territoryUrl(territory)}>{territory.data.title}</a><span aria-hidden="true"> · </span><time datetime={story.data.published_at}>{formatDateTime(story.data.published_at)}</time></p>
       <h1>{story.data.title}</h1><p class="article-deck">{story.data.description}</p>
       <div class="article-byline"><span>Por <strong>O Vigia</strong></span>{story.data.updated_at && <span>Atualizado em <time datetime={story.data.updated_at}>{formatDateTime(story.data.updated_at)}</time></span>}</div>
     </header>
 
     {story.data.media_url && <figure class="article-media"><img src={story.data.media_url} alt={story.data.media_alt ?? ''} width={story.data.media_width ? Number(story.data.media_width) : undefined} height={story.data.media_height ? Number(story.data.media_height) : undefined} loading="eager" /><figcaption>{story.data.media_caption && <span>{story.data.media_caption}</span>}{story.data.media_credit && <span class="media-credit">{story.data.media_credit}</span>}{story.data.media_source_url && <a href={story.data.media_source_url} rel="noopener noreferrer">Ver origem da mídia ↗</a>}</figcaption></figure>}
 
-    <div class="article-layout"><div class="article-body"><Content /></div><aside class="article-trust" aria-label="Fontes e correções"><p class="eyebrow">Fonte verificável</p><h2>Como conferir esta matéria</h2><p>A fonte principal fica visível para que o leitor possa consultar a evidência usada na publicação.</p><p class="source-primary"><a href={story.data.source_url} rel="noopener noreferrer">{story.data.source_name} ↗</a></p><button type="button" class="share-button" data-share-button data-share-title={story.data.title} data-share-url={new URL(canonicalPath, Astro.site).toString()}>Compartilhar matéria</button><p class="share-status" id="share-status" aria-live="polite"></p><details><summary>Detalhes de proveniência</summary><dl class="provenance-list"><div><dt>Fonte</dt><dd><a href={story.data.source_url} rel="noopener noreferrer">{story.data.source_name}</a></dd></div><div><dt>Referência</dt><dd>{story.data.source_digest}</dd></div><div><dt>Território</dt><dd><a href={territoryUrl(territory)}>{territory.data.name}</a></dd></div><div><dt>Estado</dt><dd>Publicado</dd></div></dl></details><a class="correction-link" href="/correcoes.html">Informar ou consultar uma correção →</a></aside></div>
+    <div class="article-layout"><div class="article-body"><Content /></div><aside class="article-trust" aria-label="Fontes e correções"><p class="eyebrow">Fonte verificável</p><h2>Como conferir esta matéria</h2><p>A fonte principal fica visível para que o leitor possa consultar a evidência usada na publicação.</p><p class="source-primary"><a href={story.data.source_url} rel="noopener noreferrer">{story.data.source_name} ↗</a></p><button type="button" class="share-button" data-share-button data-share-title={story.data.title} data-share-url={canonicalUrl}>Compartilhar matéria</button><p class="share-status" id="share-status" aria-live="polite"></p><details><summary>Detalhes de proveniência</summary><dl class="provenance-list"><div><dt>Fonte</dt><dd><a href={story.data.source_url} rel="noopener noreferrer">{story.data.source_name}</a></dd></div><div><dt>Referência</dt><dd>{story.data.source_digest}</dd></div><div><dt>Território</dt><dd><a href={territoryUrl(territory)}>{territory.data.title}</a></dd></div><div><dt>Estado</dt><dd>Publicado</dd></div></dl></details><a class="correction-link" href="/correcoes.html">Informar ou consultar uma correção →</a></aside></div>
 
     {related.length > 0 && <section class="article-related" aria-labelledby="related-title"><p class="eyebrow">Continue lendo</p><h2 id="related-title">Mais em {story.data.category}</h2><div class="related-grid">{related.map((item) => <article><h3><a href={storyUrl(item)}>{item.data.title}</a></h3><p>{item.data.description}</p></article>)}</div></section>}
-    <footer class="article-footer-nav"><a href={`/editorias.html#editoria-${slugify(story.data.category)}`}>← Mais em {story.data.category}</a><a href={territoryUrl(territory)}>Mais em {territory.data.name}</a><a href="/metodologia.html">Como O Vigia apura →</a></footer>
+    <footer class="article-footer-nav"><a href={`/editorias.html#editoria-${slugify(story.data.category)}`}>← Mais em {story.data.category}</a><a href={territoryUrl(territory)}>Mais em {territory.data.title}</a><a href="/metodologia.html">Como O Vigia apura →</a></footer>
   </article></main>
   <style is:global>.article-body > h1:first-child { display: none; }</style>
   <script>

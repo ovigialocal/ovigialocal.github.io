@@ -23,11 +23,12 @@ interface Props {
 }
 
 const { title, description, canonicalPath, tagline = 'Jornalismo local para entender o que muda perto de você.', compact = false, navItems = [], ogType = 'website', image, publishedAt, updatedAt, sourceUrl } = Astro.props;
-const canonical = new URL(canonicalPath, Astro.site).toString();
+const site = Astro.site ?? new URL('https://ovigialocal.github.io/');
+const canonical = new URL(canonicalPath, site).toString();
 const jsonLd = ogType === 'article' ? {
   '@context': 'https://schema.org', '@type': 'NewsArticle', headline: title.replace(/ — O Vigia$/, ''), description,
   datePublished: publishedAt, ...(updatedAt ? { dateModified: updatedAt } : {}), mainEntityOfPage: canonical,
-  author: { '@type': 'Organization', name: 'O Vigia' }, publisher: { '@type': 'Organization', name: 'O Vigia', url: new URL('/', Astro.site).toString() },
+  author: { '@type': 'Organization', name: 'O Vigia' }, publisher: { '@type': 'Organization', name: 'O Vigia', url: new URL('/', site).toString() },
   ...(image ? { image: [image] } : {}), ...(sourceUrl ? { isBasedOn: sourceUrl } : {}),
 } : null;
 ---
