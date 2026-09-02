@@ -17,6 +17,7 @@ description: Matéria aceita pela autoridade pública de O Vigia e exposta pelo 
 - `published_at` registra a publicação; `updated_at`, quando presente, registra atualização material da versão pública.
 - `source_repository`, `source_commit`, `source_path` e `source_digest` preservam a proveniência da candidatura aprovada.
 - `source_name` e `source_url` são a apresentação pública mínima da fonte verificável.
+- quando `source_url` aponta para um snapshot Wayback verificado, `source_original_url` preserva opcionalmente a URL viva de origem sem rebaixar o snapshot como provenance pública preferida.
 - `next_event_at`, `next_event_kind` e `next_event_label` são opcionais e só existem quando há um próximo marco verificável adequado a Agenda/Acompanhe.
 - `media_url`, `media_alt`, `media_caption`, `media_credit`, `media_source_url`, `media_width` e `media_height` são opcionais e, quando usados, obedecem a `docs/editorial-media-contract.md`.
 

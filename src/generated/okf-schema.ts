@@ -20,6 +20,7 @@ export const PublicArticleSchema = z.object({
   "source_commit": z.string(),
   "source_digest": z.string(),
   "source_name": z.string(),
+  "source_original_url": z.string().optional(),
   "source_path": z.string(),
   "source_repository": z.string(),
   "source_url": z.string(),
