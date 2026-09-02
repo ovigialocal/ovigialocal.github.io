@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the Astro content schema is exactly the contract compiled by okf-parser."""
+"""Verify Astro content schemas are exactly the contracts compiled by okf-parser."""
 from __future__ import annotations
 
 import difflib
@@ -11,70 +11,38 @@ GENERATED_SCHEMA = ROOT / "src" / "generated" / "okf-schema.ts"
 OKF_VERSION = "0.45.1"
 SPEC_TEMPLATE = "docs/types/{slug}.md"
 EXCLUDED_SPECS = "docs/types/**"
+RELATIONAL_SCHEMA = "okf.schema.sql"
 
 
 def run(*args: str, capture: bool = False) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        args,
-        cwd=ROOT,
-        check=True,
-        text=True,
-        capture_output=capture,
-    )
+    return subprocess.run(args, cwd=ROOT, check=True, text=True, capture_output=capture)
 
 
 def schema_command() -> tuple[str, ...]:
     return (
-        "uvx",
-        "--from",
-        f"okf-parser=={OKF_VERSION}",
-        "okf-parser",
-        "schema",
-        "content",
-        "--format",
-        "zod",
-        "--zod-import",
-        "astro",
-        "--infer-types",
-        "--exclude",
-        EXCLUDED_SPECS,
-        "--spec-template",
-        SPEC_TEMPLATE,
+        "uvx", "--from", f"okf-parser=={OKF_VERSION}", "okf-parser", "schema", "content",
+        "--format", "zod", "--zod-import", "astro", "--infer-types",
+        "--exclude", EXCLUDED_SPECS, "--spec-template", SPEC_TEMPLATE,
+        "--relational-schema", RELATIONAL_SCHEMA,
     )
 
 
 def main() -> int:
     okf = ("uvx", "--from", f"okf-parser=={OKF_VERSION}", "okf-parser")
     run(
-        *okf,
-        "check",
-        "content",
-        "--exclude",
-        EXCLUDED_SPECS,
-        "--require-spec",
-        SPEC_TEMPLATE,
-        "--normative-spec",
+        *okf, "check", "content", "--exclude", EXCLUDED_SPECS,
+        "--require-spec", SPEC_TEMPLATE, "--normative-spec",
+        "--relational-schema", RELATIONAL_SCHEMA,
     )
     expected = run(*schema_command(), capture=True).stdout
-
     if not GENERATED_SCHEMA.exists():
         raise SystemExit(f"missing generated schema: {GENERATED_SCHEMA.relative_to(ROOT)}")
     actual = GENERATED_SCHEMA.read_text(encoding="utf-8")
     if actual == expected:
-        print("OKF → Astro schema is current")
+        print("OKF → Astro schemas and references are current")
         return 0
-
     print("generated Astro schema drifted from the OKF TypeContract")
-    print(
-        "".join(
-            difflib.unified_diff(
-                actual.splitlines(keepends=True),
-                expected.splitlines(keepends=True),
-                fromfile=str(GENERATED_SCHEMA.relative_to(ROOT)),
-                tofile="okf-parser schema output",
-            )
-        )
-    )
+    print("".join(difflib.unified_diff(actual.splitlines(keepends=True), expected.splitlines(keepends=True), fromfile=str(GENERATED_SCHEMA.relative_to(ROOT)), tofile="okf-parser schema output")))
     print("regenerate with:")
     print(" ".join(schema_command()) + f" > {GENERATED_SCHEMA.relative_to(ROOT)}")
     return 1

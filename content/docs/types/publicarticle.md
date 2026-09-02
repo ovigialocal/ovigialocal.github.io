@@ -12,7 +12,8 @@ description: Matéria aceita pela autoridade pública de O Vigia e exposta pelo 
 
 - `title` e `description` são o título e a linha fina editoriais aprovados para publicação.
 - `story_id` é a identidade estável usada na URL pública `/noticias/<story_id>/`.
-- `locality` e `category` descrevem a organização pública da matéria sem fabricar território ausente; `bairro`, quando existe, é uma territorialização mais específica sustentada pela matéria.
+- `locality` é uma referência relacional a `PublicTerritory.name`; `bairro`, quando existe, também referencia `PublicTerritory.name` e representa uma granularidade territorial mais específica sustentada pela matéria.
+- `category` descreve a organização editorial da matéria.
 - `published_at` registra a publicação; `updated_at`, quando presente, registra atualização material da versão pública.
 - `source_repository`, `source_commit`, `source_path` e `source_digest` preservam a proveniência da candidatura aprovada.
 - `source_name` e `source_url` são a apresentação pública mínima da fonte verificável.
@@ -21,4 +22,4 @@ description: Matéria aceita pela autoridade pública de O Vigia e exposta pelo 
 
 O corpo Markdown é conteúdo editorial público canônico. Astro não redefine esta semântica: o schema consumido pelo Content Layer é compilado deste bundle pelo `okf-parser`.
 
-A declaração física `publicarticle.schema.sql` registra tipos e campos opcionais admitidos mesmo quando ainda não há uma observação concreta no acervo. Ela é input confiável do `TypeContract`, não uma segunda implementação de validação no frontend.
+A declaração física `publicarticle.schema.sql` registra tipos e campos opcionais admitidos mesmo quando ainda não há uma observação concreta no acervo. `content/okf.schema.sql` registra as relações entre conceitos. Ambos são inputs confiáveis do `TypeContract`, não implementações paralelas de validação no frontend.

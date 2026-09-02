@@ -4,7 +4,7 @@ on:
   push:
     branches: [refactor/astro-static-site]
     paths:
-      - 'content/docs/types/**'
+      - 'content/**'
       - 'scripts/check-astro-okf-contract.py'
       - '.github/workflows/regen-astro-schema.yml'
 
@@ -27,11 +27,12 @@ jobs:
         with:
           version: 0.12.9
           enable-cache: false
-      - name: Compile TypeContract to Astro Zod
+      - name: Compile OKF TypeContracts to Astro Zod
         run: >-
           uvx --from okf-parser==0.45.1 okf-parser schema content
           --format zod --zod-import astro --infer-types
           --exclude 'docs/types/**' --spec-template 'docs/types/{slug}.md'
+          --relational-schema okf.schema.sql
           > src/generated/okf-schema.ts
       - name: Commit generated contract
         shell: bash
@@ -42,5 +43,5 @@ jobs:
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m 'build(okf): regenerar schema Astro declarado'
+          git commit -m 'build(okf): regenerar schemas Astro relacionais'
           git push origin HEAD:refactor/astro-static-site
