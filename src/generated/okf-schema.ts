@@ -2,13 +2,21 @@
 import { z } from 'astro:content';
 
 export const PublicArticleSchema = z.object({
+  "bairro": z.string().optional(),
   "category": z.string(),
   "description": z.string(),
   "locality": z.string(),
-  "next_event_at": z.iso.datetime({ offset: true, local: true }).optional(),
+  "media_alt": z.string().optional(),
+  "media_caption": z.string().optional(),
+  "media_credit": z.string().optional(),
+  "media_height": z.union([z.number().int(), z.bigint()]).optional(),
+  "media_source_url": z.string().optional(),
+  "media_url": z.string().optional(),
+  "media_width": z.union([z.number().int(), z.bigint()]).optional(),
+  "next_event_at": z.iso.datetime({ offset: true }).optional(),
   "next_event_kind": z.string().optional(),
   "next_event_label": z.string().optional(),
-  "published_at": z.iso.datetime({ offset: true, local: true }),
+  "published_at": z.iso.datetime({ offset: true }),
   "source_commit": z.string(),
   "source_digest": z.string(),
   "source_name": z.string(),
@@ -18,5 +26,5 @@ export const PublicArticleSchema = z.object({
   "story_id": z.string(),
   "title": z.string(),
   "type": z.literal("PublicArticle"),
-  "updated_at": z.iso.datetime({ offset: true, local: true }).optional()
+  "updated_at": z.iso.datetime({ offset: true }).optional()
 });
