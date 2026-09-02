@@ -11,10 +11,10 @@ const { territory, parent, articleCount } = Astro.props;
 ---
 <header class="edition-intro territory-header">
   <p class="eyebrow">{territory.data.kind}</p>
-  <h1>{territory.data.name}</h1>
+  <h1>{territory.data.title}</h1>
   <p class="edition-deck">{territory.data.description}</p>
   <p class="section-note">
-    {parent && <>Parte de <a href={`/territorios/${parent.data.territory_id}/`}>{parent.data.name}</a> · </>}
+    {parent && <>Parte de <a href={`/territorios/${parent.data.territory_id}/`}>{parent.data.title}</a> · </>}
     {articleCount} {articleCount === 1 ? 'matéria publicada' : 'matérias publicadas'}
   </p>
 </header>

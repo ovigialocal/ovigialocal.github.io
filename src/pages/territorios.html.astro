@@ -2,10 +2,10 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PublicTerritoryCard from '../components/concepts/PublicTerritoryCard.astro';
-import { storiesForTerritory, territoryUrl, type Territory } from '../lib/news';
+import { storiesForTerritory, type Territory } from '../lib/news';
 
 const stories = await getCollection('articles');
-const territories = (await getCollection('territories')).sort((a, b) => a.data.name.localeCompare(b.data.name, 'pt-BR'));
+const territories = (await getCollection('territories')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'pt-BR'));
 const byKind = new Map<string, Territory[]>();
 for (const territory of territories) {
   const items = byKind.get(territory.data.kind) ?? [];
@@ -24,7 +24,7 @@ const navItems = [{ href: '/', label: 'Capa' }, { href: '/editorias.html', label
     <section class="edition-intro" aria-labelledby="territories-title">
       <p class="eyebrow">Navegação territorial</p>
       <h1 id="territories-title">Territórios</h1>
-      <p class="edition-deck">Cada item abaixo é um conceito `PublicTerritory` do bundle OKF. Bairro, distrito, município ou estado só ganha página quando existe como entidade publicada; o site não inventa território a partir de texto.</p>
+      <p class="edition-deck">Cada item abaixo é um conceito <code>PublicTerritory</code> do bundle OKF. Bairro, distrito, município ou estado só ganha página quando existe como entidade publicada; o site não inventa território a partir de texto.</p>
     </section>
     {orderedKinds.map((kind, index) => <section class="editorial-section" aria-labelledby={`territory-kind-${index}`}>
       <div class="section-heading"><div><p class="eyebrow">Território</p><h2 id={`territory-kind-${index}`}>{kind}</h2></div><p class="section-note">{byKind.get(kind)?.length ?? 0} publicados</p></div>
