@@ -23,6 +23,26 @@ def run(*args: str, capture: bool = False) -> subprocess.CompletedProcess[str]:
     )
 
 
+def schema_command() -> tuple[str, ...]:
+    return (
+        "uvx",
+        "--from",
+        f"okf-parser=={OKF_VERSION}",
+        "okf-parser",
+        "schema",
+        "content",
+        "--format",
+        "zod",
+        "--zod-import",
+        "astro",
+        "--infer-types",
+        "--exclude",
+        EXCLUDED_SPECS,
+        "--spec-template",
+        SPEC_TEMPLATE,
+    )
+
+
 def main() -> int:
     okf = ("uvx", "--from", f"okf-parser=={OKF_VERSION}", "okf-parser")
     run(
@@ -35,19 +55,7 @@ def main() -> int:
         SPEC_TEMPLATE,
         "--normative-spec",
     )
-    expected = run(
-        *okf,
-        "schema",
-        "content",
-        "--format",
-        "zod",
-        "--zod-import",
-        "astro",
-        "--infer-types",
-        "--exclude",
-        EXCLUDED_SPECS,
-        capture=True,
-    ).stdout
+    expected = run(*schema_command(), capture=True).stdout
 
     if not GENERATED_SCHEMA.exists():
         raise SystemExit(f"missing generated schema: {GENERATED_SCHEMA.relative_to(ROOT)}")
@@ -67,10 +75,8 @@ def main() -> int:
             )
         )
     )
-    print(
-        "regenerate with: uvx --from okf-parser==0.45.1 okf-parser schema content "
-        "--format zod --zod-import astro --infer-types --exclude 'docs/types/**'"
-    )
+    print("regenerate with:")
+    print(" ".join(schema_command()) + f" > {GENERATED_SCHEMA.relative_to(ROOT)}")
     return 1
 
 
