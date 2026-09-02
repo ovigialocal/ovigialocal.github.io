@@ -3,6 +3,8 @@
 Status: **Proposta coordenada com `franklinbaldo/ovigia-redacao#80`**  
 Data: 2 de setembro de 2026
 
+Esta RFC **substitui apenas o mecanismo de retorno por issue** da RFC 0001, especialmente as partes de `decision record`/recuperação/rejeição que usam `newsroom_issue` e “reject → issue”. Todas as demais decisões da RFC 0001 — autoridade independente do publicador, candidate key, pull periódico, reserva transacional, aceite, ledger público e idempotência — permanecem vigentes. `AGENTS.md` e `skills/publication-review/SKILL.md` refletem o contrato operacional corrente.
+
 ## 1. Decisão
 
 O site público e a Redação são dois loops autônomos.
