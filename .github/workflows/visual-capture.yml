@@ -9,11 +9,17 @@ on:
       - 'astro.config.mjs'
       - 'package.json'
       - 'bun.lock'
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'publication/README.md'
+      - 'skills/publication-review/SKILL.md'
+      - 'docs/rfc/**'
       - 'scripts/build-publication.py'
       - 'scripts/check-astro-okf-contract.py'
       - 'scripts/check-cobogo-core.py'
       - 'scripts/check-public-surface.py'
       - 'scripts/capture-public-surface.sh'
+      - '.github/workflows/deploy.yml'
       - '.github/workflows/visual-capture.yml'
   push:
     branches: [main]
@@ -24,7 +30,13 @@ on:
       - 'astro.config.mjs'
       - 'package.json'
       - 'bun.lock'
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'publication/README.md'
+      - 'skills/publication-review/SKILL.md'
+      - 'docs/rfc/**'
       - 'scripts/**'
+      - '.github/workflows/deploy.yml'
       - '.github/workflows/visual-capture.yml'
   workflow_dispatch:
 
