@@ -1,12 +1,13 @@
 # RFC 0002 — Superfície editorial de O Vigia sobre Cobogó
 
-Status: **Em revisão — atualização Astro/OKF**  
+Status: **Implementada**  
 Data da decisão: 1 de setembro de 2026  
 Implementação editorial original: 1 de setembro de 2026  
 Correção arquitetural do renderer: #69, pilha #70 → #75  
+Verificação do cutover Astro/Pages: 2 de setembro de 2026  
 Épica: #39
 
-> A gramática editorial desta RFC permanece válida. A correção #69 substitui apenas a camada Jekyll/Liquid por Astro SSG e formaliza o conteúdo público como bundle OKF. A RFC volta temporariamente a “Em revisão” até a pilha #70 → #75 ser integrada.
+> A gramática editorial desta RFC permanece válida. A correção #69 substituiu a camada Jekyll/Liquid por Astro SSG, formalizou o conteúdo público como bundle OKF e foi concluída pela pilha #70 → #75. O deploy de produção foi confirmado por `actions/deploy-pages`, e o GitHub Pages foi configurado com `build_type=workflow`.
 
 ## 1. Decisão
 
@@ -153,7 +154,7 @@ Cada matéria possui:
 
 A rota legada `article.html?id=...` permanece apenas como redirecionamento de compatibilidade e não é distribuída como URL pública principal.
 
-O deploy usa `withastro/action@v6` + `actions/deploy-pages@v5`, Bun 1.3.8 explícito e lockfile congelado.
+O deploy usa `withastro/action@v6` + `actions/deploy-pages@v5`, Bun 1.3.8 explícito e lockfile congelado. O GitHub Pages usa **GitHub Actions** como source (`build_type=workflow`), sem build implícito de branch/Jekyll.
 
 ## 6. Componentes Astro de conceito
 
@@ -328,6 +329,7 @@ A captura visual cobre desktop e mobile de:
 | correção do renderer | issue: Jekyll/Liquid → Astro SSG | #69 |
 | correção do renderer A | foundation Astro + bundle OKF relacional | #70 |
 | correção do renderer B | cutover completo + componentes/páginas/deploy | #75 |
+| fechamento operacional | Pages source `workflow` e remoção do modo legado | #78 |
 
 A pilha #70 → #75 não reabre as decisões editoriais anteriores: ela remove dívida do renderer, converte os conceitos públicos em contrato OKF explícito e faz o Astro consumir esse contrato diretamente.
 
@@ -358,10 +360,9 @@ Correção arquitetural #69:
 - [x] Pagefind, RSS, sitemap, canonical e JSON usam o mesmo Content Layer.
 - [x] deploy usa Astro Pages com Bun pinado e lock congelado.
 - [x] contrato operacional/RFC/skill foram migrados junto com o código.
-- [ ] #70 integrada em `main` após revisão.
-- [ ] #75 integrada em `main` após #70 e deploy confirmado.
-
-Quando os dois últimos itens forem concluídos, esta RFC volta a **Implementada**.
+- [x] #70 integrada em `main` após revisão.
+- [x] #75 integrada em `main` após #70 e deploy confirmado.
+- [x] GitHub Pages configurado com source **GitHub Actions** (`build_type=workflow`), preservando URL, HTTPS e ausência de CNAME.
 
 ## 17. Issues da iniciativa
 
@@ -377,6 +378,7 @@ Quando os dois últimos itens forem concluídos, esta RFC volta a **Implementada
 - #48 — adoção de foundation/design authority;
 - #49 — serviço/agenda/acompanhamento;
 - #50 — gate visual/acessibilidade/performance;
-- #69 — correção do renderer para Astro + contrato OKF público.
+- #69 — correção do renderer para Astro + contrato OKF público;
+- #78 — troca administrativa do GitHub Pages para source `workflow`.
 
-A RFC permanece plano vivo até a integração da pilha #70 → #75 e a confirmação do primeiro deploy Astro em `main`.
+A RFC está **Implementada**: a pilha #70 → #75 foi integrada, o primeiro deploy Astro em `main` foi confirmado e o Pages foi migrado do modo legado para GitHub Actions.
