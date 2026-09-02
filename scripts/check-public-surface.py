@@ -77,6 +77,7 @@ def verify_budget() -> None:
     css_paths = [
         "index.css", "editorial-cover.css", "article.css", "news-shell.css",
         "mobile-editorial.css", "institutional.css", "cobogo-theme.css",
+        "temporal-modules.css",
     ]
     js_paths = ["app.js", "article.js", "article-interactions.js"]
     css_size = sum((ROOT / path).stat().st_size for path in css_paths if (ROOT / path).exists())
@@ -95,6 +96,7 @@ def main() -> int:
     corrections = read("correcoes.html")
     archive = read("arquivo.html")
     sections = read("editorias.html")
+    temporal_contract = read("docs/editorial-temporal-contract.md")
     feed = read("feed.xml")
     sitemap = read("sitemap.xml")
     json_projection = read("articles.json")
@@ -118,6 +120,14 @@ def main() -> int:
     require(index, "lead.media_url", "index.html")
     require(index, "editorias.html", "index.html")
     require(index, "arquivo.html", "index.html")
+    require(index, "next_event_at", "index.html")
+    require(index, "temporal-desk", "index.html")
+    require(index, 'next_event_kind == "acompanhamento"', "index.html")
+    require(index, "story.source_url", "index.html")
+    require(index, "temporal-modules.css", "index.html")
+    require(temporal_contract, "não tenta adivinhar prazos", "docs/editorial-temporal-contract.md")
+    require(temporal_contract, "Agenda — Hoje / próximos dias", "docs/editorial-temporal-contract.md")
+    require(temporal_contract, "Acompanhe — Histórias abertas", "docs/editorial-temporal-contract.md")
     forbid(app, 'fetch("articles.json")', "app.js")
     forbid(app, "fetch('articles.json')", "app.js")
 
