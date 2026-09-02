@@ -1,5 +1,7 @@
 ---
 type: Spec
+title: PublicArticle
+description: Matéria aceita pela autoridade pública de O Vigia e exposta pelo site estático
 ---
 
 # PublicArticle
@@ -10,11 +12,13 @@ type: Spec
 
 - `title` e `description` são o título e a linha fina editoriais aprovados para publicação.
 - `story_id` é a identidade estável usada na URL pública `/noticias/<story_id>/`.
-- `locality` e `category` descrevem a organização pública da matéria sem fabricar território ausente.
+- `locality` e `category` descrevem a organização pública da matéria sem fabricar território ausente; `bairro`, quando existe, é uma territorialização mais específica sustentada pela matéria.
 - `published_at` registra a publicação; `updated_at`, quando presente, registra atualização material da versão pública.
 - `source_repository`, `source_commit`, `source_path` e `source_digest` preservam a proveniência da candidatura aprovada.
 - `source_name` e `source_url` são a apresentação pública mínima da fonte verificável.
 - `next_event_at`, `next_event_kind` e `next_event_label` são opcionais e só existem quando há um próximo marco verificável adequado a Agenda/Acompanhe.
-- campos de mídia editorial são opcionais e, quando usados, devem obedecer ao contrato de mídia pública do repositório.
+- `media_url`, `media_alt`, `media_caption`, `media_credit`, `media_source_url`, `media_width` e `media_height` são opcionais e, quando usados, obedecem a `docs/editorial-media-contract.md`.
 
 O corpo Markdown é conteúdo editorial público canônico. Astro não redefine esta semântica: o schema consumido pelo Content Layer é compilado deste bundle pelo `okf-parser`.
+
+A declaração física `publicarticle.schema.sql` registra tipos e campos opcionais admitidos mesmo quando ainda não há uma observação concreta no acervo. Ela é input confiável do `TypeContract`, não uma segunda implementação de validação no frontend.
