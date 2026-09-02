@@ -4,6 +4,8 @@
 
 Operate the independent public authority of O Vigia. The newsroom ends at a closed `article-ready`; this repository decides whether that exact candidate is accepted for the public brand.
 
+The public site and the newsroom are autonomous recurring loops connected asynchronously by documents. `article-ready` is an offer, never an automatic publication trigger.
+
 ## Session flow
 
 ```text
@@ -15,7 +17,7 @@ reconcile open publication transaction / pending side effects
   → subtract main decisions + open transaction reservations
   → reserve deterministic branch/PR for one free candidate
   → independent publication-review
-      ├─ reject → decision record → exactly one newsroom issue
+      ├─ reject → decision record → exactly one canonical newsroom editorial-ficha
       └─ accept → decision record + fixed public_path
                     → canonical PublicArticle Markdown
                     → OKF contract → Astro static build
@@ -23,7 +25,24 @@ reconcile open publication transaction / pending side effects
                     → publication event
 ```
 
-No automatic sync, webhook, daemon, database or shared queue is part of the contract.
+There is no automatic sync, webhook, RPC editorial call, daemon, database or shared mutable queue. The publication agent does not wait synchronously for newsroom work; future sessions observe future newsroom state.
+
+## Newsroom return channel
+
+When this repository discovers a **material editorial need**, the canonical return channel is an `editorial-ficha` written to `franklinbaldo/ovigia-redacao/knowledge/editorial/fichas/` under the newsroom's OKF contract.
+
+The ficha is broader than a rejection. Valid reasons include:
+
+- `publication-rejection` — candidate cannot be published as-is;
+- `public-correction` — possible material error/staleness in something already live;
+- `follow-up` — later event worth pursuing;
+- `new-story` — related reporting opportunity;
+- `verification` — claim needing confirmation/falsification;
+- `enrichment` — source/data/context/contradictory evidence worth pursuing.
+
+A ficha records an observed editorial need, not an imperative conclusion. The newsroom may fulfill, reformulate, falsify, block or decline it. Resolution belongs to newsroom artifacts such as `editorial-ficha-response`, not to edits of the original request.
+
+GitHub issues are optional human/operational mirrors. They do not replace the canonical ficha. Historical decision records using `newsroom_issue` remain valid; future work should prefer `newsroom_ficha` and must not rewrite history just to rename a field.
 
 ## Candidate identity
 
@@ -66,12 +85,15 @@ Before starting review, check both `main` and open PRs. Existing transaction →
 At session start:
 
 - open transaction PR: resume it first;
-- `rejected` + `newsroom_issue: pending`: search by exact candidate marker and create issue only if absent;
-- reconciled `rejected`: no new review/issue for that digest;
+- `rejected` + `newsroom_ficha: pending`: search the newsroom for a ficha carrying the exact candidate key and create one only if absent;
+- historical `rejected` + `newsroom_issue: pending`: reconcile under the historical contract; do not silently duplicate with a second return object;
+- reconciled `rejected`: no new review/ficha for that digest;
 - `accepted` without publication event: resume the same `public_path` and complete merge/Pages/URL/event;
 - `accepted` + event: nothing to repeat.
 
 Every cross-repository or Pages side effect must be reconstructible after a session stops between steps.
+
+For post-publication fichas, deduplicate by public story plus the material fact/need observed. A new hourly session seeing the same unresolved defect is not a reason to create another ficha.
 
 ## Review scope
 
@@ -137,10 +159,11 @@ Shared foundations come from the pinned Cobogó core. O Vigia remains authoritat
 
 Astro Components are the baseline presentation unit. Svelte or another hydrated framework requires a concrete stateful island or materially superior reusable Cobogó component; do not add framework runtime by default.
 
-## Corrections
+## Corrections and public observation
 
 - renderer/public-metadata bugs can be fixed here if accepted editorial content is unchanged;
-- material editorial corrections/updates require newsroom work → new closed `article-ready` → new review;
+- material editorial corrections/updates require a newsroom ficha/work → new closed `article-ready` → new review;
+- agents inspecting the live site may create `public-correction`, `follow-up`, `new-story`, `verification` or `enrichment` fichas in the newsroom instead of creating a parallel reporting workflow here;
 - this repo may withdraw/tombstone urgently because it owns public availability, but substantive retraction wording belongs to editorial work in the newsroom;
 - preserve public history through `publication/events/` and Git.
 
@@ -155,4 +178,4 @@ Astro Components are the baseline presentation unit. Svelte or another hydrated 
 - `src/pages/**` and `src/components/**`: renderer source, not editorial authority;
 - `dist/`: disposable derived output.
 
-See `docs/rfc/0001-independent-publication-agent.md`, `docs/rfc/0002-editorial-surface-cobogo.md` and `skills/publication-review/SKILL.md`.
+See `docs/rfc/0001-independent-publication-agent.md`, `docs/rfc/0002-editorial-surface-cobogo.md`, `docs/rfc/0003-newsroom-ficha-protocol.md` and `skills/publication-review/SKILL.md`.
