@@ -42,6 +42,7 @@ capture_pair "/noticias/$ARTICLE_SLUG/" "article"
 capture_pair "/metodologia.html" "methodology"
 capture_pair "/correcoes.html" "corrections"
 capture_pair "/editorias.html" "sections"
+capture_pair "/territorios.html" "territories"
 capture_pair "/arquivo.html" "archive"
 
-printf 'Captured 12 public-surface views in %s\n' "$OUT"
+printf 'Captured 14 public-surface views in %s\n' "$OUT"

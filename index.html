@@ -55,6 +55,7 @@
       <a href="#ultimas" aria-current="page">Últimas</a>
       {% if agenda_count > 0 or follow_count > 0 %}<a href="#proximos">Próximos marcos</a>{% endif %}
       <a href="#servico">Serviço</a>
+      <a href="{{ '/territorios.html' | relative_url }}">Territórios</a>
       {% for category in categories %}<a href="{{ '/editorias.html' | relative_url }}#editoria-{{ category | slugify }}">{{ category }}</a>{% endfor %}
       <a href="{{ '/arquivo.html' | relative_url }}">Arquivo</a>
     </nav>
@@ -149,7 +150,7 @@
   </main>
 
   <div class="modal-overlay" id="modal-provenance" role="dialog" aria-modal="true" aria-labelledby="modal-provenance-title" hidden><div class="modal-card"><button type="button" class="modal-close" id="modal-close" aria-label="Fechar modal">&times;</button><div id="modal-content"></div></div></div>
-  <footer><div class="footer-content"><div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div><div class="footer-links"><a href="{{ '/editorias.html' | relative_url }}">Editorias</a><a href="{{ '/arquivo.html' | relative_url }}">Arquivo</a><a href="{{ '/metodologia.html' | relative_url }}">Metodologia</a><a href="{{ '/correcoes.html' | relative_url }}">Correções</a><a href="{{ '/feed.xml' | relative_url }}">RSS</a></div><p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p></div></footer>
+  <footer><div class="footer-content"><div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div><div class="footer-links"><a href="{{ '/editorias.html' | relative_url }}">Editorias</a><a href="{{ '/territorios.html' | relative_url }}">Territórios</a><a href="{{ '/arquivo.html' | relative_url }}">Arquivo</a><a href="{{ '/metodologia.html' | relative_url }}">Metodologia</a><a href="{{ '/correcoes.html' | relative_url }}">Correções</a><a href="{{ '/feed.xml' | relative_url }}">RSS</a></div><p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p></div></footer>
   <script src="{{ '/app.js' | relative_url }}"></script>
 </body>
 </html>
