@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: astro-foundation-migration
+  cancel-in-progress: true
+
 jobs:
   materialize:
     if: github.actor != 'github-actions[bot]'
