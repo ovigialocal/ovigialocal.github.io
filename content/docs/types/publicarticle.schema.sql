@@ -11,6 +11,7 @@ CREATE TABLE "PublicArticle" (
     source_commit VARCHAR,
     source_path VARCHAR,
     source_digest VARCHAR,
+    source_refs VARCHAR[],
     source_name VARCHAR,
     source_url VARCHAR,
     source_original_url VARCHAR,
@@ -31,6 +32,7 @@ COMMENT ON COLUMN "PublicArticle".story_id IS 'Identidade estável usada na URL 
 COMMENT ON COLUMN "PublicArticle".published_at IS 'Momento de publicação da matéria.';
 COMMENT ON COLUMN "PublicArticle".updated_at IS 'Momento de atualização material, quando houver.';
 COMMENT ON COLUMN "PublicArticle".source_digest IS 'Digest da candidatura editorial aprovada.';
-COMMENT ON COLUMN "PublicArticle".source_original_url IS 'Origem viva preservada separadamente quando source_url aponta para snapshot verificável.';
+COMMENT ON COLUMN "PublicArticle".source_refs IS 'Lista canônica de PublicSource.source_ref usadas pela matéria.';
+COMMENT ON COLUMN "PublicArticle".source_original_url IS 'Compatibilidade: origem viva da primeira fonte quando source_url aponta para snapshot verificável.';
 COMMENT ON COLUMN "PublicArticle".next_event_at IS 'Próximo marco verificável usado pelos módulos temporais.';
 COMMENT ON COLUMN "PublicArticle".media_url IS 'Mídia editorial opcional vinculada à matéria.';

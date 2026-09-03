@@ -3,7 +3,7 @@ name: publication-review
 description: Avalia independentemente uma candidata article-ready fechada e decide publicar ou devolver trabalho à redação por ficha editorial canônica.
 compatibility: ">=1.0.0"
 metadata:
-  version: "1.6.0"
+  version: "1.7.0"
   owner_role: "publication-agent"
 ---
 
@@ -39,15 +39,37 @@ A Redação e a face pública são loops recorrentes autônomos. `article-ready`
 10. Se houver necessidade de nova apuração/revisão editorial, siga `Reject`.
 11. Se for publicável sem mudança material de conteúdo editorial, siga `Accept`.
 
-## Archived provenance
+## Proveniência factual multi-source
 
-A autoridade pública preserva a distinção entre origem viva e evidência arquivada produzida pela Redação:
+A candidatura editorial e as fontes factuais são cadeias distintas:
 
-- quando a `source-observation` usada pela candidata contém `archive_url` válido e correspondente ao material verificado, o link público de proveniência deve apontar para esse snapshot do Internet Archive/Wayback Machine;
-- nesse caso, grave o snapshot em `source_url` do `PublicArticle` para que todas as superfícies derivadas apontem para a evidência temporalmente estável;
-- preserve a origem canônica/viva em `source_original_url` quando o contrato público admitir esse campo;
-- quando a observação registra `archive_failure` válido ou o recurso não é arquivável, use a origem viva em `source_url` e não invente um endereço Wayback;
-- não substitua um snapshot verificado por captura mais antiga ou mais recente apenas por conveniência: a cópia pública deve representar a evidência usada na apuração sempre que isso for tecnicamente possível.
+- `PublicArticle.source_repository`, `source_commit`, `source_path` e `source_digest` preservam **qual candidatura editorial aprovada** originou a publicação;
+- `PublicArticle.source_refs` aponta para **todas as `PublicSource` factuais materiais** usadas pela matéria;
+- cada `PublicSource` corresponde a uma `source-observation` distinta da Redação e conserva sua própria provenance.
+
+Não existe uma única provenance factual por matéria. Uma matéria pode ter uma fonte ou dezenas delas. Uma fonte pode ser reutilizada por várias matérias quando a mesma `source-observation` é pertinente.
+
+Na projeção pública:
+
+1. percorra as relações `sources` do `article-ready` e do subject aprovado;
+2. identifique as `source-observation` factuais materialmente usadas pelo texto — não publique profile, gate, self-review, ficha, experiência interna ou outro artefato operacional como se fosse fonte factual;
+3. para cada `source-observation`, materialize/reutilize uma `PublicSource` cujo `source_ref` é o locator da própria observação da Redação; não crie UUID/hash paralelo;
+4. preserve `name`, `source_kind`, `publisher`, `observed_at` e os dados públicos de arquivamento aplicáveis;
+5. grave todos os locators em `PublicArticle.source_refs`, em ordem determinística coerente com a relação editorial;
+6. valide que nenhum `source_ref` fica sem `PublicSource` correspondente antes do merge.
+
+`source_name`, `source_url` e `source_original_url` no `PublicArticle` são somente uma projeção singular de compatibilidade para consumidores legados/SEO. Quando `source_refs` existir, esses campos **não são a fonte canônica do conjunto** e jamais devem ser usados para esconder as demais origens.
+
+## Archived provenance por fonte
+
+A autoridade pública preserva separadamente a distinção entre origem viva e evidência arquivada **para cada fonte**:
+
+- quando uma `source-observation` contém `archive_url` válido e correspondente ao material cuja equivalência foi confirmada pela Redação, `PublicSource.source_url` deve apontar para esse snapshot do Internet Archive/Wayback Machine;
+- nesse caso, preserve a origem canônica/viva em `PublicSource.source_original_url`;
+- quando a observação registra `archive_failure` válido ou o recurso não é arquivável, use a origem viva em `PublicSource.source_url` e não invente um endereço Wayback;
+- request sem resultado terminal ou snapshot sem equivalência confirmada não pode ser promovido silenciosamente a `verified`;
+- não substitua um snapshot verificado por captura mais antiga ou mais recente apenas por conveniência: a cópia pública deve representar a evidência usada na apuração sempre que isso for tecnicamente possível;
+- preservação de uma fonte não cobre outra fonte da mesma matéria.
 
 Essa seleção de URL é transformação de proveniência pública, não edição editorial do conteúdo aprovado.
 
@@ -87,20 +109,22 @@ Registros anteriores que usam `newsroom_issue` continuam válidos. Não os reesc
 1. Na transação reservada, grave decision `accepted` com um único `public_path`.
 2. Extraia body/title/description aprovados do envelope validado; não copie frontmatter privado inteiro.
 3. Aplique whitelist de metadados públicos e preserve `story_id`, source repo/commit/path/digest.
-4. Projete a proveniência conforme `Archived provenance`: prefira `archive_url` verificado como `source_url` público e preserve a origem quando o contrato permitir; use a origem diretamente somente quando não houver snapshot válido.
-5. Resolva slug collision como metadado público; não rejeite só por colisão técnica.
-6. Materialize ou atualize `content/articles/<slug>.md` como `type: PublicArticle`. Qualquer `locality`/`bairro` usado deve resolver para `PublicTerritory` existente; crie/ajuste o conceito territorial apenas quando o território é factual e canônico, nunca por slugificação ad hoc.
-7. Rode o contrato público: `python scripts/check-astro-okf-contract.py`, `python scripts/check-public-surface.py`, `bun run check` e `bun run build`. Não gere `_news` nem outra cópia do artigo.
-8. Integre a PR por Git normal.
-9. Depois do merge, confirme Pages/URL.
-10. Registre publication event posterior com kind, candidate key, commit, artefato/path, URL e timestamp.
-11. Se `accepted` já está em `main` sem event, retome o mesmo `public_path`; não reveja, não escolha outro slug e não publique uma segunda cópia.
+4. Resolva **todas** as `source-observation` factuais materiais da candidata e materialize/reutilize uma `PublicSource` para cada uma, conforme `Proveniência factual multi-source` e `Archived provenance por fonte`.
+5. Grave em `PublicArticle.source_refs` todos os `source_ref` materializados. Se mantiver `source_name/source_url/source_original_url`, trate-os apenas como projeção compatível da primeira fonte exibível.
+6. Resolva slug collision como metadado público; não rejeite só por colisão técnica.
+7. Materialize ou atualize `content/articles/<slug>.md` como `type: PublicArticle`. Qualquer `locality`/`bairro` usado deve resolver para `PublicTerritory` existente; crie/ajuste o conceito territorial apenas quando o território é factual e canônico, nunca por slugificação ad hoc.
+8. Verifique que toda `source_ref` resolve para `PublicSource` e que fontes arquivadas/fallbacks correspondem exatamente à provenance da Redação.
+9. Rode o contrato público: `python scripts/check-astro-okf-contract.py`, `python scripts/check-public-surface.py`, `bun run check` e `bun run build`. Não gere `_news` nem outra cópia do artigo.
+10. Integre a PR por Git normal.
+11. Depois do merge, confirme Pages/URL.
+12. Registre publication event posterior com kind, candidate key, commit, artefato/path, URL e timestamp.
+13. Se `accepted` já está em `main` sem event, retome o mesmo `public_path`; não reveja, não escolha outro slug e não publique uma segunda cópia.
 
 ## Public semantic boundary
 
-`content/` é um bundle OKF público. `okf-parser` é a autoridade sobre o TypeContract de `PublicArticle` e `PublicTerritory`; Astro apenas consome o Zod gerado e apresenta os conceitos.
+`content/` é um bundle OKF público. `okf-parser` é a autoridade sobre o TypeContract de `PublicArticle`, `PublicSource` e `PublicTerritory`; Astro apenas consome o Zod gerado e apresenta os conceitos.
 
-Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/Astro. Não trate `PublicTerritory.name` como rótulo de UI: `name` é chave relacional e `title` é apresentação humana.
+Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/Astro. Não trate `PublicTerritory.name` como rótulo de UI: `name` é chave relacional e `title` é apresentação humana. Não trate `PublicArticle.source_name/source_url` como substituto do conjunto `source_refs` quando este existir.
 
 ## Corrections and post-publication feedback
 
@@ -126,6 +150,8 @@ Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/A
 - editar conteúdo editorial materialmente;
 - tratar preferência estilística como blocker;
 - publicar fixture/demo como notícia real;
+- escolher uma única fonte para representar artificialmente todas as origens materiais da matéria;
+- omitir uma fonte material apenas porque outra já possui snapshot;
 - inventar snapshot, timestamp de arquivamento ou equivalência entre landing page e anexo não verificado;
 - manter `_news`, schema manual ou parser de frontmatter paralelo ao `okf-parser`.
 
