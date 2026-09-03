@@ -12,12 +12,11 @@ h1, h2, h3, p { margin-top: 0; }
 /* ——— Cabeçalho ——— */
 .site-header { border-bottom: var(--border-width) solid var(--ink); background: var(--paper-raised); }
 .utility-bar {
-  max-width: 1180px; margin: auto; padding: var(--s-2) var(--s-6);
+  padding: var(--s-2) var(--s-6);
   display: flex; justify-content: space-between; gap: var(--s-4);
   background: var(--ink); color: var(--papel-10);
   font-family: var(--font-mono); font-size: .69rem; letter-spacing: .11em; text-transform: uppercase;
 }
-.utility-bar { max-width: none; }
 .utility-bar > span { color: var(--highlight); }
 .utility-bar nav { display: flex; gap: var(--s-5); }
 .utility-bar a { color: var(--papel-10); text-decoration: none; }
@@ -70,7 +69,7 @@ h1, h2, h3, p { margin-top: 0; }
   font-family: var(--font-mono); font-size: .69rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
 }
 .edition-intro .eyebrow { grid-column: 1/-1; }
-h1 {
+.edition-intro h1 {
   margin-bottom: 0; font-family: var(--font-display);
   font-size: clamp(2.4rem, 5.4vw, 4.2rem); line-height: 1; font-weight: 800; letter-spacing: -.032em;
   color: var(--ink); text-wrap: balance;
@@ -95,17 +94,16 @@ h1 {
 .trust-links { display: grid; gap: var(--s-2); font-size: .84rem; font-weight: 700; }
 
 /* ——— Busca e filtro ——— */
+/* A capa filtra por território; buscar texto é trabalho do arquivo (Pagefind). */
 .controls-section {
-  display: flex; gap: var(--s-4); align-items: center;
-  padding: var(--s-5) 0; border-bottom: 1px solid var(--rule);
+  display: flex; gap: var(--s-4); align-items: center; justify-content: space-between;
+  padding: var(--s-4) 0; border-bottom: 1px solid var(--rule);
 }
-.search-box { position: relative; flex: 1; }
-.search-icon { position: absolute; left: var(--s-4); top: 50%; transform: translateY(-50%); color: var(--muted); }
-.search-input {
-  width: 100%; min-height: 44px; border: 1px solid var(--concreto-40); background: var(--paper-raised);
-  padding: var(--s-3) var(--s-4) var(--s-3) var(--s-7); color: var(--ink); font: inherit;
+.controls-section > a {
+  flex: none; color: var(--accent-cold);
+  font-size: .8rem; font-weight: 700; text-decoration: none; white-space: nowrap;
 }
-.search-input::placeholder { color: var(--muted); }
+.controls-section > a:hover { color: var(--accent); }
 .bairro-filter { display: flex; gap: var(--s-2); overflow-x: auto; scrollbar-width: none; }
 .bairro-filter::-webkit-scrollbar { display: none; }
 .filter-chip {
@@ -117,10 +115,8 @@ h1 {
 .filter-chip.active { border-color: var(--ink); background: var(--ink); color: var(--papel-10); }
 
 /* ——— Cartões genéricos ——— */
-.news-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
-.news-card { padding: 0 var(--s-5) var(--s-5); border-right: 1px solid var(--rule); display: flex; flex-direction: column; }
-.news-card:first-child { padding-left: 0; }
-.news-card:last-child { border-right: 0; }
+/* A grade fica em editorial-cover.css (12 colunas); aqui só o interior do cartão. */
+.news-card { display: flex; flex-direction: column; }
 .card-header {
   display: flex; justify-content: space-between; gap: var(--s-4); margin-bottom: var(--s-3);
   color: var(--muted); font-family: var(--font-mono); font-size: .68rem; letter-spacing: .09em; text-transform: uppercase;
@@ -184,9 +180,7 @@ footer { border-top: var(--border-width) solid var(--ink); background: var(--ink
   .front-page { padding: var(--s-6) var(--s-4) var(--s-8); }
   .edition-intro, .empty-edition { grid-template-columns: 1fr; gap: var(--s-5); }
   .edition-deck { font-size: 1.05rem; }
-  .controls-section { display: grid; gap: var(--s-3); }
-  .news-grid { grid-template-columns: 1fr; }
-  .news-card, .news-card:first-child { padding: var(--s-5) 0; border-right: 0; border-bottom: 1px solid var(--rule); }
+  .controls-section { display: grid; justify-items: start; gap: var(--s-3); }
   .footer-content { grid-template-columns: 1fr; padding-inline: var(--s-4); }
   .footer-license { grid-column: auto; }
 }
