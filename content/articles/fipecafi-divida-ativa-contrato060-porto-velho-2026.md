@@ -10,6 +10,8 @@ source_repository: "franklinbaldo/ovigia-redacao"
 source_commit: "6980254e41abbd700e8366f2640e6dba0f40211e"
 source_path: "knowledge/porto-velho/articles/2026/09/porto-velho-fipecafi-divida-ativa-contrato060-2026/ready-v2.md"
 source_digest: "sha256:68060d5fe566d7f1146142a268d7306ed8d1a3fb3f6fffdfe2f746eb953d0a9c"
+source_refs:
+  - "knowledge/porto-velho/sources/accountability/2026-09-03-fipecafi-tce-acordao-00138-25.md"
 source_name: "TCE-RO — Acórdão APL-TC 00138/25"
 source_url: "https://tce.ro.gov.br/doe/arquivos/Diario_03411_2025-9-26-15-30-36.pdf"
 ---
