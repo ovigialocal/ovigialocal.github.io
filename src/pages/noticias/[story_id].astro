@@ -3,6 +3,17 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDateTime, resolveStoryTerritory, slugify, sortStories, storyUrl, territoryUrl, type Story } from '../../lib/news';
 
+type FactualSource = {
+  ref: string;
+  name: string;
+  url: string;
+  originalUrl?: string;
+  publisher?: string;
+  observedAt?: string;
+  archiveStatus?: string;
+  archiveFailureCode?: string;
+};
+
 export async function getStaticPaths() {
   const stories = await getCollection('articles');
   return stories.map((story) => ({ params: { story_id: story.data.story_id }, props: { story } }));
@@ -13,7 +24,7 @@ const { Content } = await render(story);
 const allStories = sortStories(await getCollection('articles'));
 const sourceEntries = await getCollection('sources');
 const sourcesByRef = new Map(sourceEntries.map((source) => [source.data.source_ref, source]));
-const factualSources = (story.data.source_refs ?? [])
+const resolvedSources: FactualSource[] = (story.data.source_refs ?? [])
   .map((ref) => sourcesByRef.get(ref))
   .filter((source) => source !== undefined)
   .map((source) => ({
@@ -26,18 +37,12 @@ const factualSources = (story.data.source_refs ?? [])
     archiveStatus: source.data.archive_status,
     archiveFailureCode: source.data.archive_failure_code,
   }));
-if (factualSources.length === 0) {
-  factualSources.push({
-    ref: story.data.source_path,
-    name: story.data.source_name,
-    url: story.data.source_url,
-    originalUrl: story.data.source_original_url,
-    publisher: undefined,
-    observedAt: undefined,
-    archiveStatus: undefined,
-    archiveFailureCode: undefined,
-  });
-}
+const factualSources: FactualSource[] = resolvedSources.length > 0 ? resolvedSources : [{
+  ref: story.data.source_path,
+  name: story.data.source_name,
+  url: story.data.source_url,
+  originalUrl: story.data.source_original_url,
+}];
 const primarySource = factualSources[0];
 const territories = await getCollection('territories');
 const territory = resolveStoryTerritory(story, territories);
