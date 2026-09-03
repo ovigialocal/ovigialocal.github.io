@@ -4,6 +4,10 @@ CREATE TABLE "PublicTerritory" (
     parent_territory_id VARCHAR REFERENCES "PublicTerritory"(territory_id)
 );
 
+CREATE TABLE "PublicSource" (
+    source_ref VARCHAR PRIMARY KEY
+);
+
 CREATE TABLE "PublicArticle" (
     story_id VARCHAR PRIMARY KEY,
     locality VARCHAR REFERENCES "PublicTerritory"(name),
