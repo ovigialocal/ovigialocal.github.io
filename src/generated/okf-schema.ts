@@ -34,6 +34,7 @@ export const PublicArticleSchema = z.object({
 export const PublicSourceSchema = z.object({
   "archive_failure_code": z.string().optional(),
   "archive_status": z.string(),
+  "description": z.string().optional(),
   "name": z.string(),
   "observed_at": z.iso.datetime({ offset: true }),
   "publisher": z.string(),
@@ -41,6 +42,7 @@ export const PublicSourceSchema = z.object({
   "source_original_url": z.string().optional(),
   "source_ref": z.string(),
   "source_url": z.string(),
+  "title": z.string().optional(),
   "type": z.literal("PublicSource")
 });
 
