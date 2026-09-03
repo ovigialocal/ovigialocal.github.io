@@ -1,66 +1,59 @@
 ---
 type: PublicArticle
-title: "Contrato emergencial de R$ 21,5 milhões para o lixo vence em 23 de setembro; página da PPP ainda exibe estudos até P4"
-description: "Decisão municipal de 2025 determinou concluir o procedimento da PPP durante uma contratação emergencial de 180 dias. Em abril deste ano, o Conselho informou ao Ministério Público que P7 sairia em maio; a página oficial atual expõe somente P1 a P4."
+title: "Contrato emergencial do lixo vence em 23 de setembro; Prefeitura falou em ‘novo processo licitatório’, mas não o identificou"
+description: "Depois de prever P7 da PPP para maio, a Prefeitura disse que a operação temporária seguiria até uma nova licitação. Em julho, contratou a B3 para apoiar fases externas de projetos de PPP, mas o contrato não identifica resíduos nem prova que a MIP 005 entrou nessa fase."
 story_id: "porto-velho-residuos-emergencial-ppp-2026"
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-02T22:25:00+00:00"
+updated_at: "2026-09-03T01:46:00+00:00"
 source_repository: "franklinbaldo/ovigia-redacao"
-source_commit: "ea9b1800d640eaf2a720cf5f6e4d2f923ddde35a"
-source_path: "knowledge/porto-velho/articles/2026/09/porto-velho-residuos-emergencial-ppp-2026/ready-v1.md"
-source_digest: "sha256:bf4769934ea8794671caad36432dac84beb7ec415aedcac1c6cc7dcda9fc8415"
-source_name: "Prefeitura de Porto Velho — Portal da Transparência"
-source_url: "https://web.archive.org/web/20260902213210/https://transparencia.portovelho.ro.gov.br/contratos/4041"
-source_original_url: "https://transparencia.portovelho.ro.gov.br/contratos/4041"
+source_commit: "4e80c50be299bac8ad354aff9565333a543b71ef"
+source_path: "knowledge/porto-velho/articles/2026/09/porto-velho-residuos-emergencial-ppp-2026/ready-v2.md"
+source_digest: "sha256:e35cc23c7c31b36f53876866eb8e7680340b5837ee27eeb22c7cc5c55ff82997"
+source_name: "Prefeitura de Porto Velho — comunicação de 22 de maio"
+source_url: "https://web.archive.org/web/20260903003503/https://agencia.portovelho.ro.gov.br/noticias/eficiencia-coleta-de-lixo-em-porto-velho-segue-com-novas-rotas-para-melhor-atender-a-populacao"
+source_original_url: "https://agencia.portovelho.ro.gov.br/noticias/eficiencia-coleta-de-lixo-em-porto-velho-segue-com-novas-rotas-para-melhor-atender-a-populacao"
 ---
 
-# Contrato emergencial de R$ 21,5 milhões para o lixo vence em 23 de setembro; página da PPP ainda exibe estudos até P4
+# Contrato emergencial do lixo vence em 23 de setembro; Prefeitura falou em ‘novo processo licitatório’, mas não o identificou
 
-O contrato emergencial que mantém parte central dos serviços de resíduos sólidos de Porto Velho está registrado como **ativo até 23 de setembro de 2026**. O vínculo com a Sistemma Assessoria e Construções tem valor global de **R$ 21.534.781,01** e abrange coleta e transporte de resíduos urbanos, tratamento de resíduos de serviços de saúde e operação e manutenção do Aterro Sanitário de Jirau.
+O contrato emergencial que mantém a coleta e outros serviços de resíduos sólidos de Porto Velho está registrado como ativo até **23 de setembro de 2026**. O vínculo com a Sistemma Assessoria e Construções tem valor global de **R$ 21.534.781,01**. No empenho exibido pelo Portal da Transparência, R$ 6.514.361,98 aparecem liquidados e R$ 3.247.284,38 pagos.
 
-No empenho exibido pelo próprio Portal da Transparência, os R$ 21,53 milhões estão empenhados; **R$ 6.514.361,98 aparecem como liquidados e R$ 3.247.284,38 como pagos**. Os mesmos valores constam do snapshot Wayback preservado antes desta versão da matéria.
+O que ocorrerá depois dessa data ainda não está identificado nos documentos públicos localizados nesta apuração. A Prefeitura, porém, deu uma pista mais recente do que a página da PPP: em **22 de maio**, informou que a Sistemma continuaria temporariamente na coleta **“até a conclusão de um novo processo licitatório”**.
 
-O prazo chama atenção porque a solução emergencial para o lixo já havia sido formalmente ligada, no início de 2025, à conclusão de uma contratação definitiva por parceria público-privada. A documentação pública mostra que esse caminho ainda estava em fase de estudos em abril deste ano e que a página oficial do projeto, observada agora, expõe produtos somente até o P4.
+A comunicação não informa o número, a modalidade ou o objeto detalhado desse processo e não diz que ele corresponde à MIP 005/2025, a parceria público-privada de resíduos. Por isso, a frase é um ponto de partida para procurar a solução definitiva — não prova de que a PPP tenha avançado ou sido substituída.
 
-Isso **não prova que P5, P6 ou P7 inexistam internamente**. Mostra uma diferença verificável entre o cronograma que a Prefeitura informou em documentos oficiais e aquilo que hoje está disponível na vitrine pública da MIP 005/2025.
+Essa distinção importa porque, em fevereiro de 2025, uma decisão municipal havia associado expressamente a contratação emergencial à conclusão da PPP em 180 dias. Em abril deste ano, o Conselho Gestor informou ao Ministério Público que a MIP ainda estava em fase de estudos e previu a entrega do P7, a modelagem jurídica e anexos, para **22 de maio**. A partir daí, segundo a ata, viriam consulta pública, audiência pública e as demais fases da licitação.
 
-## Em 2025, decisão fixou 180 dias para a emergência e para a PPP
+## O que aconteceu depois do prazo previsto para o P7
 
-A Decisão nº 001/2025, publicada em fevereiro do ano passado, determinou a abertura imediata de uma contratação emergencial para os serviços de resíduos por **180 dias**. No mesmo item, registrou que, dentro desse prazo, deveria ser finalizado o procedimento licitatório para contratação da PPP.
+A apuração voltou à cadeia documental depois de 22 de maio, em vez de usar apenas a ausência de P5, P6 e P7 na página pública da MIP como medida de avanço do processo.
 
-O ato também determinou que a contratação definitiva por concessão administrativa voltasse à fase interna para ajustes no Projeto Básico e no edital, em atendimento a decisões do Tribunal de Contas do Estado.
+Na própria data prevista para o P7, a Prefeitura publicou a comunicação sobre a continuidade temporária da Sistemma até um **“novo processo licitatório”**. A página não identifica esse processo.
 
-A própria decisão reproduziu uma determinação do TCE que justificava o limite de 180 dias como forma de evitar que uma contratação precária se prolongasse por tempo indeterminado.
+Em julho, surgiu outro documento relevante. O Município assinou o **Contrato nº 079/2026/PGM** com a B3 S.A. — Brasil, Bolsa, Balcão, no valor global de **R$ 2.346.639,60**, para assessoramento operacional, procedimental e suporte técnico à **fase externa de procedimentos licitatórios de projetos aprovados pelo Conselho Gestor do Programa de PPP**.
 
-O caminho administrativo e contratual, porém, não terminou naquela primeira emergência. O registro atual do Portal da Transparência informa que o contrato emergencial anterior, nº 028/PGM/2025, com o Consórcio ECOPVH, não foi prorrogado em março deste ano. Segundo a observação oficial do portal, a Decisão nº 4 da Seinfra apontou graves falhas na execução dos serviços e perda superveniente das condições de habilitação do consórcio.
+Mas o contrato geral da B3 não autoriza concluir que a MIP de resíduos já entrou nessa etapa. Ele estabelece que os serviços serão executados **sob demanda** e que cada projeto depende de uma **Ordem de Serviço prévia**. Essa OS deve identificar o projeto — concessão ou PPP — e o cronograma da fase externa.
 
-A Prefeitura então convocou a empresa remanescente da **mesma Dispensa Emergencial nº 001/2025**, com fundamento no art. 90, § 7º, da Lei nº 14.133/2021. Foi assim que a Sistemma assumiu o contrato que o portal registra hoje com vigência de 24 de março a 23 de setembro.
+No texto do contrato lido nesta apuração não aparecem “MIP 005/2025”, “resíduos” nem outra identificação equivalente do projeto de lixo. Assim, a contratação da B3 mostra movimentação municipal posterior a maio para conduzir fases externas de projetos do Conselho, mas **não liga documentalmente essa movimentação à PPP de resíduos**.
 
-Portanto, não se trata de afirmar que houve uma nova dispensa independente em 2026: a documentação municipal apresenta o contrato atual como desdobramento da contratação emergencial iniciada em 2025.
+## Página da MIP continua em P4 — e isso, sozinho, não resolve a pergunta
 
-## Em abril, Conselho disse ao MP que P7 sairia em maio
+A página pública atual da MIP 005/2025 continua listando autorização, plano de trabalho, kick-off e os produtos P1, P2, P3 e P4. Na superfície observada, não aparecem links identificados como P5, P6, P7, consulta pública, audiência pública ou edital.
 
-O estágio da solução definitiva apareceu novamente em documento oficial neste ano.
+Sob uma leitura mais rigorosa, isso prova somente o estado dessa página. Não prova que os documentos posteriores não tenham sido produzidos, que a PPP esteja parada ou que inexista outro processo administrativo relacionado.
 
-Na 36ª reunião do Conselho Gestor do Programa de PPP, realizada em **10 de abril de 2026**, os membros analisaram um pedido de informações do Ministério Público sobre a fase do procedimento para concessão dos serviços de resíduos no âmbito da MIP nº 05.
+Por isso, a busca foi ampliada para atos e referências posteriores ao prazo de maio, inclusive pelo número da MIP, por resíduos, pela contratação da B3 e pelo processo administrativo do contrato da B3. Até esta versão do draft, não foi localizado documento público que identifique uma Ordem de Serviço da B3 para a MIP 005/2025, nem consulta, audiência ou edital que ligue de forma verificável a fase externa ao projeto de resíduos.
 
-A resposta registrada em ata dizia que, até então, haviam sido entregues P1, P2 e P3 e que o projeto permanecia em **fase de estudos**. O Conselho informou previsão de conclusão com a entrega do **P7 — Modelagem Jurídica e Anexos — em 22 de maio de 2026**.
+Essa é uma conclusão de busca pública, não uma afirmação de inexistência interna.
 
-Segundo a própria ata, a partir dessa entrega teriam início consulta pública, audiência pública e as demais fases do processo licitatório.
+## Emergência já passou por duas empresas
 
-## Página oficial hoje mostra P1 a P4
+A solução atual também precisa ser lida no histórico da emergência. O primeiro contrato, nº 028/PGM/2025, com o Consórcio ECOPVH, não foi prorrogado em março de 2026. O Portal da Transparência registra que a Decisão nº 4 da Seinfra apontou graves falhas na execução e perda superveniente das condições de habilitação.
 
-A página pública atual da MIP 005/2025 lista a autorização, o plano de trabalho, a reunião de kick-off e quatro produtos: **P1 — Diagnóstico e Estudos Preliminares; P2 — Modelagem do Projeto; P3 — Avaliação Comercial e Estudo de Demanda; e P4 — Estudo Socioambiental**.
+A Prefeitura convocou então a Sistemma, remanescente da **mesma Dispensa Emergencial nº 001/2025**, com fundamento no art. 90, § 7º, da Lei nº 14.133/2021. O contrato atual vigora de 24 de março a 23 de setembro.
 
-Na observação atual, a página não apresenta links identificados como P5, P6, P7, consulta pública, audiência pública ou edital dessa MIP.
+Portanto, o ponto de atenção não é simplesmente que “a página da PPP só mostra P4”. O fato documentado é mais específico: uma emergência iniciada em 2025 passou por duas contratadas; o Município previu P7 para maio; na data prevista passou a falar publicamente em um “novo processo licitatório”; e, em julho, contratou suporte geral da B3 para fases externas de projetos do Conselho de PPP, sem que o próprio contrato identifique o projeto de resíduos.
 
-Esse ponto precisa ser lido com cuidado. A ausência dos links **não permite concluir que os documentos não tenham sido produzidos ou que não existam em outra superfície administrativa**. O que ela permite afirmar é mais limitado: a página oficial que o próprio Conselho utiliza para dar publicidade aos produtos da MIP ainda não mostra ao público as etapas posteriores previstas no cronograma informado ao Ministério Público.
-
-## O que precisa estar claro antes do fim do contrato
-
-O contrato da Sistemma termina, segundo o Portal da Transparência, em 23 de setembro. A documentação examinada não permite afirmar antecipadamente qual será a solução operacional adotada nessa data.
-
-Há, portanto, uma pergunta pública objetiva: **em que estágio estão hoje P5, P6 e P7 da MIP 005/2025, a consulta e a audiência pública, e qual será o instrumento que garantirá a continuidade dos serviços depois de 23 de setembro?**
-
-Responder isso é diferente de presumir irregularidade ou paralisação. O dado verificável é que a Prefeitura fixou em 2025 uma emergência de 180 dias associada à conclusão da PPP; em abril de 2026 informou ao Ministério Público que o P7 seria entregue em maio; e, já no último mês de vigência do contrato emergencial atual, a página pública do projeto ainda expõe os estudos somente até o P4.
+Antes de 23 de setembro, a pergunta objetiva é: **qual é o número e o instrumento do processo definitivo que a Prefeitura disse estar preparando para substituir a operação temporária, e qual documento demonstra hoje o estágio da MIP 005/2025 dentro — ou fora — desse caminho?**
