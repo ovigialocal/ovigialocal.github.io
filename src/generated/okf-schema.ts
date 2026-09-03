@@ -22,12 +22,26 @@ export const PublicArticleSchema = z.object({
   "source_name": z.string(),
   "source_original_url": z.string().optional(),
   "source_path": z.string(),
+  "source_refs": z.array(z.string()).optional(),
   "source_repository": z.string(),
   "source_url": z.string(),
   "story_id": z.string(),
   "title": z.string(),
   "type": z.literal("PublicArticle"),
   "updated_at": z.iso.datetime({ offset: true }).optional()
+});
+
+export const PublicSourceSchema = z.object({
+  "archive_failure_code": z.string(),
+  "archive_status": z.string(),
+  "name": z.string(),
+  "observed_at": z.iso.datetime({ offset: true }),
+  "publisher": z.string(),
+  "source_kind": z.string(),
+  "source_original_url": z.string().optional(),
+  "source_ref": z.string(),
+  "source_url": z.string(),
+  "type": z.literal("PublicSource")
 });
 
 export const PublicTerritorySchema = z.object({
