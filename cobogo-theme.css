@@ -1,30 +1,84 @@
 /* O Vigia keeps product identity downstream from Cobogó core.
  * Shared role meaning comes from Cobogó; concrete editorial values remain local.
+ *
+ * Identidade: Brazilian Modernism — paleta Ipanema.
+ * Niemeyer (calma monumental) + Concretismo (geometria de aresta dura)
+ * + Athos Bulcão (cor de azulejo e ritmo modular).
  */
 :root {
   color-scheme: light;
 
-  --cobogo-canvas: #f5f1e8;
-  --cobogo-surface: #fffdf8;
-  --cobogo-surface-muted: #ebe4d7;
-  --cobogo-text: #171714;
-  --cobogo-text-muted: #676258;
-  --cobogo-border: #c9c0b1;
-  --cobogo-accent: #9d2b25;
-  --cobogo-focus: #9d2b25;
-  --cobogo-focus-contrast: #f5f1e8;
-  --cobogo-font-body: 'Inter', system-ui, sans-serif;
-  --cobogo-font-display: 'Newsreader', Georgia, serif;
-  --cobogo-font-inscription: 'Inter', system-ui, sans-serif;
+  /* ——— Papel / concreto ——— */
+  --papel-00: #fbf8f1;
+  --papel-10: #f5f1e8;
+  --papel-20: #ede7d8;
+  --papel-30: #dcd4be;
+  --concreto-40: #b8b0a0;
+  --concreto-60: #6b6455;
+  --concreto-80: #2e2a24;
+  --concreto-90: #1a1814;
 
-  /* Product aliases: retained while editorial CSS is progressively migrated. */
+  /* ——— Primárias de azulejo ——— */
+  --azul: #1b2b4b;
+  --azul-bright: #2d4a7b;
+  --vermelho: #c8472e;
+  --vermelho-deep: #9c3422;
+  --ocre: #d9a441;
+  --verde: #2e6b4a;
+
+  /* ——— Papéis compartilhados do Cobogó ——— */
+  --cobogo-canvas: var(--papel-10);
+  --cobogo-surface: var(--papel-00);
+  --cobogo-surface-muted: var(--papel-20);
+  --cobogo-text: var(--concreto-80);
+  --cobogo-text-muted: var(--concreto-60);
+  --cobogo-border: var(--papel-30);
+  --cobogo-accent: var(--vermelho);
+  --cobogo-focus: var(--azul);
+  --cobogo-focus-contrast: var(--papel-10);
+  --cobogo-success: var(--verde);
+  --cobogo-warning: #a87a1f;
+  --cobogo-danger: var(--vermelho-deep);
+  --cobogo-font-body: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --cobogo-font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --cobogo-font-inscription: 'JetBrains Mono', ui-monospace, monospace;
+  --cobogo-font-data: 'JetBrains Mono', ui-monospace, monospace;
+  --cobogo-leading-tight: 1.05;
+  --cobogo-radius-control: 0;
+  --cobogo-radius-surface: 0;
+  --cobogo-shadow-raised: 2px 2px 0 var(--concreto-90);
+
+  /* ——— Aliases de produto: o CSS editorial existente consome estes ——— */
   --paper: var(--cobogo-canvas);
   --paper-deep: var(--cobogo-surface-muted);
-  --ink: var(--cobogo-text);
+  --paper-raised: var(--cobogo-surface);
+  --ink: var(--concreto-90);
+  --ink-body: var(--concreto-80);
   --muted: var(--cobogo-text-muted);
   --rule: var(--cobogo-border);
-  --accent: var(--cobogo-accent);
-  --accent-dark: #72201c;
-  --font-serif: var(--cobogo-font-display);
+  --rule-strong: var(--concreto-80);
+  --accent: var(--vermelho);
+  --accent-dark: var(--vermelho-deep);
+  --accent-cold: var(--azul);
+  --highlight: var(--ocre);
+
+  /* Tipografia editorial: display em Archivo, leitura em Piazzolla,
+   * dados e olhos-de-página em mono. */
+  --font-display: var(--cobogo-font-display);
   --font-sans: var(--cobogo-font-body);
+  --font-serif: 'Piazzolla', 'Tiempos', Georgia, serif;
+  --font-mono: var(--cobogo-font-inscription);
+
+  /* Régua modular concretista de 8pt. */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+
+  --border-width: 1.5px;
 }
