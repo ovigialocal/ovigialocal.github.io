@@ -29,7 +29,7 @@ def verify_no_jekyll() -> None:
 
 
 def verify_budget() -> None:
-    css_paths = ["index.css", "editorial-cover.css", "article.css", "news-shell.css", "mobile-editorial.css", "institutional.css", "cobogo-theme.css", "temporal-modules.css"]
+    css_paths = ["index.css", "editorial-cover.css", "article.css", "news-shell.css", "mobile-editorial.css", "institutional.css", "cobogo-theme.css", "temporal-modules.css", "print.css"]
     css_size = sum((ROOT / path).stat().st_size for path in css_paths if (ROOT / path).exists())
     if css_size > 90_000:
         raise SystemExit(f"CSS budget exceeded: {css_size} > 90000 bytes")

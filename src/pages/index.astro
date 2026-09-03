@@ -40,9 +40,9 @@ const navItems = [
       <section class="empty-edition" aria-labelledby="empty-title"><div class="empty-edition-main"><p class="eyebrow">Acervo</p><h2 id="empty-title">Ainda não há matérias publicadas.</h2><p>A capa permanece vazia quando não existe conteúdo aceito para publicação.</p></div></section>
     ) : (
       <>
-        <section class="controls-section" aria-label="Buscar matérias">
-          <div class="search-box"><span class="search-icon" aria-hidden="true">⌕</span><input type="search" id="search-input" class="search-input" placeholder="Buscar no acervo..." aria-label="Buscar no acervo" /></div>
+        <section class="controls-section" aria-label="Filtrar matérias por território">
           <div class="bairro-filter" id="bairro-filter" aria-label="Filtrar por território"></div>
+          <a href="/arquivo.html">Buscar no acervo completo →</a>
         </section>
 
         <section class="front-lede" id="ultimas" data-news-section aria-label="Principais notícias">
@@ -53,7 +53,7 @@ const navItems = [
             <p class="lead-deck">{lead.data.description}</p>
             <div class="card-metadata"><span class="source-badge">Fonte: {lead.data.source_name}</span><button type="button" class="btn-provenance" data-provenance-button data-title={lead.data.title} data-source-name={lead.data.source_name} data-source-url={lead.data.source_url} data-source-hash={lead.data.source_digest}>Ver fonte</button></div>
           </article>}
-          <aside class="lead-rail" aria-label="Destaques"><p class="module-label">Destaques</p>{secondary.map((story) => <article class="rail-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><p class="card-header"><a class="badge-tag" href={`/editorias.html#editoria-${slugify(story.data.category)}`}>{story.data.category}</a><time datetime={story.data.published_at}>{formatTime(story.data.published_at)}</time></p><h3><a href={storyUrl(story)}>{story.data.title}</a></h3><p>{story.data.description}</p></article>)}</aside>
+          <aside class="lead-rail" aria-label="Destaques"><p class="module-label">Destaques</p>{secondary.map((story) => <article class="rail-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><p class="card-header"><a class="badge-tag" href={`/editorias.html#editoria-${slugify(story.data.category)}`}>{story.data.category}</a><time datetime={story.data.published_at}>{formatTime(story.data.published_at)}</time></p>{story.data.media_url && <figure class="card-media"><a href={storyUrl(story)}><img src={story.data.media_url} alt={story.data.media_alt ?? ''} loading="lazy" /></a></figure>}<h3><a href={storyUrl(story)}>{story.data.title}</a></h3><p>{story.data.description}</p></article>)}</aside>
         </section>
 
         {latest.length > 0 && <section class="latest-line" data-news-section aria-labelledby="latest-line-title"><div class="latest-line-heading"><p class="eyebrow">Últimas</p><h2 id="latest-line-title">O que entrou agora</h2></div><div class="latest-line-list">{latest.map((story) => <article class="latest-item" data-news-card data-category={story.data.category} data-bairro={territory(story)}><time datetime={story.data.published_at}>{formatTime(story.data.published_at)}</time><div><span>{story.data.category}</span><h3><a href={storyUrl(story)}>{story.data.title}</a></h3></div></article>)}</div></section>}
@@ -67,7 +67,7 @@ const navItems = [
 
         {categories.filter((category) => category !== 'Serviços').map((category, index) => {
           const categoryStories = stories.filter((story) => story.data.category === category).slice(0, 6);
-          return <section class="editorial-section" id={`editoria-${slugify(category)}`} data-news-section aria-labelledby={`editoria-title-${index}`}><div class="section-heading"><div><p class="eyebrow">Editoria</p><h2 id={`editoria-title-${index}`}>{category}</h2></div><div class="section-actions"><p class="section-note">{stories.filter((story) => story.data.category === category).length} no acervo</p><a href={`/editorias.html#editoria-${slugify(category)}`}>Ver editoria →</a></div></div><div class="news-grid news-grid-section">{categoryStories.map((story) => <article class="news-card news-card-brief" data-news-card data-category={story.data.category} data-bairro={territory(story)}><div class="card-header"><time datetime={story.data.published_at}>{formatDayTime(story.data.published_at)}</time></div><h3 class="card-title"><a href={storyUrl(story)}>{story.data.title}</a></h3><p class="card-excerpt">{story.data.description}</p><div class="card-metadata"><span class="source-badge">{story.data.source_name}</span><button type="button" class="btn-provenance" data-provenance-button data-title={story.data.title} data-source-name={story.data.source_name} data-source-url={story.data.source_url} data-source-hash={story.data.source_digest}>Ver fonte</button></div></article>)}</div></section>;
+          return <section class="editorial-section" id={`editoria-${slugify(category)}`} data-news-section aria-labelledby={`editoria-title-${index}`}><div class="section-heading"><div><p class="eyebrow">Editoria</p><h2 id={`editoria-title-${index}`}>{category}</h2></div><div class="section-actions"><p class="section-note">{stories.filter((story) => story.data.category === category).length} no acervo</p><a href={`/editorias.html#editoria-${slugify(category)}`}>Ver editoria →</a></div></div><div class="news-grid news-grid-section">{categoryStories.map((story) => <article class="news-card news-card-brief" data-news-card data-category={story.data.category} data-bairro={territory(story)}><div class="card-header"><time datetime={story.data.published_at}>{formatDayTime(story.data.published_at)}</time></div>{story.data.media_url && <figure class="card-media"><a href={storyUrl(story)}><img src={story.data.media_url} alt={story.data.media_alt ?? ''} loading="lazy" /></a></figure>}<h3 class="card-title"><a href={storyUrl(story)}>{story.data.title}</a></h3><p class="card-excerpt">{story.data.description}</p><div class="card-metadata"><span class="source-badge">{story.data.source_name}</span><button type="button" class="btn-provenance" data-provenance-button data-title={story.data.title} data-source-name={story.data.source_name} data-source-url={story.data.source_url} data-source-hash={story.data.source_digest}>Ver fonte</button></div></article>)}</div></section>;
         })}
         <div class="archive-cta"><a href="/arquivo.html">Ver todo o arquivo de O Vigia →</a></div>
         <p class="no-results" id="no-results" hidden>Nenhuma matéria encontrada com esses filtros.</p>
@@ -77,15 +77,12 @@ const navItems = [
   <ProvenanceModal />
   <script>
     let activeTerritory = 'Todos';
-    const normalize = (value: string) => (value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     const cards = () => [...document.querySelectorAll<HTMLElement>('[data-news-card]')];
     const filter = () => {
-      const query = normalize((document.getElementById('search-input') as HTMLInputElement | null)?.value || '');
       let visible = 0;
       cards().forEach((card) => {
         const territoryMatches = activeTerritory === 'Todos' || card.dataset.bairro === activeTerritory;
-        const textMatches = !query || normalize(card.textContent || '').includes(query);
-        card.hidden = !(territoryMatches && textMatches);
+        card.hidden = !territoryMatches;
         if (!card.hidden) visible += 1;
       });
       document.querySelectorAll<HTMLElement>('[data-news-section]').forEach((section) => { section.hidden = ![...section.querySelectorAll<HTMLElement>('[data-news-card]')].some((card) => !card.hidden); });
@@ -96,6 +93,5 @@ const navItems = [
       const values = ['Todos', ...new Set(cards().map((card) => card.dataset.bairro).filter((value): value is string => Boolean(value)))];
       container.replaceChildren(...values.map((value, index) => { const button = document.createElement('button'); button.type = 'button'; button.className = `filter-chip ${index === 0 ? 'active' : ''}`; button.textContent = value; button.addEventListener('click', () => { container.querySelectorAll('.filter-chip').forEach((item) => item.classList.remove('active')); button.classList.add('active'); activeTerritory = value; filter(); }); return button; }));
     }
-    document.getElementById('search-input')?.addEventListener('input', filter);
   </script>
 </BaseLayout>
