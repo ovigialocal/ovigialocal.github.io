@@ -32,7 +32,7 @@ export const PublicArticleSchema = z.object({
 });
 
 export const PublicSourceSchema = z.object({
-  "archive_failure_code": z.string(),
+  "archive_failure_code": z.string().optional(),
   "archive_status": z.string(),
   "name": z.string(),
   "observed_at": z.iso.datetime({ offset: true }),
