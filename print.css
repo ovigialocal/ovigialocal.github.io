@@ -1,0 +1,104 @@
+/* Impressão: o leitor arquiva a matéria, anexa a processo, leva à audiência.
+ * A página impressa é o documento — não uma captura da tela.
+ * Carregado por último em BaseLayout.astro. */
+
+@media print {
+  @page { margin: 18mm 16mm; }
+
+  :root {
+    --paper: #fff;
+    --paper-raised: #fff;
+    --paper-deep: #fff;
+    --ink: #000;
+    --ink-body: #1a1a1a;
+    --muted: #4a4a4a;
+    --rule: #b0b0b0;
+    --accent: #000;
+    --accent-cold: #000;
+  }
+
+  html, body { background: #fff !important; color: #000; font-size: 11pt; }
+
+  /* Cromo que não é conteúdo */
+  .utility-bar,
+  .section-nav,
+  .controls-section,
+  .back-link,
+  .share-button,
+  .share-status,
+  .btn-provenance,
+  .modal-overlay,
+  .archive-cta,
+  .section-actions a,
+  .filter-chip,
+  .search-box,
+  .institutional-aside,
+  footer { display: none !important; }
+
+  /* Cabeçalho reduzido a assinatura de veículo */
+  .site-header { border-bottom: 1.5pt solid #000; }
+  .masthead, .article-masthead { padding: 0 0 6pt; display: block; }
+  .brand-title, .article-brand { font-size: 20pt; letter-spacing: -.02em; }
+  .brand-logo::before, .article-brand::before { display: none; }
+  .brand-kicker, .masthead-tagline { display: none; }
+
+  .article-page, .front-page, .institutional-page { max-width: none; padding: 0; }
+
+  /* Matéria */
+  .article-header { max-width: none; padding-bottom: 10pt; border-bottom: 1.5pt solid #000; }
+  .article-header h1 { font-size: 24pt; line-height: 1.08; }
+  .article-deck { max-width: none; font-size: 13pt; line-height: 1.4; }
+  .article-preview-label { display: none; }
+  .article-meta { gap: 8pt; font-size: 8pt; }
+  .article-meta a:first-of-type { background: none; padding: 0; color: #000; }
+  .article-meta a + a { border: 0; padding: 0; }
+
+  .article-layout { display: block; padding-top: 12pt; }
+  .article-body { font-size: 11pt; line-height: 1.5; }
+  .article-body p { margin-bottom: 8pt; orphans: 3; widows: 3; }
+  .article-body h2 {
+    margin: 16pt 0 6pt; padding-top: 6pt; font-size: 14pt;
+    break-after: avoid; page-break-after: avoid;
+  }
+  .article-body > p:first-of-type::first-letter { float: none; margin: 0; font-size: inherit; color: inherit; }
+  .article-body blockquote { break-inside: avoid; page-break-inside: avoid; font-size: 12pt; }
+  .article-body table, .article-media, figure { break-inside: avoid; page-break-inside: avoid; }
+  .article-media img, .lead-media img { max-height: 90mm; }
+
+  /* A ficha de proveniência é o motivo de imprimir: sempre visível, nunca cortada */
+  .article-trust {
+    position: static; margin-top: 14pt; padding: 0;
+    border: 1pt solid #000; break-inside: avoid; page-break-inside: avoid;
+  }
+  .article-trust .eyebrow { margin: 0; background: none; padding: 6pt 8pt 0; color: #000; font-size: 7.5pt; }
+  .article-trust h2 { padding: 0 8pt; font-size: 12pt; }
+  .article-trust details { display: block; }
+  .article-trust details > summary { display: none; }
+  .provenance-list { padding: 0 8pt 8pt; }
+  .provenance-list dd { font-size: 8.5pt; }
+  .article-trust .correction-link { padding: 0 8pt; }
+
+  /* URLs precisam existir no papel */
+  .source-primary a { background: none; padding: 0; color: #000; font-weight: 700; }
+  .source-primary a::after,
+  .provenance-list a::after { content: " (" attr(href) ")"; font-size: 8pt; font-weight: 400; word-break: break-all; }
+
+  .article-related, .article-footer-nav { display: none; }
+
+  /* Capa e institucional, quando impressas */
+  .edition-intro { display: block; padding-bottom: 10pt; }
+  .front-lede { display: block; border-bottom: 1.5pt solid #000; }
+  .lead-story { padding: 0 0 10pt; border-right: 0; }
+  .lead-story h2 { max-width: none; font-size: 22pt; }
+  .lead-deck { font-size: 12pt; }
+  .lead-rail, .latest-line, .temporal-columns, .service-grid, .news-grid { display: block; }
+  .rail-story, .latest-item, .temporal-story, .service-story, .news-card {
+    padding: 6pt 0; border: 0; border-top: .5pt solid #b0b0b0;
+    break-inside: avoid; page-break-inside: avoid;
+  }
+  .temporal-module + .temporal-module { padding-left: 0; border-left: 0; }
+  .institutional-layout { display: block; }
+  .institutional-body { font-size: 11pt; }
+
+  a { text-decoration: none; color: #000; }
+}
