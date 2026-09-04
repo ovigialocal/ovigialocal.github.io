@@ -40,7 +40,7 @@
 
 /* ——— Destaques ——— */
 .lead-rail { min-width: 0; }
-.retranca {
+.module-label {
   margin: 0 0 var(--s-4); padding-bottom: var(--s-2); border-bottom: 1px solid var(--fg-heading);
   color: var(--fg-heading); font-family: var(--font-mono);
   font-size: .68rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
@@ -142,7 +142,7 @@
   .lead-media figcaption { display: grid; gap: var(--s-1); }
   .lead-linha-fina { font-size: 1.06rem; }
   .lead-rail { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--s-4); }
-  .retranca { grid-column: 1 / -1; }
+  .module-label { grid-column: 1 / -1; }
   .rail-story { padding: var(--s-3) 0; }
   .rail-story:nth-of-type(even) { padding-left: var(--s-4); border-left: 1px solid var(--border); }
   .rail-story h3 { font-size: 1.14rem; }

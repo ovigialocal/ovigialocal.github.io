@@ -157,11 +157,17 @@ All gates must pass before merge.
 
 ## Editorial vocabulary
 
-`docs/vocabulario-redacao.md` is the naming contract for editorial concepts in code, OKF, comments and conversation. When a piece has a real newsroom name, use that name: `chapeu`, `linha-fina`, `retranca`, `chamada`, `suite`, `boxe`, `fio`. Keep technical web mechanics such as `grid`, `card`, `modal`, `nav`, `filter` and `search` in their normal technical vocabulary.
+`docs/vocabulario-redacao.md` is the semantic naming contract for editorial concepts in code, OKF, comments and conversation. It separates three layers: traditional newsroom pieces, O Vigia's own operational domain, and technical renderer mechanics.
 
-Do not introduce retired names such as `eyebrow`, editorial `deck`, `module-label`, “trilha de destaques”, “ficha de proveniência” or “módulo temporal”. A rename of an editorial CSS class must be atomic with every Astro/component consumer so markup and style cannot drift apart.
+When an identifier directly names an editorial piece, prefer the newsroom term (`chapeu`, `linha-fina`, `chamada`, `suite`, `boxe`, `fio`). Structural wrappers and web mechanics such as `grid`, `card`, `modal`, `nav`, `filter`, `search` and `module-label` remain technical when that is what they actually are.
 
-New editorial terms must be added to the vocabulary in the same change. Do not invent a new metaphor when established newsroom vocabulary exists.
+`retranca` is reserved because professional usage is polysemous; do not use it as a generic module/section label. A future use as internal story identifier or subordinate editorial relation requires an explicit newsroom/OKF contract first.
+
+Do not introduce retired renderer names such as `eyebrow`, editorial `deck`, “trilha de destaques”, “ficha de proveniência” or “módulo temporal”. A rename of an editorial CSS class must be atomic with every Astro/component consumer so markup and style cannot drift apart.
+
+Do not mass-rename stable public fields merely for vocabulary purity. The semantic compatibility map in `docs/vocabulario-redacao.md` is authoritative: for example, `description` means linha fina and `category` means editoria in the current public contract.
+
+New editorial terms must be defined with meaning, layer, authority and persistence in the vocabulary in the same change. When professional sources use the same word differently, document the O Vigia meaning instead of pretending the term is universal.
 
 ## UI authority boundary
 
