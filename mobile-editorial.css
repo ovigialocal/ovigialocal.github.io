@@ -1,12 +1,23 @@
 /* Phone edition: preserve editorial order while reducing chrome and metadata noise. */
 @media (max-width: 480px) {
   .utility-bar { padding: var(--s-2) var(--s-4); font-size: .66rem; }
-  .masthead { padding: var(--s-4) var(--s-4) var(--s-3); }
-  .brand-title { font-size: clamp(2.9rem, 16vw, 4rem); }
-  .brand-kicker { font-size: .64rem; }
-  .masthead-tagline { max-width: 19rem; margin-top: var(--s-3); font-size: .98rem; }
-  .section-nav { padding: 0 var(--s-4); scroll-snap-type: x proximity; }
-  .section-nav a { padding: var(--s-3) var(--s-4); scroll-snap-align: start; }
+  /* O cabeçalho custa um quarto da tela, não a tela toda. */
+  .masthead { padding: var(--s-3) var(--s-4); }
+  .brand-logo { gap: var(--s-3); }
+  .brand-logo::before { min-height: 2.1rem; width: 10px; }
+  .brand-title { font-size: clamp(2.1rem, 11vw, 2.9rem); white-space: nowrap; }
+  /* A barra de utilidade já diz "Porto Velho, Rondônia" — o kicker é repetição. */
+  .brand-kicker { display: none; }
+  .masthead-tagline { display: none; }
+
+  /* Uma fileira só, rolando, com sombra na borda indicando que continua. */
+  .section-nav {
+    padding: 0 var(--s-4); scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
+  .section-nav a { padding: var(--s-3) var(--s-4); font-size: .72rem; scroll-snap-align: start; }
+  .section-nav a[data-nav="modulo"] { display: none; }
   .front-page { padding: var(--s-5) var(--s-4) var(--s-8); }
   .edition-intro { padding-bottom: var(--s-5); }
   .edition-intro h1 { font-size: clamp(2.2rem, 11.5vw, 3rem); line-height: .96; }
@@ -20,7 +31,7 @@
   .lead-story .card-metadata { align-items: flex-start; }
   .lead-rail { grid-template-columns: 1fr; }
   .rail-story,
-  .rail-story:nth-of-type(even) { padding: var(--s-3) 0; border-left: 0; border-top: 1px solid var(--rule); }
+  .rail-story:nth-of-type(even) { padding: var(--s-3) 0; border-left: 0; border-top: 1px solid var(--border); }
   .rail-story:first-of-type { border-top: 0; }
   .rail-story h3 { font-size: 1.24rem; }
   .rail-story .card-media { display: none; }

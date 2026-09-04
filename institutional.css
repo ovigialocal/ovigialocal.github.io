@@ -5,15 +5,15 @@
 
 .institutional-header {
   max-width: 48rem; padding-bottom: var(--s-6);
-  border-bottom: var(--border-width) solid var(--ink);
+  border-bottom: var(--border-width) solid var(--fg-heading);
 }
 .institutional-header h1 {
   margin: var(--s-2) 0 var(--s-4); font-family: var(--font-display);
-  font-size: clamp(2.4rem, 5.4vw, 4.2rem); line-height: 1;
-  font-weight: 800; letter-spacing: -.032em; color: var(--ink); text-wrap: balance;
+  font-size: clamp(2.4rem, 5.4vw, var(--t-h1)); line-height: 1;
+  font-weight: 800; letter-spacing: -.032em; color: var(--fg-heading); text-wrap: balance;
 }
 .institutional-header .deck {
-  margin: 0; color: var(--muted);
+  margin: 0; color: var(--fg-muted);
   font-family: var(--font-serif); font-size: 1.18rem; line-height: 1.5; text-wrap: pretty;
 }
 
@@ -21,12 +21,12 @@
   display: grid; grid-template-columns: minmax(0, 44rem) minmax(15rem, 1fr);
   gap: var(--s-8); padding-top: var(--s-7);
 }
-.institutional-body { font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.7; color: var(--ink-body); }
+.institutional-body { font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.7; color: var(--fg); }
 .institutional-body h2 {
   margin: var(--s-7) 0 var(--s-4); padding-top: var(--s-4);
-  border-top: var(--border-width) solid var(--ink);
-  font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 1.8rem);
-  line-height: 1.15; font-weight: 800; letter-spacing: -.022em; color: var(--ink);
+  border-top: var(--border-width) solid var(--fg-heading);
+  font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, var(--t-h3));
+  line-height: 1.15; font-weight: 800; letter-spacing: -.022em; color: var(--fg-heading);
 }
 .institutional-body h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 .institutional-body h3 {
@@ -34,43 +34,43 @@
   font-size: 1.22rem; line-height: 1.25; font-weight: 700; letter-spacing: -.015em;
 }
 .institutional-body li { margin-bottom: var(--s-2); }
-.institutional-body a { color: var(--accent-cold); }
-.institutional-body a:hover { color: var(--accent); }
+.institutional-body a { color: var(--azul); }
+.institutional-body a:hover { color: var(--vermelho); }
 
 .principle-box {
   margin: var(--s-6) 0; padding: var(--s-4) var(--s-5);
-  border-left: 5px solid var(--accent); background: var(--paper-deep);
+  border-left: 5px solid var(--vermelho); background: var(--bg-sunken);
 }
 .principle-box strong {
-  display: block; margin-bottom: var(--s-2); color: var(--accent);
+  display: block; margin-bottom: var(--s-2); color: var(--vermelho);
   font-family: var(--font-mono); font-size: .69rem;
   font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
 }
 
 .institutional-aside {
   align-self: start; position: sticky; top: var(--s-5);
-  padding-top: var(--s-4); border-top: var(--border-width) solid var(--ink);
+  padding-top: var(--s-4); border-top: var(--border-width) solid var(--fg-heading);
   font-family: var(--font-sans);
 }
 .institutional-aside h2 {
   margin-bottom: var(--s-2); font-family: var(--font-display);
-  font-size: 1.3rem; line-height: 1.15; font-weight: 800; letter-spacing: -.02em; color: var(--ink);
+  font-size: 1.3rem; line-height: 1.15; font-weight: 800; letter-spacing: -.02em; color: var(--fg-heading);
 }
 .institutional-aside p,
-.institutional-aside li { color: var(--muted); font-size: .88rem; line-height: 1.5; }
-.institutional-aside a { color: var(--accent-cold); font-weight: 700; }
-.institutional-aside a:hover { color: var(--accent); }
+.institutional-aside li { color: var(--fg-muted); font-size: .88rem; line-height: 1.5; }
+.institutional-aside a { color: var(--azul); font-weight: 700; }
+.institutional-aside a:hover { color: var(--vermelho); }
 
-.policy-list { margin: var(--s-4) 0 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
-.policy-list li { padding: var(--s-3) 0; border-bottom: 1px solid var(--rule); }
+.policy-list { margin: var(--s-4) 0 0; padding: 0; list-style: none; border-top: 1px solid var(--border); }
+.policy-list li { padding: var(--s-3) 0; border-bottom: 1px solid var(--border); }
 
 .correction-cta {
   display: inline-flex; align-items: center; min-height: 44px;
-  margin: var(--s-3) 0 var(--s-4); border: 1px solid var(--ink);
-  padding: var(--s-3) var(--s-4); color: var(--ink);
+  margin: var(--s-3) 0 var(--s-4); border: 1px solid var(--fg-heading);
+  padding: var(--s-3) var(--s-4); color: var(--fg-heading);
   font: 700 .86rem var(--font-sans); text-decoration: none;
 }
-.correction-cta:hover { background: var(--ink); color: var(--papel-10); }
+.correction-cta:hover { background: var(--fg-heading); color: var(--papel-10); }
 
 @media (max-width: 760px) {
   .institutional-page { padding: var(--s-6) var(--s-4) var(--s-8); }
