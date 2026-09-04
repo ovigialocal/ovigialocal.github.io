@@ -22,12 +22,12 @@ const navItems = [{ href: '/', label: 'Capa' }, { href: '/editorias.html', label
 <BaseLayout title="Territórios — O Vigia" description="Navegue pela cobertura de O Vigia por territórios materializados e verificáveis." canonicalPath="/territorios.html" tagline="Continue lendo pelo lugar a que a notícia realmente se refere." navItems={navItems}>
   <main class="front-page">
     <section class="edition-intro" aria-labelledby="territories-title">
-      <p class="eyebrow">Navegação territorial</p>
+      <p class="chapeu">Navegação territorial</p>
       <h1 id="territories-title">Territórios</h1>
-      <p class="edition-deck">Cada item abaixo é um conceito <code>PublicTerritory</code> do bundle OKF. Bairro, distrito, município ou estado só ganha página quando existe como entidade publicada; o site não inventa território a partir de texto.</p>
+      <p class="edition-linha-fina">Cada item abaixo é um conceito <code>PublicTerritory</code> do bundle OKF. Bairro, distrito, município ou estado só ganha página quando existe como entidade publicada; o site não inventa território a partir de texto.</p>
     </section>
     {orderedKinds.map((kind, index) => <section class="editorial-section" aria-labelledby={`territory-kind-${index}`}>
-      <div class="section-heading"><div><p class="eyebrow">Território</p><h2 id={`territory-kind-${index}`}>{kind}</h2></div><p class="section-note">{byKind.get(kind)?.length ?? 0} publicados</p></div>
+      <div class="section-heading"><div><p class="chapeu">Território</p><h2 id={`territory-kind-${index}`}>{kind}</h2></div><p class="section-note">{byKind.get(kind)?.length ?? 0} publicados</p></div>
       <div class="news-grid news-grid-section">{(byKind.get(kind) ?? []).map((territory) => <PublicTerritoryCard territory={territory} articleCount={storiesForTerritory(stories, territory).length} childCount={territories.filter((child) => child.data.parent_territory_id === territory.data.territory_id).length} />)}</div>
     </section>)}
     {territories.length === 0 && <section class="empty-edition"><h2>Nenhum território publicado.</h2></section>}

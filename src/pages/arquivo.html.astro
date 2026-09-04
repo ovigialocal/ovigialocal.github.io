@@ -10,9 +10,9 @@ const navItems = [{ href: '/', label: 'Capa' }, { href: '/editorias.html', label
 ---
 <BaseLayout title="Arquivo — O Vigia" description="Arquivo cronológico das matérias publicadas por O Vigia em Porto Velho." canonicalPath="/arquivo.html" tagline="O registro público, em ordem de publicação." navItems={navItems}>
   <main class="front-page" data-pagefind-body>
-    <section class="edition-intro"><p class="eyebrow">Acervo</p><h1 data-pagefind-meta="title">Arquivo de matérias</h1><p class="edition-deck">Todas as publicações aceitas por O Vigia, da mais recente para a mais antiga.</p></section>
+    <section class="edition-intro"><p class="chapeu">Acervo</p><h1 data-pagefind-meta="title">Arquivo de matérias</h1><p class="edition-linha-fina">Todas as publicações aceitas por O Vigia, da mais recente para a mais antiga.</p></section>
     <section class="controls-section" aria-label="Buscar no arquivo"><SearchBox instance="archive-search" label="Buscar em todo O Vigia" /></section>
-    <section class="editorial-section" aria-labelledby="all-title"><div class="section-heading"><div><p class="eyebrow">Cronologia</p><h2 id="all-title">{stories.length} matérias</h2></div></div><div class="news-grid news-grid-section">{stories.map((story) => <PublicArticleCard story={story} />)}</div></section>
+    <section class="editorial-section" aria-labelledby="all-title"><div class="section-heading"><div><p class="chapeu">Cronologia</p><h2 id="all-title">{stories.length} matérias</h2></div></div><div class="news-grid news-grid-section">{stories.map((story) => <PublicArticleCard story={story} />)}</div></section>
   </main>
   <ProvenanceModal />
 </BaseLayout>

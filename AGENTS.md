@@ -54,7 +54,7 @@ Use exactly:
 
 with the ready digest from `okf-parser`. Persist `source_path` and pinned newsroom commit as provenance/locators, not identity. A rename of the same ready is not a new candidate.
 
-Before review, verify the private `article-ready` pins subject/profile/one approval per required gate by `source_digest` and that body/title/description are identical to the approved subject. An invalid envelope is not reviewable.
+Before review, verify the private `article-ready` pins subject/profile/one approval per required gate by `source_digest` and that body/title/description — and `chamada` when present — are identical to the approved subject. An invalid envelope is not reviewable.
 
 ## Portable ledger paths
 
@@ -103,7 +103,7 @@ Trust the newsroom process as evidence, but independently judge material fitness
 
 Copy approved **editorial content**, not the private file byte-for-byte. Whitelist public metadata. Never expose self-review, internal findings, reporting notes, experience/wiki records or workflow instructions by default.
 
-A material body/title/description edit requires a new newsroom ready digest.
+A material body/title/description/`chamada` edit requires a new newsroom ready digest. If a legacy ready has no `chamada`, the public renderer may display `description` as fallback; the publication agent must not author a new chamada.
 
 ## Public OKF contract
 
@@ -122,6 +122,8 @@ PublicTerritory.parent_territory_id → PublicTerritory(territory_id)
 ```
 
 `PublicTerritory.name` is a relational key; `title` is the human-facing label. Presentation must not infer territory identity by slugifying arbitrary article text.
+
+`PublicArticle.chamada`, when present, is approved cover copy. It is not a renderer-generated summary and is distinct from `description`/linha fina.
 
 ## Renderer boundary
 
@@ -152,6 +154,20 @@ bun run build
 ```
 
 All gates must pass before merge.
+
+## Editorial vocabulary
+
+`docs/vocabulario-redacao.md` is the semantic naming contract for editorial concepts in code, OKF, comments and conversation. It separates three layers: traditional newsroom pieces, O Vigia's own operational domain, and technical renderer mechanics.
+
+When an identifier directly names an editorial piece, prefer the newsroom term (`chapeu`, `linha-fina`, `chamada`, `suite`, `boxe`, `fio`). Structural wrappers and web mechanics such as `grid`, `card`, `modal`, `nav`, `filter`, `search` and `module-label` remain technical when that is what they actually are.
+
+`retranca` is reserved because professional usage is polysemous; do not use it as a generic module/section label. A future use as internal story identifier or subordinate editorial relation requires an explicit newsroom/OKF contract first.
+
+Do not introduce retired renderer names such as `eyebrow`, editorial `deck`, “trilha de destaques”, “ficha de proveniência” or “módulo temporal”. A rename of an editorial CSS class must be atomic with every Astro/component consumer so markup and style cannot drift apart.
+
+Do not mass-rename stable public fields merely for vocabulary purity. The semantic compatibility map in `docs/vocabulario-redacao.md` is authoritative: for example, `description` means linha fina and `category` means editoria in the current public contract.
+
+New editorial terms must be defined with meaning, layer, authority and persistence in the vocabulary in the same change. When professional sources use the same word differently, document the O Vigia meaning instead of pretending the term is universal.
 
 ## UI authority boundary
 

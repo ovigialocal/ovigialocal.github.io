@@ -21,13 +21,13 @@
   .front-page { padding: var(--s-5) var(--s-4) var(--s-8); }
   .edition-intro { padding-bottom: var(--s-5); }
   .edition-intro h1 { font-size: clamp(2.2rem, 11.5vw, 3rem); line-height: .96; }
-  .edition-deck { margin-top: var(--s-3); font-size: 1rem; line-height: 1.45; }
+  .edition-linha-fina { margin-top: var(--s-3); font-size: 1rem; line-height: 1.45; }
   .controls-section { position: relative; display: grid; padding: var(--s-3) 0; }
   .bairro-filter { width: 100%; padding-bottom: 2px; scroll-snap-type: x proximity; }
   .filter-chip { scroll-snap-align: start; }
   .front-lede { padding-top: var(--s-4); }
   .lead-story h2 { margin-top: var(--s-1); font-size: clamp(2.3rem, 12vw, 3.2rem); text-wrap: pretty; }
-  .lead-deck { margin-bottom: var(--s-4); font-size: 1.03rem; }
+  .lead-linha-fina { margin-bottom: var(--s-4); font-size: 1.03rem; }
   .lead-story .card-metadata { align-items: flex-start; }
   .lead-rail { grid-template-columns: 1fr; }
   .rail-story,
@@ -50,7 +50,7 @@
   .article-page { padding: var(--s-6) var(--s-4) var(--s-8); }
   .article-masthead { padding: var(--s-4); }
   .article-header h1 { font-size: clamp(2.1rem, 11vw, 3rem); line-height: .98; }
-  .article-deck { margin-top: var(--s-4); font-size: 1.12rem; }
+  .article-linha-fina { margin-top: var(--s-4); font-size: 1.12rem; }
   .article-body { font-size: 1.08rem; line-height: 1.66; }
   .article-body h2 { margin-top: var(--s-7); font-size: 1.55rem; }
   .article-body blockquote { font-size: 1.18rem; }

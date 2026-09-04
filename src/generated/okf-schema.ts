@@ -4,6 +4,7 @@ import { z } from 'astro:content';
 export const PublicArticleSchema = z.object({
   "bairro": z.string().describe("references PublicTerritory(name)").optional(),
   "category": z.string(),
+  "chamada": z.string().optional(),
   "description": z.string(),
   "locality": z.string().describe("references PublicTerritory(name)"),
   "media_alt": z.string().optional(),

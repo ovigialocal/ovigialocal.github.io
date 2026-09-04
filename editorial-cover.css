@@ -23,7 +23,7 @@
   color: var(--fg-muted); font-size: .74rem;
 }
 .lead-media figcaption span:last-child { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
-.lead-deck {
+.lead-linha-fina {
   max-width: 42rem; margin-bottom: var(--s-4);
   color: var(--concreto-60); font-family: var(--font-serif); font-size: var(--t-lede); line-height: 1.5; text-wrap: pretty;
 }
@@ -38,7 +38,7 @@
 .rail-story .card-media { margin-bottom: var(--s-2); }
 .news-card-brief .card-media { margin-bottom: var(--s-3); }
 
-/* ——— Trilha de destaques ——— */
+/* ——— Destaques ——— */
 .lead-rail { min-width: 0; }
 .module-label {
   margin: 0 0 var(--s-4); padding-bottom: var(--s-2); border-bottom: 1px solid var(--fg-heading);
@@ -140,7 +140,7 @@
   .lead-story h2 { max-width: none; font-size: clamp(2.2rem, 10vw, 3.2rem); line-height: .98; }
   .lead-media img { aspect-ratio: 4 / 3; max-height: 62vh; object-fit: cover; }
   .lead-media figcaption { display: grid; gap: var(--s-1); }
-  .lead-deck { font-size: 1.06rem; }
+  .lead-linha-fina { font-size: 1.06rem; }
   .lead-rail { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--s-4); }
   .module-label { grid-column: 1 / -1; }
   .rail-story { padding: var(--s-3) 0; }
