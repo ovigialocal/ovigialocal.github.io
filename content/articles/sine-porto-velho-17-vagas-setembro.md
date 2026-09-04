@@ -1,54 +1,54 @@
 ---
 type: PublicArticle
-title: "Sine de Porto Velho lista 27 vagas com prazos até 1º de outubro; 8 são para PCD"
-description: "Painel oficial tinha 27 postos dentro do prazo na noite de 1º de setembro, incluindo soldador, roçador, peixeiro, farmacêutico e vagas administrativas; oferta pode mudar conforme preenchimento."
+title: "Sine de Porto Velho mantém 27 vagas abertas; 16 vencem em 8 de setembro e 8 são para PCD"
+description: "Revalidação do painel oficial em 4 de setembro encontrou os mesmos 27 postos ainda dentro do prazo; 16 vencem no dia 8 e o portal permite candidatura online com currículo em PDF."
 story_id: "porto-velho-sine-vagas-2026-09-01"
 locality: "Porto Velho, RO"
 category: "Serviços"
 published_at: "2026-09-01T03:12:00-04:00"
-updated_at: "2026-09-01T19:35:00-04:00"
+updated_at: "2026-09-04T09:40:00-04:00"
 source_repository: "franklinbaldo/ovigia-redacao"
-source_commit: "36d163525c476cbd405221a92fcc4ee2896ca785"
-source_path: "knowledge/porto-velho/articles/2026/09/porto-velho-sine-vagas-2026-09-01/ready-v1.md"
-source_digest: "sha256:fd5510e2956b6f6ffe16bc36d807fb3d788a95b7cb1b5b155fe96a779e876c65"
-source_name: "Sine Municipal de Porto Velho"
+source_commit: "4b38d981bebaedd918cfeaf5227e3eb83c7a1325"
+source_path: "knowledge/porto-velho/articles/2026/09/porto-velho-sine-vagas-2026-09-01/ready-v2.md"
+source_digest: "sha256:5377894e15cfeccd99006d691a164797357e9d6c6b74567b602339907c74ecf8"
+source_refs:
+  - "knowledge/porto-velho/sources/service/2026-09-04-sine-vagas-revalidation.md"
+source_name: "Sine Municipal de Porto Velho — vagas disponíveis"
 source_url: "https://www.portovelho.ro.gov.br/sine/vagas"
 ---
 
-# Sine de Porto Velho lista 27 vagas com prazos até 1º de outubro; 8 são para PCD
+# Sine de Porto Velho mantém 27 vagas abertas; 16 vencem em 8 de setembro e 8 são para PCD
 
-O painel oficial do **Sine Municipal de Porto Velho** mostrava **27 vagas ainda dentro do prazo** na noite desta terça-feira, **1º de setembro**. Há oportunidades para diferentes níveis de escolaridade, além de funções sem exigência formal de instrução. Oito postos de vendedor interno são destinados a **pessoas com deficiência (PCD)**.
+O painel oficial do **Sine Municipal de Porto Velho** continuava mostrando **27 postos dentro do prazo** na manhã desta sexta-feira, **4 de setembro**. A reapuração encontrou dez anúncios ativos; **16 postos têm prazo indicado até 8 de setembro**, enquanto **8 vagas de vendedor interno são destinadas a pessoas com deficiência (PCD)** e ficam abertas, no painel, até 30 de setembro.
 
-A disponibilidade é dinâmica: a própria Prefeitura informa que a relação pode mudar conforme as vagas são preenchidas. Por isso, a lista abaixo é um retrato da consulta feita em 1º de setembro; antes de enviar currículo ou se deslocar, confira se a oportunidade continua aparecendo no painel oficial.
+A relação é dinâmica: aparecer na lista em 4 de setembro não garante que a vaga continuará disponível até a data-limite. Antes de enviar o currículo, vale conferir se o anúncio ainda está no painel oficial.
 
-## Prazos mais próximos
+## O que vence primeiro
 
-Com prazo até **8 de setembro**, o painel mostrava:
+Com prazo indicado até **8 de setembro**, a página mostrava:
 
 - 1 vaga de mecânico soldador;
 - 5 vagas de soldador;
-- 5 vagas de roçador, para atuação em **Jacy-Paraná**;
+- 5 vagas de roçador, com atuação informada em **Jacy-Paraná**;
 - 1 vaga de ajudante de marmorista;
 - 3 vagas de peixeiro;
 - 1 vaga de farmacêutico.
 
-Também apareciam **1 vaga de auxiliar de lavanderia**, até **10 de setembro**, e **8 vagas de vendedor interno para PCD**, até **30 de setembro**.
+São **16 postos** nesse grupo. O anúncio de farmacêutico exige graduação completa em Farmácia, registro ativo no CRF e disponibilidade inclusive aos finais de semana. Para roçador, a página pede experiência na função e informa a localidade de Jacy-Paraná.
 
-Os prazos mais longos eram de **1 vaga de auxiliar de RH** e **1 vaga de operador de telemarketing**, ambas até **1º de outubro**.
+Também havia **1 vaga de auxiliar de lavanderia** até **10 de setembro**.
+
+## Vagas com prazo mais longo
+
+O painel mantinha **8 vagas de vendedor interno exclusivas para candidatos PCD**, com prazo até **30 de setembro**. O anúncio pede ensino médio completo e cita experiência na função, comunicação, proatividade e atendimento ao cliente.
+
+As duas oportunidades com data mais distante eram:
+
+- 1 vaga de **auxiliar de RH**, até **1º de outubro**, para quem está no ensino superior e tem conhecimento de Word e Excel;
+- 1 vaga de **operador de telemarketing**, também até **1º de outubro**, com ensino médio completo, informática básica e disponibilidade para escala 12x36.
 
 ## Como concorrer
 
-Na página de vagas do Sine, escolha a oportunidade e use o botão **“Concorrer à Vaga”**. O formulário oficial solicita dados pessoais, informações de escolaridade e **currículo em PDF de até 5 MB**.
+Na própria página oficial do Sine, escolha o anúncio e use **“Concorrer à Vaga”**. O formulário solicita nome, CPF, data de nascimento, e-mail, telefone, dados trabalhistas, escolaridade e **currículo em PDF de até 5 MB**.
 
-Quem preferir atendimento presencial pode procurar:
-
-- **Sine Centro:** Rua General Osório, nº 81, Centro;
-- **Sine Praça CEU:** Rua Antônio Fraga Moreira, nº 1706, bairro JK.
-
-A Prefeitura informa os telefones **(69) 3901-3213** e **(69) 3901-3181** e o e-mail **sinemunicipal@portovelho.ro.gov.br** para informações.
-
-## Antes de se candidatar
-
-Leia os requisitos específicos no anúncio. Algumas funções exigem experiência; a vaga de farmacêutico pede graduação completa e registro ativo no CRF, e as oito vagas de vendedor interno são destinadas a candidatos PCD.
-
-Como o painel pode mudar antes da data-limite exibida, a confirmação na fonte oficial é a etapa final antes da candidatura.
+Como as oportunidades podem sair do ar antes do prazo exibido, a etapa mais importante é abrir a página oficial no momento da candidatura e confirmar que a vaga ainda aparece.
