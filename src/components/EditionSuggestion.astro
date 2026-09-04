@@ -1,16 +1,16 @@
 ---
-import { EDITIONS } from '../lib/editions';
-
-interface Props { current: string }
-const { current } = Astro.props;
+interface Props { current: string; editions: Array<{ data: Record<string, unknown> }>; policy: Record<string, unknown> }
+const { current, editions, policy } = Astro.props;
 ---
-<aside class="edition-suggestion" data-edition-suggestion data-current={current} data-editions={JSON.stringify(EDITIONS)} hidden>
+<aside class="edition-suggestion" data-edition-suggestion data-current={current} data-editions={JSON.stringify(editions.map(({ data }) => data))} data-policy={JSON.stringify(policy)} hidden>
   <p><span data-suggestion-copy></span> <a data-suggestion-link>Mudar de edição →</a></p>
 </aside>
 <script>
+  import { GEOIP_ENDPOINT, GEOIP_TIMEOUT_MS } from '../lib/geo';
   const suggestion = document.querySelector<HTMLElement>('[data-edition-suggestion]');
   if (suggestion) {
     const editions = JSON.parse(suggestion.dataset.editions ?? '[]');
+    const policy = JSON.parse(suggestion.dataset.policy ?? '{}');
     const current = suggestion.dataset.current;
     const distance = (a: number, b: number, c: number, d: number) => {
       const rad = (value: number) => value * Math.PI / 180;
@@ -24,8 +24,8 @@ const { current } = Astro.props;
         geo = JSON.parse(sessionStorage.getItem('vigia:geo') ?? 'null');
         if (!geo) {
           const controller = new AbortController();
-          const timeout = setTimeout(() => controller.abort(), 1800);
-          const response = await fetch('https://ipwho.is/?fields=success,latitude,longitude', { signal: controller.signal });
+          const timeout = setTimeout(() => controller.abort(), GEOIP_TIMEOUT_MS);
+          const response = await fetch(`${GEOIP_ENDPOINT}?fields=success,latitude,longitude`, { signal: controller.signal });
           clearTimeout(timeout);
           const result = await response.json();
           if (!result.success) return;
@@ -34,13 +34,13 @@ const { current } = Astro.props;
         }
       } catch { return; }
       const nearby = editions.map((edition: any) => ({ ...edition, distance: distance(geo.latitude, geo.longitude, edition.latitude, edition.longitude) })).sort((a: any, b: any) => a.distance - b.distance)[0];
-      if (!nearby || nearby.slug === current || nearby.distance > 250) return;
+      if (!nearby || nearby.edition_id === current || nearby.distance > Number(policy.suggestion_radius_km)) return;
       const copy = suggestion.querySelector<HTMLElement>('[data-suggestion-copy]');
       const link = suggestion.querySelector<HTMLAnchorElement>('[data-suggestion-link]');
       if (!copy || !link) return;
       copy.textContent = `Você parece estar mais perto de ${nearby.name}.`;
-      link.href = `/${nearby.slug}/`;
-      link.addEventListener('click', () => localStorage.setItem('vigia:edition', nearby.slug));
+      link.href = `${nearby.path_prefix}/`;
+      link.addEventListener('click', () => localStorage.setItem('vigia:edition', nearby.edition_id));
       suggestion.hidden = false;
     };
     recommend();

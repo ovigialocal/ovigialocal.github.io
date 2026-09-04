@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Decreto que prorrogou Refis diz que procura e objetivos de arrecadação ficaram muito abaixo do previsto"
 description: "A Prefeitura divulgou a extensão do programa até dezembro como oportunidade de regularização; o decreto mostra que a decisão também responde a procura e objetivos de arrecadação muito aquém do previsto e à transição do IBS."
 story_id: "porto-velho-refis-2026-prorrogacao-arrecadacao"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Economia"
 published_at: "2026-09-02T04:48:00+00:00"

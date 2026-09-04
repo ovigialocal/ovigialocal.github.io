@@ -77,7 +77,7 @@ Astro Components são o baseline. Não há framework UI hidratado por padrão. `
 
 ### Edições e URLs permanentes
 
-O namespace público reserva a raiz para selecionar a edição e mantém cidade e matéria em segmentos estáveis:
+`PublicEdition` e o singleton `PublicEditionRegistry` são os contratos OKF canônicos do namespace. O registry, e não cada cidade, define `default_edition_id`. O namespace público reserva a raiz para selecionar a edição e mantém cidade e matéria em segmentos estáveis:
 
 ```text
 /                                      # roteador/seletor de edição

@@ -3,6 +3,7 @@ type: PublicArticle
 title: "EMDUR projeta 1,3 mil m³ de concreto após consumir 709 m³ da ata atual; preço máximo é sigiloso"
 description: "Termo de referência abre a memória de cálculo da nova licitação: o saldo atual é de cerca de 291 m³, enquanto só o Parque Circuito tem previsão de 312 m³; disputa começa nesta quarta."
 story_id: "porto-velho-emdur-concreto-1300-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-02T10:26:42+00:00"

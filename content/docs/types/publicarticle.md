@@ -13,7 +13,7 @@ description: Matéria aceita pela autoridade pública de O Vigia e exposta pelo 
 - `title` é o título editorial aprovado para publicação.
 - `description` é a **linha fina** aprovada: resume a matéria para quem já está diante dela.
 - `chamada`, quando presente, é o texto editorial aprovado para a **capa**. Sua função é convidar à leitura sem prometer mais do que a matéria entrega. É diferente da linha fina; quando ausente, a apresentação pode usar `description` como fallback, mas o renderer não pode fabricar uma chamada nova.
-- `story_id` é a identidade estável usada na URL pública `/noticias/<story_id>/`.
+- `story_id` é a identidade estável da matéria dentro da edição; `edition_id` referencia `PublicEdition.edition_id` e compõe a URL pública `/<edition_id>/noticias/<story_id>/`.
 - `locality` é uma referência relacional a `PublicTerritory.name`; `bairro`, quando existe, também referencia `PublicTerritory.name` e representa uma granularidade territorial mais específica sustentada pela matéria.
 - `category` descreve a organização editorial da matéria.
 - `published_at` registra a publicação; `updated_at`, quando presente, registra atualização material da versão pública.

@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Seduc convoca classificados do Amigo Voluntário; prazo vai até 11 de setembro"
 description: "12ª convocação exige envio de documentos, cadastro ativo no SEI/RO e apresentação na Superintendência Regional indicada no edital."
 story_id: "rondonia-seduc-amigo-voluntario-convocacao-2026-09-11"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Serviços"
 published_at: "2026-09-01T16:36:00-04:00"

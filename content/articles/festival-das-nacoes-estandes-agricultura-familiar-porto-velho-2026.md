@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Festival das Nações oferece 8 estandes à agricultura familiar; formulário exige CNPJ e aviso diverge sobre prazo"
 description: "Credenciamento da Semagric é gratuito e ocorre por formulário oficial; a camada de inscrição exige CNPJ e não mostra campo de CAF, enquanto a notícia oficial dá duas indicações incompatíveis para o prazo final."
 story_id: "porto-velho-semagric-festival-nacoes-estandes-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Serviços"
 published_at: "2026-09-03T22:40:00-04:00"

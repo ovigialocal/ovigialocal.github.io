@@ -1,5 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const editions = (await getCollection('editions')).filter((edition) => edition.data.status === 'active');
+const registries = await getCollection('editionRegistry');
+if (registries.length !== 1 || registries[0].data.registry_id !== 'main') throw new Error('PublicEditionRegistry deve conter exatamente o registry main');
+const [registry] = registries;
 ---
 <BaseLayout title="Escolha sua cidade — O Vigia" description="Escolha a edição local de O Vigia." canonicalPath="/" compact>
   <main class="edition-router" aria-labelledby="edition-router-title">
@@ -7,14 +12,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h1 id="edition-router-title">Notícias perto de você.</h1>
     <p>Quando reconhecemos uma preferência anterior, abrimos essa edição. Na primeira visita, uma consulta aproximada por IP tenta encontrar a cidade; se ela falhar, Porto Velho é a edição inicial.</p>
     <nav aria-label="Escolher cidade">
-      <a href="/porto-velho/" data-edition="porto-velho"><strong>Porto Velho</strong><span>Rondônia</span></a>
+      {editions.map((edition) => <a href={`${edition.data.path_prefix}/`} data-edition={edition.data.edition_id}><strong>{edition.data.name}</strong><span>{edition.data.state_code}</span></a>)}
     </nav>
     <noscript><p>Selecione uma cidade para continuar.</p></noscript>
   </main>
-  <script is:inline>
+  <script type="application/json" data-edition-registry set:html={JSON.stringify({ editions: editions.map(({ data }) => data), policy: registry.data })}></script>
+  <script>
+    import { GEOIP_ENDPOINT, GEOIP_TIMEOUT_MS } from '../lib/geo';
     (async () => {
-      const editions = { 'porto-velho': '/porto-velho/' };
-      const cityEditions = { 'porto velho': 'porto-velho' };
+      const editionsRegistry = JSON.parse(document.querySelector('[data-edition-registry]')?.textContent || '{}');
+      const registry = editionsRegistry.editions;
+      const policy = editionsRegistry.policy;
+      const editions = Object.fromEntries(registry.map((edition) => [edition.edition_id, `${edition.path_prefix}/`]));
+      const cityEditions = Object.fromEntries(registry.flatMap((edition) => edition.geo_names.map((name) => [name.toLocaleLowerCase('pt-BR'), edition.edition_id])));
       const chooser = new URLSearchParams(location.search).has('escolher');
       const remembered = localStorage.getItem('vigia:edition');
       document.querySelectorAll('[data-edition]').forEach((link) => link.addEventListener('click', () => localStorage.setItem('vigia:edition', link.dataset.edition)));
@@ -23,16 +33,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
       let inferred;
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 1800);
+      const timeout = setTimeout(() => controller.abort(), GEOIP_TIMEOUT_MS);
       try {
-        const response = await fetch('https://ipwho.is/?fields=success,city', { signal: controller.signal });
+        const response = await fetch(`${GEOIP_ENDPOINT}?fields=success,city`, { signal: controller.signal });
         const result = await response.json();
         const city = typeof result.city === 'string' ? result.city.toLocaleLowerCase('pt-BR') : '';
         if (result.success) inferred = cityEditions[city];
       } catch {}
       finally { clearTimeout(timeout); }
 
-      const edition = editions[inferred] ? inferred : 'porto-velho';
+      const fallback = policy.default_edition_id;
+      const edition = editions[inferred] ? inferred : fallback;
       localStorage.setItem('vigia:edition', edition);
       location.replace(editions[edition]);
     })();

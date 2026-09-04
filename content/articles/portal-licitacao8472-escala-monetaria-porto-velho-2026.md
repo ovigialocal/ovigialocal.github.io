@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Portal mostra R$ 878,2 bilhões para pregão estimado em R$ 878,2 mil; diferença é de 1 milhão de vezes"
 description: "Edital e quadro de preços do mesmo processo fixam R$ 878.156,70. A página também ainda chama o certame de ‘Acolhimento de Propostas’ após decisão de agosto que adjudicou e homologou um dos itens."
 story_id: "porto-velho-dados-publicos-escala-monetaria-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-04T02:45:00-04:00"

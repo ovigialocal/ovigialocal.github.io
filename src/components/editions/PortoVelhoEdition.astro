@@ -9,6 +9,10 @@ import EditionSuggestion from '../EditionSuggestion.astro';
 import { formatDayMonth, formatDayTime, formatTime, futureTemporal, slugify, sortStories, storyUrl, territory } from '../../lib/news';
 
 const stories = sortStories(await getCollection('articles'));
+const editions = await getCollection('editions');
+const editionRegistries = await getCollection('editionRegistry');
+if (editionRegistries.length !== 1 || editionRegistries[0].data.registry_id !== 'main') throw new Error('PublicEditionRegistry deve conter exatamente o registry main');
+const [editionRegistry] = editionRegistries;
 const categories = [...new Set(stories.map((story) => story.data.category))];
 const lead = stories[0];
 const secondary = stories.slice(1, 4);
@@ -34,7 +38,7 @@ const navItems = [
   navItems={navItems}
 >
   <main class="front-page">
-    <EditionSuggestion current="porto-velho" />
+    <EditionSuggestion current="porto-velho" editions={editions} policy={editionRegistry.data} />
     <section class="edition-intro" aria-labelledby="edition-title">
       <p class="chapeu">Edição de Porto Velho</p>
       <h1 id="edition-title">Notícias da cidade, com a fonte à vista.</h1>

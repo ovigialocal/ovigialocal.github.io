@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Relatório que embasa marco econômico recomendou SLIN por R$ 4,1 mi em 48 meses; sistema próprio segue previsto"
 description: "Documento técnico comparou alternativa de R$ 10,5 milhões, condicionou a via de contratação a parecer favorável da PGM e manteve o SUL como solução municipal definitiva em desenvolvimento paralelo."
 story_id: "porto-velho-liberdade-economica-slin-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-03T00:10:00+00:00"

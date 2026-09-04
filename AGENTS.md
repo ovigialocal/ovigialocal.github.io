@@ -107,10 +107,13 @@ A material body/title/description/`chamada` edit requires a new newsroom ready d
 
 ## Public OKF contract
 
-`content/` is the public OKF bundle. The initial public concepts are:
+`content/` is the public OKF bundle. The public concepts are:
 
 - `PublicArticle` in `content/articles/*.md`;
-- `PublicTerritory` in `content/territories/*.md`.
+- `PublicTerritory` in `content/territories/*.md`;
+- `PublicEdition` in `content/editions/*.md` and the singleton `PublicEditionRegistry` in `content/registry/editions.md`.
+
+`PublicEditionRegistry.default_edition_id` owns the site fallback. Individual editions must not carry an `is_default` flag. Public articles reference `PublicEdition.edition_id`; Redação and Dados consume that ID without copying the public registry as a second authority.
 
 `okf-parser` owns their semantic contract. Astro owns presentation. Do not maintain a second hand-written frontmatter schema in Python, TypeScript or Astro.
 
