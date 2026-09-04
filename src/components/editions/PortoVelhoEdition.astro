@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProvenanceModal from '../ProvenanceModal.astro';
+import SearchBox from '../SearchBox.astro';
+import SourceDisclosure from '../SourceDisclosure.astro';
+import PublicArticleCard from '../concepts/PublicArticleCard.astro';
+import EditionSuggestion from '../EditionSuggestion.astro';
+import { formatDayMonth, formatDayTime, formatTime, futureTemporal, slugify, sortStories, storyUrl, territory } from '../../lib/news';
+
+const stories = sortStories(await getCollection('articles'));
+const categories = [...new Set(stories.map((story) => story.data.category))];
+const lead = stories[0];
+const secondary = stories.slice(1, 4);
+const latest = stories.slice(4, 9);
+const service = stories.filter((story) => story.data.category === 'Serviços').slice(0, 4);
+const temporal = futureTemporal(stories);
+const agenda = temporal.filter((story) => story.data.next_event_kind !== 'acompanhamento');
+const follow = temporal.filter((story) => story.data.next_event_kind === 'acompanhamento');
+const navItems = [
+  { href: '#ultimas', label: 'Últimas', current: true },
+  ...(temporal.length ? [{ href: '#proximos', label: 'Próximos marcos' }] : []),
+  ...(service.length ? [{ href: '#servico', label: 'Serviço' }] : []),
+  { href: '/territorios.html', label: 'Territórios' },
+  ...categories.map((category) => ({ href: `/editorias.html#editoria-${slugify(category)}`, label: category })),
+  { href: '/arquivo.html', label: 'Arquivo' },
+];
+---
+<BaseLayout
+  title="O Vigia — Notícias de Porto Velho"
+  description="O Vigia acompanha Porto Velho com jornalismo local baseado em fontes verificáveis e transparência editorial."
+  canonicalPath="/porto-velho/"
+  image={lead?.data.media_url}
+  navItems={navItems}
+>
+  <main class="front-page">
+    <EditionSuggestion current="porto-velho" />
+    <section class="edition-intro" aria-labelledby="edition-title">
+      <p class="chapeu">Edição de Porto Velho</p>
+      <h1 id="edition-title">Notícias da cidade, com a fonte à vista.</h1>
+      <p class="edition-linha-fina">O Vigia acompanha decisões públicas, serviços, economia e acontecimentos que afetam Porto Velho. Cada matéria mantém um caminho claro até a evidência que a sustenta.</p>
+    </section>
+
+    {stories.length === 0 ? (
+      <section class="empty-edition" aria-labelledby="empty-title"><div class="empty-edition-main"><p class="chapeu">Acervo</p><h2 id="empty-title">Ainda não há matérias publicadas.</h2><p>A capa permanece vazia quando não existe conteúdo aceito para publicação.</p></div></section>
+    ) : (
+      <>
+        <section class="controls-section" aria-label="Filtrar matérias por território">
+          <div class="bairro-filter" id="bairro-filter" aria-label="Filtrar por território"></div>
+          <details class="home-search">
+            <summary>Buscar no acervo</summary>
+            <div class="home-search-panel"><SearchBox instance="home-search" label="Buscar no acervo de O Vigia" /><a href="/arquivo.html">Abrir arquivo completo →</a></div>
+          </details>
+        </section>
+
+        <section class="front-lede" id="ultimas" data-news-section aria-label="Principais notícias">
+          {lead && <article class="lead-story" data-news-card data-category={lead.data.category} data-bairro={territory(lead)}>
+            <div class="card-header"><a class="badge-tag" href={`/editorias.html#editoria-${slugify(lead.data.category)}`}>{lead.data.category}</a><time datetime={lead.data.published_at}>{formatDayTime(lead.data.published_at)}</time></div>
+            <h2><a href={storyUrl(lead)}>{lead.data.title}</a></h2>
+            {lead.data.media_url && <figure class="lead-media"><a href={storyUrl(lead)}><img src={lead.data.media_url} alt={lead.data.media_alt ?? ''} width={lead.data.media_width ? Number(lead.data.media_width) : undefined} height={lead.data.media_height ? Number(lead.data.media_height) : undefined} /></a><figcaption>{lead.data.media_caption && <span>{lead.data.media_caption}</span>}{lead.data.media_credit && <span>{lead.data.media_credit}</span>}</figcaption></figure>}
+            <p class="lead-linha-fina">{lead.data.description}</p>
+            <SourceDisclosure story={lead} />
+          </article>}
+          <aside class="lead-rail" aria-label="Destaques"><p class="module-label">Destaques</p>{secondary.map((story) => <article class="rail-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><p class="card-header"><a class="badge-tag" href={`/editorias.html#editoria-${slugify(story.data.category)}`}>{story.data.category}</a><time datetime={story.data.published_at}>{formatTime(story.data.published_at)}</time></p>{story.data.media_url && <figure class="card-media"><a href={storyUrl(story)}><img src={story.data.media_url} alt={story.data.media_alt ?? ''} loading="lazy" /></a></figure>}<h3><a href={storyUrl(story)}>{story.data.title}</a></h3><p>{story.data.chamada ?? story.data.description}</p></article>)}</aside>
+        </section>
+
+        {latest.length > 0 && <section class="latest-line" data-news-section aria-labelledby="latest-line-title"><div class="latest-line-heading"><p class="chapeu">Últimas</p><h2 id="latest-line-title">O que entrou agora</h2></div><div class="latest-line-list">{latest.map((story) => <article class="latest-item" data-news-card data-category={story.data.category} data-bairro={territory(story)}><time datetime={story.data.published_at}>{formatTime(story.data.published_at)}</time><div><span>{story.data.category}</span><h3><a href={storyUrl(story)}>{story.data.title}</a></h3></div></article>)}</div></section>}
+
+        {temporal.length > 0 && <section class="temporal-desk" id="proximos" data-news-section aria-labelledby="temporal-title"><header class="temporal-desk-header"><div><p class="chapeu">O que vem agora</p><h2 id="temporal-title">Próximos marcos</h2></div><p>Só entram datas estruturadas e verificáveis; previsão incerta ou data incidental não vira agenda.</p></header><div class="temporal-columns">
+          {agenda.length > 0 && <section class="temporal-module" aria-labelledby="agenda-title"><p class="module-label">Hoje / próximos dias</p><h3 id="agenda-title">Agenda</h3><div class="temporal-list">{agenda.map((story) => <article class="temporal-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><time datetime={story.data.next_event_at}>{formatDayTime(story.data.next_event_at!)}</time><div><span>{story.data.next_event_kind}</span><h4><a href={storyUrl(story)}>{story.data.next_event_label}</a></h4><p>{story.data.title}</p><div class="temporal-links"><a href={storyUrl(story)}>Ver matéria →</a><a href={story.data.source_url} rel="noopener noreferrer">Fonte ↗</a></div></div></article>)}</div></section>}
+          {follow.length > 0 && <section class="temporal-module temporal-module-follow" aria-labelledby="follow-title"><p class="module-label">Histórias abertas</p><h3 id="follow-title">Acompanhe</h3><div class="temporal-list">{follow.map((story) => <article class="temporal-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><time datetime={story.data.next_event_at}>{formatDayTime(story.data.next_event_at!)}</time><div><span>próximo marco</span><h4><a href={storyUrl(story)}>{story.data.next_event_label}</a></h4><p>{story.data.title}</p><div class="temporal-links"><a href={storyUrl(story)}>Ver matéria →</a><a href={story.data.source_url} rel="noopener noreferrer">Fonte ↗</a></div></div></article>)}</div></section>}
+        </div></section>}
+
+        {service.length > 0 && <section class="service-desk" id="servico" data-news-section aria-labelledby="service-title"><header class="service-desk-header"><div><p class="chapeu">Utilidade pública</p><h2 id="service-title">Serviço</h2></div><p>Informação prática para agir, se organizar ou não perder prazo.</p></header><div class="service-grid">{service.map((story) => <article class="service-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><time datetime={story.data.published_at}>{formatDayMonth(story.data.published_at)}</time><h3><a href={storyUrl(story)}>{story.data.title}</a></h3><p>{story.data.chamada ?? story.data.description}</p><div class="service-links"><a class="service-read" href={storyUrl(story)}>Entenda o serviço →</a><a href={story.data.source_url} rel="noopener noreferrer">Fonte ↗</a></div></article>)}</div></section>}
+
+        {categories.filter((category) => category !== 'Serviços').map((category, index) => {
+          const categoryStories = stories.filter((story) => story.data.category === category).slice(0, 3);
+          return <section class="editorial-section" id={`editoria-${slugify(category)}`} data-news-section aria-labelledby={`editoria-title-${index}`}><div class="section-heading"><div><p class="chapeu">Editoria</p><h2 id={`editoria-title-${index}`}>{category}</h2></div><div class="section-actions"><p class="section-note">{stories.filter((story) => story.data.category === category).length} no acervo</p><a href={`/editorias.html#editoria-${slugify(category)}`}>Ver editoria →</a></div></div><div class="news-grid news-grid-section">{categoryStories.map((story) => <PublicArticleCard story={story} showCategory={false} />)}</div></section>;
+        })}
+        <div class="archive-cta"><a href="/arquivo.html">Ver todo o arquivo de O Vigia →</a></div>
+        <p class="no-results" id="no-results" hidden>Nenhuma matéria encontrada com esses filtros.</p>
+      </>
+    )}
+  </main>
+  <ProvenanceModal />
+  <script is:inline>localStorage.setItem('vigia:edition', 'porto-velho');</script>
+  <script>
+    let activeTerritory = 'Todos';
+    const cards = () => [...document.querySelectorAll<HTMLElement>('[data-news-card]')];
+    const filter = () => {
+      let visible = 0;
+      cards().forEach((card) => {
+        const territoryMatches = activeTerritory === 'Todos' || card.dataset.bairro === activeTerritory;
+        card.hidden = !territoryMatches;
+        if (!card.hidden) visible += 1;
+      });
+      document.querySelectorAll<HTMLElement>('[data-news-section]').forEach((section) => { section.hidden = ![...section.querySelectorAll<HTMLElement>('[data-news-card]')].some((card) => !card.hidden); });
+      const empty = document.getElementById('no-results'); if (empty) empty.hidden = visible !== 0;
+    };
+    const container = document.getElementById('bairro-filter');
+    if (container) {
+      const values = ['Todos', ...new Set(cards().map((card) => card.dataset.bairro).filter((value): value is string => Boolean(value)))];
+      container.replaceChildren(...values.map((value, index) => { const button = document.createElement('button'); button.type = 'button'; button.className = `filter-chip ${index === 0 ? 'active' : ''}`; button.textContent = value; button.addEventListener('click', () => { container.querySelectorAll('.filter-chip').forEach((item) => item.classList.remove('active')); button.classList.add('active'); activeTerritory = value; filter(); }); return button; }));
+    }
+  </script>
+</BaseLayout>

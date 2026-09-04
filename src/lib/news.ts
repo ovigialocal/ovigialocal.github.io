@@ -6,7 +6,7 @@ export type Territory = CollectionEntry<'territories'>;
 const TIME_ZONE = 'America/Porto_Velho';
 
 export function storyUrl(story: Story): string {
-  return `/noticias/${encodeURIComponent(story.data.story_id)}/`;
+  return `/porto-velho/noticias/${encodeURIComponent(story.data.story_id)}/`;
 }
 
 export function territoryUrl(territory: Territory): string {

@@ -73,8 +73,10 @@ def verify_operational_contract() -> None:
 
 def main() -> int:
     files = {
-        "homepage": read("src/pages/index.astro"),
-        "article": read("src/pages/noticias/[story_id].astro"),
+        "edition-router": read("src/pages/index.astro"),
+        "homepage": read("src/components/editions/PortoVelhoEdition.astro"),
+        "article": read("src/pages/porto-velho/noticias/[story_id].astro"),
+        "legacy-story": read("src/pages/noticias/[story_id].astro"),
         "legacy-article": read("src/pages/article.html.astro"),
         "base": read("src/layouts/BaseLayout.astro"),
         "editorias": read("src/pages/editorias.html.astro"),
@@ -100,7 +102,10 @@ def main() -> int:
     for needle in ["getStaticPaths", "render(story)", "resolveStoryTerritory", "data-share-button"]:
         require(files["article"], needle, "article")
     require(files["legacy-article"], "URLSearchParams", "legacy article redirect")
-    require(files["legacy-article"], "/noticias/", "legacy article redirect")
+    require(files["legacy-article"], "/porto-velho/noticias/", "legacy article redirect")
+    require(files["legacy-story"], "Astro.redirect(storyUrl(story), 301)", "legacy story redirect")
+    for needle in ["localStorage", "ipwho.is", "porto-velho"]:
+        require(files["edition-router"], needle, "edition router")
     for needle in ["NewsArticle", 'rel="sitemap"', "data-pagefind-ignore"]:
         require(files["base"], needle, "BaseLayout")
 

@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  story: CollectionEntry<'articles'>;
+  mode?: 'modal' | 'link';
+  prefix?: boolean;
+}
+
+const { story, mode = 'modal', prefix = true } = Astro.props;
+const label = prefix ? `Fonte primária: ${story.data.source_name}` : story.data.source_name;
+---
+<div class="card-metadata source-disclosure">
+  <span class="source-badge">{label}</span>
+  {mode === 'modal' ? (
+    <button type="button" class="btn-provenance" data-provenance-button data-title={story.data.title} data-source-name={story.data.source_name} data-source-url={story.data.source_url} data-source-hash={story.data.source_digest}>Verificar fonte</button>
+  ) : (
+    <a class="btn-provenance" href={story.data.source_url} rel="noopener noreferrer">Abrir fonte ↗</a>
+  )}
+</div>

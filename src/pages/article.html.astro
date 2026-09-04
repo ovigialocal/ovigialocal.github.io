@@ -5,10 +5,10 @@ export const prerender = true;
 <html lang="pt-BR">
 <head><meta charset="UTF-8" /><meta name="robots" content="noindex" /><title>Redirecionando — O Vigia</title></head>
 <body>
-  <p>Esta URL é antiga. <a href="/">Voltar à capa</a>.</p>
+  <p>Esta URL é antiga. <a href="/porto-velho/">Voltar à capa</a>.</p>
   <script is:inline>
     const id = new URLSearchParams(location.search).get('id');
-    location.replace(id ? `/noticias/${encodeURIComponent(id)}/` : '/');
+    location.replace(id ? `/porto-velho/noticias/${encodeURIComponent(id)}/` : '/porto-velho/');
   </script>
 </body>
 </html>
