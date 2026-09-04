@@ -95,7 +95,7 @@
   line-height: 1.03;
   letter-spacing: -.028em;
 }
-.article-deck {
+.article-linha-fina {
   max-width: 47rem;
   margin: var(--s-5) 0 0;
   color: var(--concreto-60);
@@ -140,7 +140,7 @@
   padding: 0 var(--s-5) var(--s-5);
   font-family: var(--font-sans);
 }
-.article-trust .eyebrow {
+.article-trust .chapeu {
   margin: 0 calc(var(--s-5) * -1) var(--s-5);
   background: var(--fg-heading);
   padding: .5rem var(--s-5);
@@ -158,7 +158,7 @@
   line-height: 1.2;
   letter-spacing: -.02em;
 }
-.article-trust > p:not(.eyebrow) { color: var(--fg-muted); font-size: .92rem; max-inline-size: none; }
+.article-trust > p:not(.chapeu) { color: var(--fg-muted); font-size: .92rem; max-inline-size: none; }
 .article-trust details {
   margin: var(--s-5) 0 0;
   border-top: 1px solid var(--border);

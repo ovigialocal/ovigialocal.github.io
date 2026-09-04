@@ -54,7 +54,7 @@ Use exactly:
 
 with the ready digest from `okf-parser`. Persist `source_path` and pinned newsroom commit as provenance/locators, not identity. A rename of the same ready is not a new candidate.
 
-Before review, verify the private `article-ready` pins subject/profile/one approval per required gate by `source_digest` and that body/title/description are identical to the approved subject. An invalid envelope is not reviewable.
+Before review, verify the private `article-ready` pins subject/profile/one approval per required gate by `source_digest` and that body/title/description — and `chamada` when present — are identical to the approved subject. An invalid envelope is not reviewable.
 
 ## Portable ledger paths
 
@@ -103,7 +103,7 @@ Trust the newsroom process as evidence, but independently judge material fitness
 
 Copy approved **editorial content**, not the private file byte-for-byte. Whitelist public metadata. Never expose self-review, internal findings, reporting notes, experience/wiki records or workflow instructions by default.
 
-A material body/title/description edit requires a new newsroom ready digest.
+A material body/title/description/`chamada` edit requires a new newsroom ready digest. If a legacy ready has no `chamada`, the public renderer may display `description` as fallback; the publication agent must not author a new chamada.
 
 ## Public OKF contract
 
@@ -122,6 +122,8 @@ PublicTerritory.parent_territory_id → PublicTerritory(territory_id)
 ```
 
 `PublicTerritory.name` is a relational key; `title` is the human-facing label. Presentation must not infer territory identity by slugifying arbitrary article text.
+
+`PublicArticle.chamada`, when present, is approved cover copy. It is not a renderer-generated summary and is distinct from `description`/linha fina.
 
 ## Renderer boundary
 
@@ -152,6 +154,14 @@ bun run build
 ```
 
 All gates must pass before merge.
+
+## Editorial vocabulary
+
+`docs/vocabulario-redacao.md` is the naming contract for editorial concepts in code, OKF, comments and conversation. When a piece has a real newsroom name, use that name: `chapeu`, `linha-fina`, `retranca`, `chamada`, `suite`, `boxe`, `fio`. Keep technical web mechanics such as `grid`, `card`, `modal`, `nav`, `filter` and `search` in their normal technical vocabulary.
+
+Do not introduce retired names such as `eyebrow`, editorial `deck`, `module-label`, “trilha de destaques”, “ficha de proveniência” or “módulo temporal”. A rename of an editorial CSS class must be atomic with every Astro/component consumer so markup and style cannot drift apart.
+
+New editorial terms must be added to the vocabulary in the same change. Do not invent a new metaphor when established newsroom vocabulary exists.
 
 ## UI authority boundary
 

@@ -3,7 +3,7 @@ name: publication-review
 description: Avalia independentemente uma candidata article-ready fechada e decide publicar ou devolver trabalho à redação por ficha editorial canônica.
 compatibility: ">=1.0.0"
 metadata:
-  version: "1.7.0"
+  version: "1.8.0"
   owner_role: "publication-agent"
 ---
 
@@ -29,7 +29,7 @@ A Redação e a face pública são loops recorrentes autônomos. `article-ready`
 
 1. Reconcilie primeiro qualquer transação aberta ou side effect pendente.
 2. Fixe um commit da Redação e carregue o bundle com `okf-parser`.
-3. Enumere `article-ready` e valide que cada oferta fecha subject/profile/approvals por `source_digest` e não diverge do body/title/description aprovados.
+3. Enumere `article-ready` e valide que cada oferta fecha subject/profile/approvals por `source_digest` e não diverge do body/title/description/`chamada` aprovados. `chamada` é opcional; ausência continua ausência.
 4. Derive a key repo/story/ready-digest. Path/commit não fazem parte da identidade.
 5. Exclua keys já decididas em `main` e keys reservadas por PR aberta.
 6. Para uma key realmente livre, derive `story_token`/`digest_token` por percent-encoding e reserve a branch determinística `publication/<story_token>/<digest_token>`.
@@ -38,6 +38,12 @@ A Redação e a face pública são loops recorrentes autônomos. `article-ready`
 9. Faça julgamento independente focado em defeitos **materiais** de publicação; não repita gates só para demonstrar atividade.
 10. Se houver necessidade de nova apuração/revisão editorial, siga `Reject`.
 11. Se for publicável sem mudança material de conteúdo editorial, siga `Accept`.
+
+## Chamada x linha fina
+
+`description` é a linha fina da matéria. `chamada`, quando presente na candidata aprovada, é texto próprio de capa e pode ter formulação mais convidativa sem ultrapassar o que a matéria sustenta.
+
+O publicador **não escreve chamada**. Ele pode apenas copiar a chamada aprovada para `PublicArticle.chamada`. Para ready legado sem o campo, deixa `chamada` ausente; o renderer usa `description` como fallback visual. Produzir, reescrever ou “melhorar” uma chamada neste repositório é edição material e exige nova versão na Redação.
 
 ## Proveniência factual multi-source
 
@@ -107,8 +113,8 @@ Registros anteriores que usam `newsroom_issue` continuam válidos. Não os reesc
 ## Accept
 
 1. Na transação reservada, grave decision `accepted` com um único `public_path`.
-2. Extraia body/title/description aprovados do envelope validado; não copie frontmatter privado inteiro.
-3. Aplique whitelist de metadados públicos e preserve `story_id`, source repo/commit/path/digest.
+2. Extraia body/title/description e `chamada` quando presente da fotografia editorial aprovada; não copie frontmatter privado inteiro e não crie chamada nova.
+3. Aplique whitelist de metadados públicos e preserve `story_id`, source repo/commit/path/digest. `PublicArticle.chamada` só é preenchido quando a candidata aprovada a possui.
 4. Resolva **todas** as `source-observation` factuais materiais da candidata e materialize/reutilize uma `PublicSource` para cada uma, conforme `Proveniência factual multi-source` e `Archived provenance por fonte`.
 5. Grave em `PublicArticle.source_refs` todos os `source_ref` materializados. Se mantiver `source_name/source_url/source_original_url`, trate-os apenas como projeção compatível da primeira fonte exibível.
 6. Resolva slug collision como metadado público; não rejeite só por colisão técnica.
@@ -124,7 +130,7 @@ Registros anteriores que usam `newsroom_issue` continuam válidos. Não os reesc
 
 `content/` é um bundle OKF público. `okf-parser` é a autoridade sobre o TypeContract de `PublicArticle`, `PublicSource` e `PublicTerritory`; Astro apenas consome o Zod gerado e apresenta os conceitos.
 
-Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/Astro. Não trate `PublicTerritory.name` como rótulo de UI: `name` é chave relacional e `title` é apresentação humana. Não trate `PublicArticle.source_name/source_url` como substituto do conjunto `source_refs` quando este existir.
+Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/Astro. Não trate `PublicTerritory.name` como rótulo de UI: `name` é chave relacional e `title` é apresentação humana. Não trate `PublicArticle.source_name/source_url` como substituto do conjunto `source_refs` quando este existir. Não trate `description` e `chamada` como sinônimos: uma é linha fina; a outra, quando aprovada, é peça própria de capa.
 
 ## Corrections and post-publication feedback
 
@@ -147,7 +153,7 @@ Não implemente uma segunda lista de campos obrigatórios em Python/TypeScript/A
 - tratar GitHub issue como autoridade semântica do retorno quando o contrato de ficha estiver ativo;
 - abandonar side effect pendente sem estado retomável;
 - expor metadados privados por cópia cega;
-- editar conteúdo editorial materialmente;
+- editar conteúdo editorial materialmente, inclusive criar ou reescrever `chamada`;
 - tratar preferência estilística como blocker;
 - publicar fixture/demo como notícia real;
 - escolher uma única fonte para representar artificialmente todas as origens materiais da matéria;

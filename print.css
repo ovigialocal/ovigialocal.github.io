@@ -47,7 +47,7 @@
   /* Matéria */
   .article-header { max-width: none; padding-bottom: 10pt; border-bottom: 1.5pt solid #000; }
   .article-header h1 { font-size: 24pt; line-height: 1.08; }
-  .article-deck { max-width: none; font-size: 13pt; line-height: 1.4; }
+  .article-linha-fina { max-width: none; font-size: 13pt; line-height: 1.4; }
   .article-preview-label { display: none; }
   .article-meta { gap: 8pt; font-size: 8pt; }
   .article-meta a:first-of-type { background: none; padding: 0; color: #000; }
@@ -65,12 +65,12 @@
   .article-body table, .article-media, figure { break-inside: avoid; page-break-inside: avoid; }
   .article-media img, .lead-media img { max-height: 90mm; }
 
-  /* A ficha de proveniência é o motivo de imprimir: sempre visível, nunca cortada */
+  /* O boxe de proveniência é o motivo de imprimir: sempre visível, nunca cortado */
   .article-trust {
     position: static; margin-top: 14pt; padding: 0;
     border: 1pt solid #000; break-inside: avoid; page-break-inside: avoid;
   }
-  .article-trust .eyebrow { margin: 0; background: none; padding: 6pt 8pt 0; color: #000; font-size: 7.5pt; }
+  .article-trust .chapeu { margin: 0; background: none; padding: 6pt 8pt 0; color: #000; font-size: 7.5pt; }
   .article-trust h2 { padding: 0 8pt; font-size: 12pt; }
   .article-trust details { display: block; }
   .article-trust details > summary { display: none; }
@@ -90,7 +90,7 @@
   .front-lede { display: block; border-bottom: 1.5pt solid #000; }
   .lead-story { padding: 0 0 10pt; border-right: 0; }
   .lead-story h2 { max-width: none; font-size: 22pt; }
-  .lead-deck { font-size: 12pt; }
+  .lead-linha-fina { font-size: 12pt; }
   .lead-rail, .latest-line, .temporal-columns, .service-grid, .news-grid { display: block; }
   .rail-story, .latest-item, .temporal-story, .service-story, .news-card {
     padding: 6pt 0; border: 0; border-top: .5pt solid #b0b0b0;

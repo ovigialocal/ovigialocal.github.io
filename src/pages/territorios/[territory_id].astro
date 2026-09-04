@@ -24,13 +24,13 @@ const navItems = [{ href: '/', label: 'Capa' }, { href: '/editorias.html', label
     <PublicTerritoryHeader territory={territory} parent={parent} articleCount={directStories.length} />
 
     {children.length > 0 && <section class="editorial-section" aria-labelledby="children-title">
-      <div class="section-heading"><div><p class="eyebrow">Dentro deste território</p><h2 id="children-title">Territórios relacionados</h2></div><p class="section-note">{children.length} publicados</p></div>
+      <div class="section-heading"><div><p class="chapeu">Dentro deste território</p><h2 id="children-title">Territórios relacionados</h2></div><p class="section-note">{children.length} publicados</p></div>
       <div class="news-grid news-grid-section">{children.map((child) => <PublicTerritoryCard territory={child} articleCount={storiesForTerritory(stories, child).length} childCount={territories.filter((item) => item.data.parent_territory_id === child.data.territory_id).length} />)}</div>
     </section>}
 
     <section class="editorial-section" aria-labelledby="territory-news-title">
-      <div class="section-heading"><div><p class="eyebrow">Cobertura</p><h2 id="territory-news-title">Matérias em {territory.data.title}</h2></div><p class="section-note">{directStories.length} no acervo</p></div>
-      {directStories.length > 0 ? <div class="news-grid news-grid-section">{directStories.map((story) => <PublicArticleCard story={story} />)}</div> : <p class="edition-deck">Ainda não há matéria diretamente associada a este território.</p>}
+      <div class="section-heading"><div><p class="chapeu">Cobertura</p><h2 id="territory-news-title">Matérias em {territory.data.title}</h2></div><p class="section-note">{directStories.length} no acervo</p></div>
+      {directStories.length > 0 ? <div class="news-grid news-grid-section">{directStories.map((story) => <PublicArticleCard story={story} />)}</div> : <p class="edition-linha-fina">Ainda não há matéria diretamente associada a este território.</p>}
     </section>
   </main>
 </BaseLayout>

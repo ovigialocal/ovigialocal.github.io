@@ -10,7 +10,9 @@ description: Matéria aceita pela autoridade pública de O Vigia e exposta pelo 
 
 ## Semântica
 
-- `title` e `description` são o título e a linha fina editoriais aprovados para publicação.
+- `title` é o título editorial aprovado para publicação.
+- `description` é a **linha fina** aprovada: resume a matéria para quem já está diante dela.
+- `chamada`, quando presente, é o texto editorial aprovado para a **capa**. Sua função é convidar à leitura sem prometer mais do que a matéria entrega. É diferente da linha fina; quando ausente, a apresentação pode usar `description` como fallback, mas o renderer não pode fabricar uma chamada nova.
 - `story_id` é a identidade estável usada na URL pública `/noticias/<story_id>/`.
 - `locality` é uma referência relacional a `PublicTerritory.name`; `bairro`, quando existe, também referencia `PublicTerritory.name` e representa uma granularidade territorial mais específica sustentada pela matéria.
 - `category` descreve a organização editorial da matéria.
@@ -24,6 +26,10 @@ description: Matéria aceita pela autoridade pública de O Vigia e exposta pelo 
 O corpo Markdown é conteúdo editorial público canônico. Astro não redefine esta semântica: o schema consumido pelo Content Layer é compilado deste bundle pelo `okf-parser`.
 
 A declaração física `publicarticle.schema.sql` registra tipos e campos opcionais admitidos mesmo quando ainda não há uma observação concreta no acervo. `content/okf.schema.sql` registra as relações entre conceitos. Ambos são inputs confiáveis do `TypeContract`, não implementações paralelas de validação no frontend.
+
+## Chamada é conteúdo editorial
+
+O publicador pode copiar `chamada` apenas quando ela pertence à candidatura aprovada pela Redação. Uma chamada nova ou materialmente reescrita depois do `article-ready` exigiria nova candidata e novos gates. Para artigos legados sem o campo, `description` é somente fallback de apresentação: a ausência da peça permanece semanticamente ausência de chamada própria.
 
 ## Proveniência factual x proveniência editorial
 

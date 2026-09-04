@@ -1,6 +1,7 @@
 CREATE TABLE "PublicArticle" (
     title VARCHAR,
     description VARCHAR,
+    chamada VARCHAR,
     story_id VARCHAR,
     locality VARCHAR,
     bairro VARCHAR,
@@ -29,6 +30,7 @@ CREATE TABLE "PublicArticle" (
 
 COMMENT ON TABLE "PublicArticle" IS 'Matéria pública canônica de O Vigia.';
 COMMENT ON COLUMN "PublicArticle".story_id IS 'Identidade estável usada na URL pública.';
+COMMENT ON COLUMN "PublicArticle".chamada IS 'Texto editorial opcional de capa; distinto da linha fina e copiado da candidatura aprovada.';
 COMMENT ON COLUMN "PublicArticle".published_at IS 'Momento de publicação da matéria.';
 COMMENT ON COLUMN "PublicArticle".updated_at IS 'Momento de atualização material, quando houver.';
 COMMENT ON COLUMN "PublicArticle".source_digest IS 'Digest da candidatura editorial aprovada.';

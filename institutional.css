@@ -1,5 +1,5 @@
 /* Páginas institucionais: metodologia, correções, políticas.
- * Display em Archivo, leitura em Piazzolla, régua única. */
+ * Display em Archivo, leitura em Piazzolla, fio único. */
 
 .institutional-page { max-width: 1040px; margin: auto; padding: var(--s-7) var(--s-6) var(--s-9); }
 
@@ -12,7 +12,7 @@
   font-size: clamp(2.4rem, 5.4vw, var(--t-h1)); line-height: 1;
   font-weight: 800; letter-spacing: -.032em; color: var(--fg-heading); text-wrap: balance;
 }
-.institutional-header .deck {
+.institutional-header .linha-fina {
   margin: 0; color: var(--fg-muted);
   font-family: var(--font-serif); font-size: 1.18rem; line-height: 1.5; text-wrap: pretty;
 }
@@ -75,7 +75,7 @@
 @media (max-width: 760px) {
   .institutional-page { padding: var(--s-6) var(--s-4) var(--s-8); }
   .institutional-header h1 { font-size: clamp(2.1rem, 11vw, 3rem); }
-  .institutional-header .deck { font-size: 1.06rem; }
+  .institutional-header .linha-fina { font-size: 1.06rem; }
   .institutional-layout { grid-template-columns: 1fr; gap: var(--s-6); }
   .institutional-body { font-size: 1.06rem; }
   .institutional-aside { position: static; }
