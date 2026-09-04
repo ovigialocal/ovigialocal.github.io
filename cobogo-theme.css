@@ -4,72 +4,77 @@
  * Identidade: Brazilian Modernism — paleta Ipanema.
  * Niemeyer (calma monumental) + Concretismo (geometria de aresta dura)
  * + Athos Bulcão (cor de azulejo e ritmo modular).
+ *
+ * Os nomes de token abaixo são os canônicos do design system. Não invente
+ * apelidos locais: um var() que não resolve cai no default do navegador em
+ * silêncio, e foi assim que a tipografia do site quebrou uma vez.
  */
 :root {
   color-scheme: light;
 
   /* ——— Papel / concreto ——— */
-  --papel-00: #fbf8f1;
-  --papel-10: #f5f1e8;
-  --papel-20: #ede7d8;
-  --papel-30: #dcd4be;
-  --concreto-40: #b8b0a0;
-  --concreto-60: #6b6455;
-  --concreto-80: #2e2a24;
-  --concreto-90: #1a1814;
+  --papel-00: #FBF8F1;
+  --papel-10: #F5F1E8;
+  --papel-20: #EDE7D8;
+  --papel-30: #DCD4BE;
+  --concreto-40: #B8B0A0;
+  --concreto-60: #6B6455;
+  --concreto-80: #2E2A24;
+  --concreto-90: #1A1814;
 
   /* ——— Primárias de azulejo ——— */
-  --azul: #1b2b4b;
-  --azul-bright: #2d4a7b;
-  --vermelho: #c8472e;
-  --vermelho-deep: #9c3422;
-  --ocre: #d9a441;
-  --verde: #2e6b4a;
+  --azul: #1B2B4B;
+  --azul-bright: #2D4A7B;
+  --azul-soft: #E6ECF5;
+  --vermelho: #C8472E;
+  --vermelho-deep: #9C3422;
+  --vermelho-soft: #F9E7E1;
+  --ocre: #D9A441;
+  --ocre-deep: #A87A1F;
+  --ocre-soft: #F7EED6;
+  --verde: #2E6B4A;
+  --verde-soft: #DDEBE1;
 
-  /* ——— Papéis compartilhados do Cobogó ——— */
-  --cobogo-canvas: var(--papel-10);
-  --cobogo-surface: var(--papel-00);
-  --cobogo-surface-muted: var(--papel-20);
-  --cobogo-text: var(--concreto-80);
-  --cobogo-text-muted: var(--concreto-60);
-  --cobogo-border: var(--papel-30);
-  --cobogo-accent: var(--vermelho);
-  --cobogo-focus: var(--azul);
-  --cobogo-focus-contrast: var(--papel-10);
-  --cobogo-success: var(--verde);
-  --cobogo-warning: #a87a1f;
-  --cobogo-danger: var(--vermelho-deep);
-  --cobogo-font-body: 'Archivo', ui-sans-serif, system-ui, sans-serif;
-  --cobogo-font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
-  --cobogo-font-inscription: 'JetBrains Mono', ui-monospace, monospace;
-  --cobogo-font-data: 'JetBrains Mono', ui-monospace, monospace;
-  --cobogo-leading-tight: 1.05;
-  --cobogo-radius-control: 0;
-  --cobogo-radius-surface: 0;
-  --cobogo-shadow-raised: 2px 2px 0 var(--concreto-90);
+  /* ——— Semântica ———
+   * --accent é o cobalto (autoridade, estrutura): links, botão de fonte.
+   * O vermelho Portinari é usado por nome onde é gesto editorial —
+   * editoria, capitular, hover — e não como acento genérico. */
+  --bg: var(--papel-10);
+  --bg-raised: var(--papel-00);
+  --bg-sunken: var(--papel-20);
+  --fg: var(--concreto-80);
+  --fg-muted: var(--concreto-60);
+  --fg-heading: var(--concreto-90);
+  --border: var(--papel-30);
+  --border-strong: var(--concreto-80);
+  --accent: var(--azul);
+  --accent-fg: var(--papel-00);
+  --danger: var(--vermelho);
+  --warn: var(--ocre);
+  --success: var(--verde);
 
-  /* ——— Aliases de produto: o CSS editorial existente consome estes ——— */
-  --paper: var(--cobogo-canvas);
-  --paper-deep: var(--cobogo-surface-muted);
-  --paper-raised: var(--cobogo-surface);
-  --ink: var(--concreto-90);
-  --ink-body: var(--concreto-80);
-  --muted: var(--cobogo-text-muted);
-  --rule: var(--cobogo-border);
-  --rule-strong: var(--concreto-80);
-  --accent: var(--vermelho);
-  --accent-dark: var(--vermelho-deep);
-  --accent-cold: var(--azul);
-  --highlight: var(--ocre);
+  /* ——— Tipografia ——— */
+  --font-display: "Archivo", "Archivo Black", ui-sans-serif, sans-serif;
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Piazzolla", "Tiempos", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
 
-  /* Tipografia editorial: display em Archivo, leitura em Piazzolla,
-   * dados e olhos-de-página em mono. */
-  --font-display: var(--cobogo-font-display);
-  --font-sans: var(--cobogo-font-body);
-  --font-serif: 'Piazzolla', 'Tiempos', Georgia, serif;
-  --font-mono: var(--cobogo-font-inscription);
+  --t-micro: 11px;
+  --t-small: 13px;
+  --t-body: 16px;
+  --t-lede: 19px;
+  --t-h4: 22px;
+  --t-h3: 30px;
+  --t-h2: 44px;
+  --t-h1: 68px;
+  --t-display: 112px;
 
-  /* Régua modular concretista de 8pt. */
+  --lh-tight: 0.95;
+  --lh-snug: 1.12;
+  --lh-body: 1.55;
+  --lh-long: 1.7;
+
+  /* ——— Régua concretista ——— */
   --s-1: 4px;
   --s-2: 8px;
   --s-3: 12px;
@@ -79,6 +84,41 @@
   --s-7: 48px;
   --s-8: 64px;
   --s-9: 96px;
+  --s-10: 144px;
 
+  --r-0: 0;
+  --r-1: 2px;
   --border-width: 1.5px;
+  --border-style: solid;
+  --shadow-0: none;
+  --shadow-1: 2px 2px 0 var(--concreto-90);
+
+  --ease-concreto: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 360ms;
+
+  /* ——— Papéis compartilhados do Cobogó ———
+   * O core consome estes; o gate check-cobogo-core.py exige que existam. */
+  --cobogo-canvas: var(--bg);
+  --cobogo-surface: var(--bg-raised);
+  --cobogo-surface-muted: var(--bg-sunken);
+  --cobogo-text: var(--fg);
+  --cobogo-text-muted: var(--fg-muted);
+  --cobogo-border: var(--border);
+  --cobogo-accent: var(--vermelho);
+  --cobogo-focus: var(--azul);
+  --cobogo-focus-contrast: var(--papel-10);
+  --cobogo-success: var(--success);
+  --cobogo-warning: var(--ocre-deep);
+  --cobogo-danger: var(--vermelho-deep);
+  --cobogo-font-body: var(--font-sans);
+  --cobogo-font-display: var(--font-display);
+  --cobogo-font-inscription: var(--font-mono);
+  --cobogo-font-data: var(--font-mono);
+  --cobogo-leading-tight: var(--lh-snug);
+  --cobogo-radius-control: var(--r-0);
+  --cobogo-radius-surface: var(--r-0);
+  --cobogo-shadow-raised: var(--shadow-1);
 }

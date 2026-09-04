@@ -4,8 +4,8 @@
 .temporal-desk {
   margin: var(--s-8) 0 0;
   padding: var(--s-5) 0 var(--s-6);
-  border-top: 5px solid var(--accent-cold);
-  border-bottom: var(--border-width) solid var(--ink);
+  border-top: 5px solid var(--azul);
+  border-bottom: var(--border-width) solid var(--fg-heading);
   scroll-margin-top: var(--s-4);
 }
 .temporal-desk-header {
@@ -14,58 +14,58 @@
 }
 .temporal-desk-header h2 {
   margin: 0; font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3.2vw, 2.5rem); line-height: 1;
-  font-weight: 800; letter-spacing: -.028em; color: var(--ink);
+  font-size: clamp(1.7rem, 3.2vw, var(--t-h2)); line-height: 1;
+  font-weight: 800; letter-spacing: -.028em; color: var(--fg-heading);
 }
 .temporal-desk-header > p {
-  max-width: 28rem; margin: 0; color: var(--muted);
+  max-width: 28rem; margin: 0; color: var(--fg-muted);
   font-family: var(--font-serif); font-size: .94rem; line-height: 1.5; text-align: right;
 }
 
 .temporal-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-6); }
-.temporal-module + .temporal-module { padding-left: var(--s-6); border-left: 1px solid var(--rule); }
+.temporal-module + .temporal-module { padding-left: var(--s-6); border-left: 1px solid var(--border); }
 .temporal-module h3 {
   margin: 0 0 var(--s-4); font-family: var(--font-display);
-  font-size: 1.35rem; line-height: 1.1; font-weight: 700; letter-spacing: -.02em; color: var(--ink);
+  font-size: 1.35rem; line-height: 1.1; font-weight: 700; letter-spacing: -.02em; color: var(--fg-heading);
 }
 
 .temporal-list { display: grid; gap: 0; }
 .temporal-story {
   display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: var(--s-4);
-  padding: var(--s-4) 0; border-top: 1px solid var(--rule);
+  padding: var(--s-4) 0; border-top: 1px solid var(--border);
 }
 .temporal-story:first-child { padding-top: 0; border-top: 0; }
 .temporal-story > time {
-  color: var(--accent); font-family: var(--font-mono);
+  color: var(--vermelho); font-family: var(--font-mono);
   font-size: .72rem; font-weight: 500; line-height: 1.35; font-variant-numeric: tabular-nums;
 }
 .temporal-story span {
-  color: var(--muted); font-family: var(--font-mono);
+  color: var(--fg-muted); font-family: var(--font-mono);
   font-size: .62rem; font-weight: 400; letter-spacing: .11em; text-transform: uppercase;
 }
 .temporal-story h4 {
   margin: var(--s-1) 0 var(--s-2); font-family: var(--font-display);
   font-size: 1.16rem; line-height: 1.2; font-weight: 700; letter-spacing: -.015em; text-wrap: pretty;
 }
-.temporal-story h4 a { color: var(--ink); text-decoration: none; }
-.temporal-story h4 a:hover { color: var(--accent); }
+.temporal-story h4 a { color: var(--fg-heading); text-decoration: none; }
+.temporal-story h4 a:hover { color: var(--vermelho); }
 .temporal-story p {
-  margin: 0 0 var(--s-3); color: var(--muted);
+  margin: 0 0 var(--s-3); color: var(--fg-muted);
   font-family: var(--font-serif); font-size: .88rem; line-height: 1.45;
 }
 .temporal-links, .service-links {
   display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4);
   font-family: var(--font-sans); font-size: .76rem; font-weight: 700;
 }
-.temporal-links a, .service-links a { color: var(--accent); text-decoration: none; }
-.temporal-links a:hover, .service-links a:hover { color: var(--ink); }
+.temporal-links a, .service-links a { color: var(--vermelho); text-decoration: none; }
+.temporal-links a:hover, .service-links a:hover { color: var(--fg-heading); }
 
 @media (max-width: 760px) {
   .temporal-desk-header { display: block; }
   .temporal-desk-header > p { margin-top: var(--s-3); text-align: left; }
   .temporal-columns { grid-template-columns: 1fr; gap: var(--s-5); }
   .temporal-module + .temporal-module {
-    padding: var(--s-5) 0 0; border-left: 0; border-top: var(--border-width) solid var(--ink);
+    padding: var(--s-5) 0 0; border-left: 0; border-top: var(--border-width) solid var(--fg-heading);
   }
   .temporal-story { grid-template-columns: 5rem minmax(0, 1fr); gap: var(--s-3); }
 }

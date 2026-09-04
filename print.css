@@ -6,15 +6,15 @@
   @page { margin: 18mm 16mm; }
 
   :root {
-    --paper: #fff;
-    --paper-raised: #fff;
-    --paper-deep: #fff;
-    --ink: #000;
-    --ink-body: #1a1a1a;
-    --muted: #4a4a4a;
-    --rule: #b0b0b0;
-    --accent: #000;
-    --accent-cold: #000;
+    --bg: #fff;
+    --bg-raised: #fff;
+    --bg-sunken: #fff;
+    --fg-heading: #000;
+    --fg: #1a1a1a;
+    --fg-muted: #4a4a4a;
+    --border: #b0b0b0;
+    --vermelho: #000;
+    --azul: #000;
   }
 
   html, body { background: #fff !important; color: #000; font-size: 11pt; }
