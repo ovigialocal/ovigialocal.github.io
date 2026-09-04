@@ -19,17 +19,21 @@ const [registry] = registries;
   <script type="application/json" data-edition-registry set:html={JSON.stringify({ editions: editions.map(({ data }) => data), policy: registry.data })}></script>
   <script>
     import { GEOIP_ENDPOINT, GEOIP_TIMEOUT_MS } from '../lib/geo';
+    type BrowserEdition = { edition_id: string; path_prefix: string; geo_names: string[] };
+    type BrowserRegistry = { editions: BrowserEdition[]; policy: { default_edition_id: string } };
     (async () => {
-      const editionsRegistry = JSON.parse(document.querySelector('[data-edition-registry]')?.textContent || '{}');
+      const editionsRegistry = JSON.parse(document.querySelector('[data-edition-registry]')?.textContent || '{}') as BrowserRegistry;
       const registry = editionsRegistry.editions;
       const policy = editionsRegistry.policy;
       const editions = Object.fromEntries(registry.map((edition) => [edition.edition_id, `${edition.path_prefix}/`]));
       const cityEditions = Object.fromEntries(registry.flatMap((edition) => edition.geo_names.map((name) => [name.toLocaleLowerCase('pt-BR'), edition.edition_id])));
       const chooser = new URLSearchParams(location.search).has('escolher');
       const remembered = localStorage.getItem('vigia:edition');
-      document.querySelectorAll('[data-edition]').forEach((link) => link.addEventListener('click', () => localStorage.setItem('vigia:edition', link.dataset.edition)));
+      document.querySelectorAll<HTMLElement>('[data-edition]').forEach((link) => link.addEventListener('click', () => {
+        if (link.dataset.edition) localStorage.setItem('vigia:edition', link.dataset.edition);
+      }));
       if (chooser) return;
-      if (editions[remembered]) return location.replace(editions[remembered]);
+      if (remembered && editions[remembered]) return location.replace(editions[remembered]);
 
       let inferred;
       const controller = new AbortController();
