@@ -35,7 +35,7 @@ const [registry] = registries;
       if (chooser) return;
       if (remembered && editions[remembered]) return location.replace(editions[remembered]);
 
-      let inferred;
+      let inferred: string | undefined;
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), GEOIP_TIMEOUT_MS);
       try {
@@ -47,9 +47,11 @@ const [registry] = registries;
       finally { clearTimeout(timeout); }
 
       const fallback = policy.default_edition_id;
-      const edition = editions[inferred] ? inferred : fallback;
+      const edition = inferred && editions[inferred] ? inferred : fallback;
+      const target = editions[edition];
+      if (!target) throw new Error(`Edição pública desconhecida: ${edition}`);
       localStorage.setItem('vigia:edition', edition);
-      location.replace(editions[edition]);
+      location.replace(target);
     })();
   </script>
 </BaseLayout>
