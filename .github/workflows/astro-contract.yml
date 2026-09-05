@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'astro.config.mjs'
+      - 'lighthouserc.cjs'
       - 'package.json'
       - 'bun.lock'
       - 'tsconfig.json'
@@ -27,6 +28,7 @@ on:
     branches: [main]
     paths:
       - 'astro.config.mjs'
+      - 'lighthouserc.cjs'
       - 'package.json'
       - 'bun.lock'
       - 'tsconfig.json'
@@ -58,7 +60,7 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
 
@@ -91,3 +93,6 @@ jobs:
 
       - name: Verify generated SEO contract
         run: bun run seo:check
+
+      - name: Lighthouse CI — five runs, median assertions
+        run: bun run lighthouse:ci
