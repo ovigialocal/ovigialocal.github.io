@@ -20,6 +20,7 @@ on:
       - 'scripts/check-astro-okf-contract.py'
       - 'scripts/check-editorial-vocabulary.py'
       - 'scripts/check-public-surface.py'
+      - 'scripts/check-seo-build.py'
       - '.github/workflows/deploy.yml'
       - '.github/workflows/astro-contract.yml'
   push:
@@ -42,6 +43,7 @@ on:
       - 'scripts/check-astro-okf-contract.py'
       - 'scripts/check-editorial-vocabulary.py'
       - 'scripts/check-public-surface.py'
+      - 'scripts/check-seo-build.py'
       - '.github/workflows/deploy.yml'
       - '.github/workflows/astro-contract.yml'
   workflow_dispatch:
@@ -86,3 +88,6 @@ jobs:
 
       - name: Build static Astro surface
         run: bun run build
+
+      - name: Verify generated SEO contract
+        run: bun run seo:check
