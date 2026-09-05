@@ -11,7 +11,9 @@
     "build": "astro build",
     "check": "astro check",
     "preview": "astro preview",
-    "verify": "bun run check && bun run build"
+    "seo:check": "python scripts/check-seo-build.py dist",
+    "lighthouse:ci": "bunx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs",
+    "verify": "bun run check && bun run build && bun run seo:check"
   },
   "dependencies": {
     "@astrojs/rss": "4.0.19",
