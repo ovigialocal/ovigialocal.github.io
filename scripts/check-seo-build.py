@@ -169,7 +169,10 @@ def main() -> int:
         return 2
 
     errors: list[str] = []
-    html_files = sorted(root.rglob("*.html"))
+    # With trailingSlash="always", Astro can emit route directories whose names
+    # themselves end in .html (for example dist/arquivo.html/index.html).  Path.rglob
+    # matches those directories too, so only validate actual generated files.
+    html_files = sorted(path for path in root.rglob("*.html") if path.is_file())
     if not html_files:
         errors.append("build contains no HTML files")
 
