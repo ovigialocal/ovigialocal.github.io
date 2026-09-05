@@ -1,0 +1,4 @@
+# Artefatos de build do Astro — o CI regenera a cada execução.
+dist/
+.astro/
+node_modules/
