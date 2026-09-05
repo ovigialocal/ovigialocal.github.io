@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDateTime, sortStories, storyUrl } from '../../lib/news';
+
+const stories = sortStories((await getCollection('articles')).filter((story) => story.data.category === 'Esportes'));
+const navItems = [
+  { href: '/', label: 'Capa' },
+  { href: '/esportes/', label: 'Esportes', current: true },
+  { href: '/editorias.html', label: 'Editorias' },
+  { href: '/territorios.html', label: 'Territórios' },
+  { href: '/arquivo.html', label: 'Arquivo' },
+];
+---
+<BaseLayout
+  title="Esportes — O Vigia"
+  description="Notícias esportivas de Porto Velho e Rondônia apuradas a partir de resultados, regulamentos, dados e fontes primárias."
+  canonicalPath="/esportes/"
+  tagline="Esporte local com placar, contexto e fonte."
+  navItems={navItems}
+>
+  <main class="front-page">
+    <section class="edition-intro">
+      <p class="chapeu">Editoria</p>
+      <h1>Esportes</h1>
+      <p class="edition-linha-fina">Resultados, competições, atletas e políticas esportivas que afetam Porto Velho e Rondônia — com a fonte primária por trás do placar ou anúncio.</p>
+    </section>
+
+    <section class="editorial-section" aria-labelledby="esportes-acervo">
+      <div class="section-heading">
+        <div><p class="chapeu">Últimas</p><h2 id="esportes-acervo">Notícias de esportes</h2></div>
+        <p class="section-note">{stories.length} no acervo</p>
+      </div>
+      {stories.length > 0 ? (
+        <div class="news-grid news-grid-section">
+          {stories.map((story) => (
+            <article class="news-card news-card-brief">
+              <div class="card-header"><time datetime={story.data.published_at}>{formatDateTime(story.data.published_at)}</time></div>
+              <h3 class="card-title"><a href={storyUrl(story)}>{story.data.title}</a></h3>
+              <p class="card-excerpt">{story.data.chamada ?? story.data.description}</p>
+              <div class="card-metadata">
+                <span class="source-badge">Fonte: {story.data.source_name}</span>
+                <a class="btn-provenance" href={story.data.source_url} rel="noopener noreferrer">Abrir fonte ↗</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="edition-linha-fina">A editoria está pronta para receber a primeira matéria classificada como Esportes.</p>
+      )}
+    </section>
+  </main>
+</BaseLayout>
