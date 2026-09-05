@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Nova regra do Distrito Industrial chega após mais de três anos sem renúncia fiscal efetiva"
 description: "Documento orçamentário da Prefeitura diz que o incentivo não gerava renúncia efetiva desde março de 2023; a LC 1.079 muda as alíquotas do ISSQN e deixa questões de transição que o release não explica."
 story_id: "porto-velho-distrito-industrial-incentivos-issqn-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Economia"
 published_at: "2026-09-02T02:34:00+00:00"

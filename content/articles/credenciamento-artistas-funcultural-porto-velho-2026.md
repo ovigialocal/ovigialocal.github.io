@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Credenciamento de artistas em Porto Velho segue aberto; inscrições podem ser enviadas a qualquer tempo"
 description: "Edital da Funcultural mantém cadastro permanente enquanto houver necessidade administrativa; podem participar pessoas físicas e jurídicas com experiência compatível."
 story_id: "porto-velho-credenciamento-artistas-funcultural-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cultura"
 published_at: "2026-09-02T01:46:00+00:00"

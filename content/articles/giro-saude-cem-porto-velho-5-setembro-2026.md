@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Giro da Saúde terá clínico geral sem agendamento neste sábado; especialistas seguem por convocação"
 description: "Atendimento será das 8h às 14h no CEM: clínica geral será por ordem de chegada, enquanto sete especialidades atendem pacientes previamente convocados pela Regulação Municipal."
 story_id: "porto-velho-giro-saude-cem-2026-09-05"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Serviços"
 published_at: "2026-09-01T19:00:00-04:00"

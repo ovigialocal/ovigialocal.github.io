@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Sine de Porto Velho mantém 27 vagas abertas; 16 vencem em 8 de setembro e 8 são para PCD"
 description: "Revalidação do painel oficial em 4 de setembro encontrou os mesmos 27 postos ainda dentro do prazo; 16 vencem no dia 8 e o portal permite candidatura online com currículo em PDF."
 story_id: "porto-velho-sine-vagas-2026-09-01"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Serviços"
 published_at: "2026-09-01T03:12:00-04:00"

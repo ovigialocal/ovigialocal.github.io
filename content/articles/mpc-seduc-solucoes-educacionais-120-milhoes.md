@@ -3,6 +3,7 @@ type: PublicArticle
 title: "MPC cobra justificativas após cotação de solução educacional chegar a R$ 120,2 milhões em RO"
 description: "Recomendação à Seduc pede análise de preços, sobreposição e necessidade antes de nova adesão; documento compara estimativas anteriores de R$ 63,1 milhões e R$ 29,7 milhões."
 story_id: "rondonia-mpc-seduc-kits-120-milhoes-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Poder público"
 published_at: "2026-09-01T11:55:00-04:00"

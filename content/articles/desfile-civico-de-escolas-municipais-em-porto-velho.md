@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Desfile cívico de escolas municipais acontece nesta terça às 16h no Centro de Porto Velho"
 description: "Evento da rede municipal começa às 16h em frente à Prefeitura, no encontro da avenida Sete de Setembro com a Farquar, e tem encerramento previsto para 17h30."
 story_id: "porto-velho-desfile-civico-2026-09-01"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Educação"
 published_at: "2026-09-01T01:35:00-04:00"

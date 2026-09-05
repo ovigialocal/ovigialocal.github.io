@@ -63,6 +63,9 @@ h1, h2, h3, p { margin-top: 0; }
 
 /* ——— Abertura da edição ——— */
 .front-page { max-width: 1180px; margin: auto; padding: var(--s-7) var(--s-6) var(--s-9); }
+.edition-suggestion { margin: calc(-1 * var(--s-3)) 0 var(--s-5); padding: var(--s-3) var(--s-4); border-left: 4px solid var(--azul); background: var(--bg-sunken); }
+.edition-suggestion p { margin: 0; font-size: .84rem; }
+.edition-suggestion a { color: var(--azul); font-weight: 700; text-decoration: none; }
 .edition-intro {
   display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(17rem, 1fr);
   column-gap: var(--s-8); align-items: end;
@@ -98,7 +101,7 @@ h1, h2, h3, p { margin-top: 0; }
 .trust-links { display: grid; gap: var(--s-2); font-size: .84rem; font-weight: 700; }
 
 /* ——— Busca e filtro ——— */
-/* A capa filtra por território; buscar texto é trabalho do arquivo (Pagefind). */
+/* Filtro territorial e acesso progressivo à busca Pagefind. */
 .controls-section {
   display: flex; gap: var(--s-4); align-items: center; justify-content: space-between;
   padding: var(--s-4) 0; border-bottom: 1px solid var(--border);
@@ -108,6 +111,14 @@ h1, h2, h3, p { margin-top: 0; }
   font-size: .8rem; font-weight: 700; text-decoration: none; white-space: nowrap;
 }
 .controls-section > a:hover { color: var(--vermelho); }
+.home-search { position: relative; flex: 0 1 30rem; }
+.home-search summary { color: var(--azul); font-size: .8rem; font-weight: 700; text-align: right; cursor: pointer; list-style: none; }
+.home-search summary::-webkit-details-marker { display: none; }
+.home-search summary::after { content: ' +'; }
+.home-search[open] summary::after { content: ' −'; }
+.home-search-panel { position: absolute; z-index: 10; top: calc(100% + var(--s-3)); right: 0; width: min(34rem, 82vw); padding: var(--s-4); border: 1px solid var(--fg-heading); background: var(--bg); box-shadow: .35rem .35rem 0 var(--fg-heading); }
+.home-search-panel > a { display: inline-block; margin-top: var(--s-3); color: var(--azul); font-size: .78rem; font-weight: 700; text-decoration: none; }
+.home-search-panel > a:hover { color: var(--vermelho); }
 .bairro-filter { display: flex; gap: var(--s-2); overflow-x: auto; scrollbar-width: none; }
 .bairro-filter::-webkit-scrollbar { display: none; }
 .filter-chip {
@@ -142,6 +153,8 @@ h1, h2, h3, p { margin-top: 0; }
   font: 500 .68rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
 }
 .btn-provenance:hover { color: var(--vermelho); }
+.source-disclosure .source-badge { text-wrap: pretty; }
+.source-disclosure .btn-provenance { flex: none; white-space: nowrap; }
 
 /* ——— Rodapé ——— */
 footer { border-top: var(--border-width) solid var(--fg-heading); background: var(--fg-heading); color: var(--papel-30); }

@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Governo de RO descontinua Geração Emprego e orienta procura pelo Sine Estadual"
 description: "Plataformas Geração Emprego e Geração Serviço deixam de ser o canal indicado a partir de 1º de setembro; em Porto Velho, o atendimento estadual segue em duas unidades do Sine."
 story_id: "rondonia-geracao-emprego-descontinuidade-2026-09-01"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Serviços"
 published_at: "2026-09-01T08:40:00-04:00"

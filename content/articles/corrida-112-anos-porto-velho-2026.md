@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Corrida dos 112 anos: 5 km e 10 km custam R$ 50; lote Kids está esgotado"
 description: "Página de inscrição mantém 5 km e 10 km disponíveis e agora marca Kids como esgotado; estado foi revalidado em 5 de setembro."
 story_id: "porto-velho-corrida-112-anos-2026-09-26"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Esportes"
 published_at: "2026-09-01T18:45:00-04:00"

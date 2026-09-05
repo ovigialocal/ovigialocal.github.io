@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Subutilização em Rondônia ficou em 6,0% no 2º trimestre, ante 7,6% um ano antes; taxa foi a 2ª menor do país"
 description: "PNAD Contínua mostra estimativas de 7,6% no 2º trimestre de 2025, 7,7% no 1º trimestre de 2026 e 6,0% no 2º trimestre de 2026. O indicador é mais amplo que desemprego; as publicações consultadas não sustentam, sozinhas, chamar as diferenças de queda estatisticamente significativa."
 story_id: "rondonia-pnad-subutilizacao-2026q2"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Economia"
 published_at: "2026-09-03T01:23:40-04:00"
