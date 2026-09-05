@@ -2,7 +2,7 @@ import { getCollection } from 'astro:content';
 import { storyUrl, territoryUrl } from '../lib/news';
 
 const SITE = 'https://ovigialocal.github.io';
-const STATIC_PATHS = ['/', '/editorias.html', '/territorios.html', '/arquivo.html', '/metodologia.html', '/correcoes.html'];
+const STATIC_PATHS = ['/', '/esportes/', '/editorias.html', '/territorios.html', '/arquivo.html', '/metodologia.html', '/correcoes.html'];
 
 export async function GET() {
   const stories = await getCollection('articles');
