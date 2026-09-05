@@ -5,6 +5,12 @@ const editions = (await getCollection('editions')).filter((edition) => edition.d
 const registries = await getCollection('editionRegistry');
 if (registries.length !== 1 || registries[0].data.registry_id !== 'main') throw new Error('PublicEditionRegistry deve conter exatamente o registry main');
 const [registry] = registries;
+// storyUrl monta /<edition_id>/noticias/<story_id>/, enquanto o roteador e o
+// masthead navegam por path_prefix. Os dois só coincidem por convenção: se uma
+// edição futura divergir, as matérias saem publicadas fora do próprio prefixo.
+const divergent = editions.filter((edition) => edition.data.path_prefix !== `/${edition.data.edition_id}`);
+if (divergent.length > 0) throw new Error(`PublicEdition com path_prefix incompatível com edition_id: ${divergent.map((edition) => edition.data.edition_id).join(', ')}`);
+if (!editions.some((edition) => edition.data.edition_id === registry.data.default_edition_id)) throw new Error(`default_edition_id aponta para edição inexistente ou inativa: ${registry.data.default_edition_id}`);
 ---
 <BaseLayout title="Escolha sua cidade — O Vigia" description="Escolha a edição local de O Vigia." canonicalPath="/" compact>
   <main class="edition-router" aria-labelledby="edition-router-title">
