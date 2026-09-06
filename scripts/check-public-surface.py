@@ -53,15 +53,14 @@ def verify_operational_contract() -> None:
         require(text, "PublicArticle", name)
         require(text, "PublicTerritory", name)
 
-    # publication-review projects one accepted article and its factual sources;
-    # territory validity is a public-surface risk, not a requirement to restate
-    # the whole PublicTerritory concept in the execution skill.
+    # The publication skill projects one article and its factual sources. It
+    # validates territory as a surface risk without restating the full
+    # PublicTerritory type contract.
     require(skill, "PublicArticle", "publication-review")
     require(skill, "PublicSource", "publication-review")
 
     require(agents, "The public renderer is Astro SSG, not Jekyll.", "AGENTS.md")
     require(readme, "Astro Content Layer", "README.md")
-    require(skill, "não gere `_news`".replace("não gere `_news`", "Não gere `_news`") if "Não gere `_news`" in skill else "PublicArticle", "publication-review")
     require(rfc, "O renderer público é Astro SSG", "RFC 0001")
     require(publication_readme, "Não existe `_news`", "publication ledger")
 
