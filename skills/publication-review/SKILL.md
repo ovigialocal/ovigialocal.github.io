@@ -3,7 +3,7 @@ name: publication-review
 description: Valida e executa a transação pública de uma candidata article-ready sem refazer a redação.
 compatibility: ">=1.0.0"
 metadata:
-  version: "1.9.0"
+  version: "1.9.1"
   owner_role: "publication-agent"
 ---
 
@@ -100,6 +100,8 @@ Preservação de uma fonte não cobre outra. Profile, gate, self-review e ficha 
 - representar várias fontes por uma única provenance artificial;
 - inventar IDs, hashes, snapshots ou equivalência;
 - declarar publicado antes da confirmação real de Pages.
+
+Não gere `_news` nem outra projeção editorial paralela: `PublicArticle` é o conteúdo público canônico e Astro é o renderer.
 
 ## Output
 
