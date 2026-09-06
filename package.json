@@ -7,9 +7,10 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "check": "astro check",
+    "panda": "panda codegen",
+    "dev": "bun run panda && astro dev",
+    "build": "bun run panda && astro build",
+    "check": "bun run panda && astro check",
     "preview": "astro preview",
     "verify": "bun run check && bun run build"
   },
@@ -17,10 +18,12 @@
     "@astrojs/rss": "4.0.19",
     "@astrojs/sitemap": "3.7.4",
     "astro": "7.2.10",
-    "astro-pagefind": "2.0.1"
+    "astro-pagefind": "2.0.1",
+    "cobogo": "github:franklinbaldo/cobogo#8ad1fe1c40bb6af12d8b8fcbe1b20d070b5bb44c"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.9",
+    "@pandacss/dev": "1.12.0",
     "typescript": "5.9.3"
   }
 }
