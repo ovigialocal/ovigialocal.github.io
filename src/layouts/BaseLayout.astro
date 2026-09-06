@@ -105,11 +105,11 @@ const isModuleNav = (item: NavItem) => item.module ?? (item.href.startsWith('#')
         <a href="/" aria-label="O Vigia — página inicial" class={css({ display: 'flex', alignItems: 'stretch', gap: { base: '4', md: '5' }, width: 'fit-content', color: 'text', textDecoration: 'none' })}>
           <span aria-hidden="true" class={css({ width: { base: '3', md: '4' }, background: 'attention', border: '1px solid', borderColor: 'text' })}></span>
           <span>
-            <strong class={css({ display: 'block', fontFamily: 'display', fontSize: { base: '4xl', md: '6xl' }, lineHeight: '0.82', fontWeight: 'black', letterSpacing: '-0.065em' })}>O Vigia</strong>
+            <strong class={css({ display: 'block', fontFamily: 'display', fontSize: 'clamp(3.7rem, 8vw, 6.8rem)', lineHeight: '0.82', fontWeight: 'black', letterSpacing: '-0.065em' })}>O Vigia</strong>
             <span class={css({ display: 'inline-block', mt: '3', px: '2', py: '1', background: 'accent', color: 'accentText', border: '1px solid', borderColor: 'text', fontFamily: 'mono', fontSize: 'xs', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase' })}>Porto Velho</span>
           </span>
         </a>
-        <p class={css({ m: '0', maxW: '28rem', color: 'textMuted', fontFamily: 'serif', fontSize: { base: 'md', md: 'lg' }, lineHeight: 'body', textAlign: { base: 'left', md: 'right' } })}>{tagline}</p>
+        <p class={css({ m: '0', maxW: '28rem', color: 'textMuted', fontFamily: 'var(--font-serif)', fontSize: { base: 'md', md: 'lg' }, lineHeight: 'body', textAlign: { base: 'left', md: 'right' } })}>{tagline}</p>
       </div>
     )}
 
@@ -131,7 +131,7 @@ const isModuleNav = (item: NavItem) => item.module ?? (item.href.startsWith('#')
           <span aria-hidden="true" class={css({ w: '8', h: '8', background: 'accent', border: '1px solid', borderColor: 'canvas' })}></span>
           <strong class={css({ fontFamily: 'display', fontSize: '2xl', fontWeight: 'black', letterSpacing: '-0.04em' })}>O Vigia</strong>
         </div>
-        <p class={css({ m: '0', maxW: '38rem', color: 'surfaceMuted', fontFamily: 'serif', lineHeight: 'body' })}>Jornalismo local em Porto Velho com fontes verificáveis, correções públicas e um caminho claro até a evidência.</p>
+        <p class={css({ m: '0', maxW: '38rem', color: 'surfaceMuted', fontFamily: 'var(--font-serif)', lineHeight: 'body' })}>Jornalismo local em Porto Velho com fontes verificáveis, correções públicas e um caminho claro até a evidência.</p>
       </div>
       <nav aria-label="Rodapé" class={css({ display: 'grid', gridTemplateColumns: { base: '1fr 1fr', sm: 'repeat(3, auto)' }, gap: '3' })}>
         <a href="/editorias.html" class={css({ color: 'canvas' })}>Editorias</a>
