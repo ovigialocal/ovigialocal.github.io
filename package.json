@@ -19,7 +19,7 @@
     "@astrojs/sitemap": "3.7.4",
     "astro": "7.2.10",
     "astro-pagefind": "2.0.1",
-    "cobogo": "github:franklinbaldo/cobogo#8ad1fe1c40bb6af12d8b8fcbe1b20d070b5bb44c"
+    "cobogo": "github:franklinbaldo/cobogo#aa0c9bfcc09a6c327b143b033e18877f3f193ab5"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.9",
