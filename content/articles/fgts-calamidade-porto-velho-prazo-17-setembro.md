@@ -3,6 +3,7 @@ type: PublicArticle
 title: "FGTS por calamidade em Porto Velho pode ser solicitado até 17 de setembro"
 description: "Trabalhadores de áreas atingidas e habilitadas pela Defesa Civil podem pedir o saque pelo app FGTS; valor é limitado a R$ 6.220 por conta e ao saldo disponível."
 story_id: "porto-velho-fgts-saque-calamidade-2026-09-17"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Serviços"
 published_at: "2026-09-01T03:04:00-04:00"

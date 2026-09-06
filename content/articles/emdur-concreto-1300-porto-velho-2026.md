@@ -3,6 +3,7 @@ type: PublicArticle
 title: "EMDUR calculou 1,3 mil m³ de concreto após consumir 709 m³; resultado do novo pregão ainda não foi localizado"
 description: "Termo de referência mostra que o saldo da ata anterior era de cerca de 291 m³, abaixo dos 312 m³ previstos só para o Parque Circuito; a sessão estava marcada para 2 de setembro e a apuração segue atrás do preço resultante."
 story_id: "porto-velho-emdur-concreto-1300-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-02T10:26:42+00:00"

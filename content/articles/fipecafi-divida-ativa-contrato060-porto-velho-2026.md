@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Porto Velho contrata FIPECAFI para dívida ativa; fundação já atua em projeto semelhante em Mauá"
 description: "Além do contexto do TCE-RO, a apuração identifica quem é a FIPECAFI, um antecedente comparável em Mauá e a diferença entre experiência contratual e resultado comprovado."
 story_id: "porto-velho-fipecafi-divida-ativa-contrato060-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-03T11:39:00+00:00"

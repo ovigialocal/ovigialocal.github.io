@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Edital da Fhemeron dá dois prazos para envio de documentos: 6 e 8 de setembro"
 description: "Convocação publicada em 3 de setembro manda candidatos enviarem documentos até dia 6 no item 2.1, mas o cronograma do mesmo edital fixa a etapa de 4 a 8 de setembro."
 story_id: "fhemeron-edital-268-prazos-conflitantes-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Serviços"
 published_at: "2026-09-04T08:54:00-04:00"

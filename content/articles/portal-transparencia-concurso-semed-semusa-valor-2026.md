@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Portal da Transparência mostra R$ 2,14 bilhões para banca de concurso; contrato assinado é de R$ 2,41 milhões"
 description: "A página oficial do processo SEMED/SEMUSA exibe um valor quase 888 vezes maior que o Contrato 098/2026/PGM. O instrumento assinado em 1º de setembro fixa R$ 2,41 milhões e detalha a matriz por inscritos."
 story_id: "porto-velho-concurso-semed-semusa-valor-portal-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-03T02:25:00+00:00"

@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Prefeitura disse que Bolsa Atleta já estava em vigor; lei prevê prazo de até 180 dias"
 description: "Lei municipal publicada em abril cria bolsas de R$ 500 a R$ 1.500, mas prevê entrada em vigor em até 180 dias e atos adicionais para seleção e implementação."
 story_id: "porto-velho-bolsa-atleta-vigencia-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Esportes"
 published_at: "2026-09-04T06:47:00-04:00"

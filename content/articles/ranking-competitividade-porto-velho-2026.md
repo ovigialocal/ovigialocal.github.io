@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Porto Velho tem maior avanço entre capitais no ranking; Economia sobe 262 posições, Sociedade fica em 394º"
 description: "Relatórios técnicos do CLP confirmam a alta geral de 83 posições em 2026, mas mostram um avanço desigual: Economia foi de 297º para 35º, Sociedade mudou só uma posição e Instituições caiu de 214º para 270º."
 story_id: "porto-velho-ranking-competitividade-rebote-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-04T05:10:00-04:00"

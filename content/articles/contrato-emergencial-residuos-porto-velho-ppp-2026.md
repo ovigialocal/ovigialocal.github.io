@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Contrato emergencial do lixo vence em 23 de setembro; Prefeitura falou em ‘novo processo licitatório’, mas não o identificou"
 description: "Depois de prever P7 da PPP para maio, a Prefeitura disse que a operação temporária seguiria até uma nova licitação. Em julho, contratou a B3 para apoiar fases externas de projetos de PPP, mas o contrato não identifica resíduos nem prova que a MIP 005 entrou nessa fase."
 story_id: "porto-velho-residuos-emergencial-ppp-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-02T22:25:00+00:00"

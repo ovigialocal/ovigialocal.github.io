@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Projeto do Executivo diz que nova lei não altera direitos PCD destacados em release"
 description: "Notícia municipal destacou cota de 10% e jornadas especiais ao anunciar a nova legislação; mensagem do próprio Executivo diz que a mudança é exclusivamente terminológica."
 story_id: "porto-velho-pcd-servidores-lc1078-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidadania"
 published_at: "2026-09-02T04:12:00+00:00"

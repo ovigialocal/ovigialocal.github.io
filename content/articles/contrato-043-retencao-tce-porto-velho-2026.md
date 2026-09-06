@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Prefeitura reteve 5% após cautelar de R$ 3,7 milhões; percentual exigiria R$ 74 milhões em novas medições para atingir o limite"
 description: "TCE estimou potencial pagamento a maior nas cinco primeiras medições do contrato de máquinas. A SEINFRA registrou retenção de 5% por medição; mantido isoladamente, esse percentual só alcançaria o teto cautelar após faturamento superior ao dobro do valor original de R$ 36,4 milhões."
 story_id: "porto-velho-maquinas-contrato043-retencao-tce-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-03T04:51:00+00:00"

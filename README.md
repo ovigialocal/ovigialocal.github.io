@@ -75,6 +75,18 @@ A capa é composta por manchete, rail de destaques, últimas, Serviço, Agenda/A
 
 Astro Components são o baseline. Não há framework UI hidratado por padrão. `astro-pagefind`, `@astrojs/rss` e `@astrojs/sitemap` substituem infraestrutura própria onde faz sentido.
 
+### Edições e URLs permanentes
+
+`PublicEdition` e o singleton `PublicEditionRegistry` são os contratos OKF canônicos do namespace. O registry, e não cada cidade, define `default_edition_id`. O namespace público reserva a raiz para selecionar a edição e mantém cidade e matéria em segmentos estáveis:
+
+```text
+/                                      # roteador/seletor de edição
+/porto-velho/                          # capa da edição
+/porto-velho/noticias/<story_id>/      # matéria permanente
+```
+
+O roteador respeita primeiro a edição salva no navegador. Na primeira visita, tenta uma localização aproximada por IP com timeout curto e usa Porto Velho como fallback. A edição pode ser trocada manualmente; quando houver outra cidade coberta significativamente mais próxima, a capa poderá sugeri-la sem substituir a preferência do leitor. URLs antigas em `/noticias/<story_id>/` permanecem como redirects permanentes.
+
 Leia:
 
 - `docs/rfc/0001-independent-publication-agent.md` — protocolo institucional de publicação;

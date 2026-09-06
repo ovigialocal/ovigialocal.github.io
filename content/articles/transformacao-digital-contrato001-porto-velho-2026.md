@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Portal exibe R$ 177,8 mil como executados em contrato de R$ 1,6 mi; registros detalhados chegam a R$ 266,7 mil"
 description: "Consultoria de transformação digital tem primeira parcela documentada e aprovada pelo controle interno, mas o resumo financeiro do Portal não coincide com a execução bruta reconstruída; contrato também diverge sobre prazo, data e processo."
 story_id: "porto-velho-transformacao-digital-contrato001-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-03T09:16:00+00:00"

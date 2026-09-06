@@ -55,7 +55,9 @@ def verify_operational_contract() -> None:
         require(text, "PublicTerritory", name)
 
     require(agents, "The public renderer is Astro SSG, not Jekyll.", "AGENTS.md")
+    require(agents, "PublicEdition", "AGENTS.md")
     require(readme, "Astro Content Layer", "README.md")
+    require(readme, "PublicEdition", "README.md")
     require(skill, "Não gere `_news`", "publication-review")
     require(rfc, "O renderer público é Astro SSG", "RFC 0001")
     require(publication_readme, "Não existe `_news`", "publication ledger")
@@ -73,8 +75,10 @@ def verify_operational_contract() -> None:
 
 def main() -> int:
     files = {
-        "homepage": read("src/pages/index.astro"),
-        "article": read("src/pages/noticias/[story_id].astro"),
+        "edition-router": read("src/pages/index.astro"),
+        "homepage": read("src/components/editions/PortoVelhoEdition.astro"),
+        "article": read("src/pages/porto-velho/noticias/[story_id].astro"),
+        "legacy-story": read("src/pages/noticias/[story_id].astro"),
         "legacy-article": read("src/pages/article.html.astro"),
         "base": read("src/layouts/BaseLayout.astro"),
         "editorias": read("src/pages/editorias.html.astro"),
@@ -87,6 +91,9 @@ def main() -> int:
         "territory-card": read("src/components/concepts/PublicTerritoryCard.astro"),
         "territory-header": read("src/components/concepts/PublicTerritoryHeader.astro"),
         "search": read("src/components/SearchBox.astro"),
+        "edition-spec": read("content/docs/types/publicedition.md"),
+        "registry-spec": read("content/docs/types/publiceditionregistry.md"),
+        "geo-adapter": read("src/lib/geo.ts"),
         "json": read("src/pages/articles.json.ts"),
         "feed": read("src/pages/feed.xml.ts"),
         "sitemap": read("src/pages/sitemap.xml.ts"),
@@ -100,7 +107,14 @@ def main() -> int:
     for needle in ["getStaticPaths", "render(story)", "resolveStoryTerritory", "data-share-button"]:
         require(files["article"], needle, "article")
     require(files["legacy-article"], "URLSearchParams", "legacy article redirect")
-    require(files["legacy-article"], "/noticias/", "legacy article redirect")
+    require(files["legacy-article"], "/porto-velho/noticias/", "legacy article redirect")
+    require(files["legacy-story"], "Astro.redirect(storyUrl(story), 301)", "legacy story redirect")
+    for needle in ["localStorage", "GEOIP_ENDPOINT", "default_edition_id"]:
+        require(files["edition-router"], needle, "edition router")
+    require(files["geo-adapter"], "ipwho.is", "GeoIP adapter")
+    require(files["edition-router"], "getCollection('editionRegistry')", "edition router")
+    require(files["registry-spec"], "default_edition_id", "edition registry")
+    forbid(files["edition-spec"], "is_default", "PublicEdition")
     for needle in ["NewsArticle", 'rel="sitemap"', "data-pagefind-ignore"]:
         require(files["base"], needle, "BaseLayout")
 

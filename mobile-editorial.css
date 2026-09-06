@@ -17,12 +17,15 @@
     mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
   }
   .section-nav a { padding: var(--s-3) var(--s-4); font-size: .72rem; scroll-snap-align: start; }
-  .section-nav a[data-nav="modulo"] { display: none; }
+  .section-nav a:not([data-nav="modulo"]) { display: none; }
   .front-page { padding: var(--s-5) var(--s-4) var(--s-8); }
   .edition-intro { padding-bottom: var(--s-5); }
   .edition-intro h1 { font-size: clamp(2.2rem, 11.5vw, 3rem); line-height: .96; }
   .edition-linha-fina { margin-top: var(--s-3); font-size: 1rem; line-height: 1.45; }
   .controls-section { position: relative; display: grid; padding: var(--s-3) 0; }
+  .home-search { width: 100%; }
+  .home-search summary { text-align: left; }
+  .home-search-panel { position: static; width: auto; margin-top: var(--s-3); box-shadow: none; }
   .bairro-filter { width: 100%; padding-bottom: 2px; scroll-snap-type: x proximity; }
   .filter-chip { scroll-snap-align: start; }
   .front-lede { padding-top: var(--s-4); }

@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Disputa pela Área C derrubou licitações de R$ 48,4 milhões para duas obras em Porto Velho"
 description: "Estado revogou as concorrências da Praça da Bíblia e do Parque Cidade da Criança em cumprimento a decisão judicial que suspendeu intervenções estaduais na área; titularidade ainda está em disputa."
 story_id: "porto-velho-area-c-duas-obras-revogadas-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-03T07:55:00+00:00"

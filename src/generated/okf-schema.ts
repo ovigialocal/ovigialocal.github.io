@@ -6,6 +6,7 @@ export const PublicArticleSchema = z.object({
   "category": z.string(),
   "chamada": z.string().optional(),
   "description": z.string(),
+  "edition_id": z.string().describe("references PublicEdition(edition_id)"),
   "locality": z.string().describe("references PublicTerritory(name)"),
   "media_alt": z.string().optional(),
   "media_caption": z.string().optional(),
@@ -30,6 +31,35 @@ export const PublicArticleSchema = z.object({
   "title": z.string(),
   "type": z.literal("PublicArticle"),
   "updated_at": z.iso.datetime({ offset: true }).optional()
+});
+
+export const PublicEditionSchema = z.object({
+  "country_code": z.string(),
+  "description": z.string(),
+  "edition_id": z.string(),
+  "geo_names": z.array(z.string()),
+  "geo_radius_km": z.union([z.number().int(), z.bigint()]),
+  "latitude": z.number(),
+  "locale": z.string(),
+  "longitude": z.number(),
+  "municipality_ibge_code": z.string(),
+  "municipality_territory_id": z.string().describe("references PublicTerritory(territory_id)"),
+  "name": z.string(),
+  "path_prefix": z.string(),
+  "state_code": z.string(),
+  "status": z.string(),
+  "timezone": z.string(),
+  "title": z.string(),
+  "type": z.literal("PublicEdition")
+});
+
+export const PublicEditionRegistrySchema = z.object({
+  "default_edition_id": z.string().describe("references PublicEdition(edition_id)"),
+  "description": z.string(),
+  "registry_id": z.string(),
+  "suggestion_radius_km": z.union([z.number().int(), z.bigint()]),
+  "title": z.string(),
+  "type": z.literal("PublicEditionRegistry")
 });
 
 export const PublicSourceSchema = z.object({

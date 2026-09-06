@@ -3,6 +3,7 @@ type: PublicArticle
 title: "Portal exibiu R$ 1,368 bi em contrato de R$ 1,368 mi; divergência se soma a outros casos"
 description: "Documento assinado e empenho confirmam escala de milhões. Em outras duas apurações recentes, campos agregados do Portal também divergiram dos registros detalhados ou dos instrumentos primários."
 story_id: "porto-velho-contrato027-valor-mil-vezes-2026"
+edition_id: porto-velho
 locality: "Porto Velho, RO"
 category: "Cidade"
 published_at: "2026-09-03T13:51:00+00:00"
