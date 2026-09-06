@@ -1,5 +1,7 @@
 ---
-import '../../index.css';
+import '../styles/panda.css';
+import '../../cobogo-theme.css';
+import '../styles/editorial-foundation.css';
 import '../../editorial-cover.css';
 import '../../article.css';
 import '../../news-shell.css';
@@ -7,6 +9,8 @@ import '../../temporal-modules.css';
 import '../../mobile-editorial.css';
 import '../../institutional.css';
 import '../../print.css';
+import { css } from '../../styled-system/css';
+import { navLink } from '../../styled-system/recipes';
 
 interface NavItem { href: string; label: string; current?: boolean; module?: boolean }
 interface Props {
@@ -23,7 +27,19 @@ interface Props {
   sourceUrl?: string;
 }
 
-const { title, description, canonicalPath, tagline = 'Jornalismo local para entender o que muda perto de você.', compact = false, navItems = [], ogType = 'website', image, publishedAt, updatedAt, sourceUrl } = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath,
+  tagline = 'Jornalismo local para entender o que muda perto de você.',
+  compact = false,
+  navItems = [],
+  ogType = 'website',
+  image,
+  publishedAt,
+  updatedAt,
+  sourceUrl,
+} = Astro.props;
 const site = Astro.site ?? new URL('https://ovigialocal.github.io/');
 const canonical = new URL(canonicalPath, site).toString();
 const jsonLd = ogType === 'article' ? {
@@ -43,6 +59,7 @@ const isModuleNav = (item: NavItem) => item.module ?? (item.href.startsWith('#')
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="author" content="O Vigia" />
+  <meta name="theme-color" content="#17221f" />
   <link rel="canonical" href={canonical} />
   <link rel="alternate" type="application/rss+xml" title="O Vigia" href="/feed.xml" />
   <link rel="sitemap" href="/sitemap-index.xml" />
@@ -60,13 +77,72 @@ const isModuleNav = (item: NavItem) => item.module ?? (item.href.startsWith('#')
   {image && <meta property="og:image" content={image} />}
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
-<body>
-  <header class="site-header" data-pagefind-ignore>
-    <div class="utility-bar"><span>Porto Velho, Rondônia</span><nav aria-label="Links institucionais"><a href="/metodologia.html">Como apuramos</a><a href="/correcoes.html">Correções</a><a href="/feed.xml">RSS</a></nav></div>
-    {compact ? <div class="article-masthead"><a href="/" class="article-brand" aria-label="O Vigia — página inicial">O Vigia</a><a class="back-link" href="/">← Voltar à capa</a></div> : <div class="masthead"><a href="/" class="brand-logo" aria-label="O Vigia — página inicial"><span class="brand-title">O Vigia</span><span class="brand-kicker">Porto Velho</span></a><p class="masthead-tagline">{tagline}</p></div>}
-    {renderedNavItems.length > 0 && <nav class="section-nav" aria-label="Seções do jornal">{renderedNavItems.map((item) => <a href={item.href} aria-current={item.current ? 'page' : undefined} data-nav={isModuleNav(item) ? 'modulo' : undefined}>{item.label}</a>)}</nav>}
+<body data-ui-generation="cobogo-panda">
+  <a href="#conteudo" class={css({ position: 'fixed', left: '4', top: '4', zIndex: '50', px: '4', py: '3', background: 'accent', color: 'accentText', border: '1px solid', borderColor: 'text', fontWeight: 'bold', textDecoration: 'none', transform: 'translateY(-200%)', _focusVisible: { transform: 'translateY(0)' } })}>Ir para o conteúdo</a>
+
+  <header data-pagefind-ignore class={css({ borderBottom: '1px solid', borderColor: 'text', background: 'canvas' })}>
+    <div class={css({ background: 'text', color: 'canvas' })}>
+      <div class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: '2', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4', flexWrap: 'wrap', fontFamily: 'mono', fontSize: 'xs', letterSpacing: '0.08em', textTransform: 'uppercase' })}>
+        <span class={css({ color: 'accent', fontWeight: 'bold' })}>Porto Velho · Rondônia</span>
+        <nav aria-label="Links institucionais" class={css({ display: { base: 'none', sm: 'flex' }, gap: '5' })}>
+          <a href="/metodologia.html" class={css({ color: 'canvas', textDecoration: 'none', _hover: { color: 'accent' } })}>Como apuramos</a>
+          <a href="/correcoes.html" class={css({ color: 'canvas', textDecoration: 'none', _hover: { color: 'accent' } })}>Correções</a>
+          <a href="/feed.xml" class={css({ color: 'canvas', textDecoration: 'none', _hover: { color: 'accent' } })}>RSS</a>
+        </nav>
+      </div>
+    </div>
+
+    {compact ? (
+      <div class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: { base: '4', md: '5' }, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '5' })}>
+        <a href="/" aria-label="O Vigia — página inicial" class={css({ display: 'inline-flex', alignItems: 'center', gap: '3', color: 'text', textDecoration: 'none' })}>
+          <span aria-hidden="true" class={css({ display: 'grid', placeItems: 'center', w: '9', h: '9', background: 'attention', color: 'canvas', border: '1px solid', borderColor: 'text', fontFamily: 'mono', fontWeight: 'bold', fontSize: 'xs' })}>OV</span>
+          <strong class={css({ fontFamily: 'display', fontSize: '2xl', fontWeight: 'black', letterSpacing: '-0.05em' })}>O Vigia</strong>
+        </a>
+        <a href="/" class={navLink()}>← Capa</a>
+      </div>
+    ) : (
+      <div class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: { base: '7', md: '10' }, display: 'grid', gridTemplateColumns: { base: '1fr', md: '1fr minmax(18rem, 28rem)' }, gap: { base: '5', md: '10' }, alignItems: 'end' })}>
+        <a href="/" aria-label="O Vigia — página inicial" class={css({ display: 'flex', alignItems: 'stretch', gap: { base: '4', md: '5' }, width: 'fit-content', color: 'text', textDecoration: 'none' })}>
+          <span aria-hidden="true" class={css({ width: { base: '3', md: '4' }, background: 'attention', border: '1px solid', borderColor: 'text' })}></span>
+          <span>
+            <strong class={css({ display: 'block', fontFamily: 'display', fontSize: { base: '4xl', md: '6xl' }, lineHeight: '0.82', fontWeight: 'black', letterSpacing: '-0.065em' })}>O Vigia</strong>
+            <span class={css({ display: 'inline-block', mt: '3', px: '2', py: '1', background: 'accent', color: 'accentText', border: '1px solid', borderColor: 'text', fontFamily: 'mono', fontSize: 'xs', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase' })}>Porto Velho</span>
+          </span>
+        </a>
+        <p class={css({ m: '0', maxW: '28rem', color: 'textMuted', fontFamily: 'serif', fontSize: { base: 'md', md: 'lg' }, lineHeight: 'body', textAlign: { base: 'left', md: 'right' } })}>{tagline}</p>
+      </div>
+    )}
+
+    {renderedNavItems.length > 0 && (
+      <nav aria-label="Seções do jornal" class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, display: 'flex', overflowX: 'auto', borderTop: '1px solid', borderColor: 'border', scrollbarWidth: 'none' })}>
+        {renderedNavItems.map((item) => (
+          <a href={item.href} aria-current={item.current ? 'page' : undefined} data-nav={isModuleNav(item) ? 'modulo' : undefined} class={css({ flex: 'none', px: '4', py: '3', color: item.current ? 'text' : 'textMuted', borderLeft: '1px solid', borderColor: 'border', fontSize: 'xs', fontWeight: 'bold', letterSpacing: '0.07em', textTransform: 'uppercase', textDecoration: 'none', _first: { pl: '0', borderLeft: '0' }, _hover: { color: 'attention' } })}>{item.label}</a>
+        ))}
+      </nav>
+    )}
   </header>
-  <slot />
-  <footer data-pagefind-ignore><div class="footer-content"><div class="footer-brand"><strong>O Vigia</strong><span>Jornalismo local em Porto Velho.</span></div><div class="footer-links"><a href="/editorias.html">Editorias</a><a href="/territorios.html">Territórios</a><a href="/arquivo.html">Arquivo</a><a href="/metodologia.html">Metodologia</a><a href="/correcoes.html">Correções e erratas</a><a href="/feed.xml">RSS</a></div><p class="footer-license">© 2026 · Conteúdo sob licença CC BY 4.0.</p></div></footer>
+
+  <div id="conteudo"><slot /></div>
+
+  <footer data-pagefind-ignore class={css({ mt: '20', background: 'text', color: 'canvas', borderTop: '1px solid', borderColor: 'text' })}>
+    <div class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: { base: '10', md: '12' }, display: 'grid', gridTemplateColumns: { base: '1fr', md: '1.25fr 1fr' }, gap: '10' })}>
+      <div>
+        <div class={css({ display: 'flex', alignItems: 'center', gap: '3', mb: '4' })}>
+          <span aria-hidden="true" class={css({ w: '8', h: '8', background: 'accent', border: '1px solid', borderColor: 'canvas' })}></span>
+          <strong class={css({ fontFamily: 'display', fontSize: '2xl', fontWeight: 'black', letterSpacing: '-0.04em' })}>O Vigia</strong>
+        </div>
+        <p class={css({ m: '0', maxW: '38rem', color: 'surfaceMuted', fontFamily: 'serif', lineHeight: 'body' })}>Jornalismo local em Porto Velho com fontes verificáveis, correções públicas e um caminho claro até a evidência.</p>
+      </div>
+      <nav aria-label="Rodapé" class={css({ display: 'grid', gridTemplateColumns: { base: '1fr 1fr', sm: 'repeat(3, auto)' }, gap: '3' })}>
+        <a href="/editorias.html" class={css({ color: 'canvas' })}>Editorias</a>
+        <a href="/territorios.html" class={css({ color: 'canvas' })}>Territórios</a>
+        <a href="/arquivo.html" class={css({ color: 'canvas' })}>Arquivo</a>
+        <a href="/metodologia.html" class={css({ color: 'canvas' })}>Metodologia</a>
+        <a href="/correcoes.html" class={css({ color: 'canvas' })}>Correções</a>
+        <a href="/feed.xml" class={css({ color: 'canvas' })}>RSS</a>
+      </nav>
+      <p class={css({ gridColumn: '1 / -1', m: '0', pt: '5', borderTop: '1px solid', borderColor: 'textMuted', color: 'textMuted', fontFamily: 'mono', fontSize: 'xs', letterSpacing: '0.06em', textTransform: 'uppercase' })}>© 2026 · Conteúdo sob licença CC BY 4.0.</p>
+    </div>
+  </footer>
 </body>
 </html>
