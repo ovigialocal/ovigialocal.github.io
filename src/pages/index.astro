@@ -2,13 +2,15 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProvenanceModal from '../components/ProvenanceModal.astro';
+import { css } from '../../styled-system/css';
+import { badge, button, card } from '../../styled-system/recipes';
 import { formatDayMonth, formatDayTime, formatTime, futureTemporal, slugify, sortStories, storyUrl, territory } from '../lib/news';
 
 const stories = sortStories(await getCollection('articles'));
 const categories = [...new Set(stories.map((story) => story.data.category))];
 const lead = stories[0];
 const secondary = stories.slice(1, 4);
-const latest = stories.slice(4, 9);
+const latest = stories.slice(4, 10);
 const service = stories.filter((story) => story.data.category === 'Serviços').slice(0, 4);
 const temporal = futureTemporal(stories);
 const agenda = temporal.filter((story) => story.data.next_event_kind !== 'acompanhamento');
@@ -29,51 +31,124 @@ const navItems = [
   image={lead?.data.media_url}
   navItems={navItems}
 >
-  <main class="front-page">
-    <section class="edition-intro" aria-labelledby="edition-title">
-      <p class="chapeu">Edição de Porto Velho</p>
-      <h1 id="edition-title">Notícias da cidade, com a fonte à vista.</h1>
-      <p class="edition-linha-fina">O Vigia acompanha decisões públicas, serviços, economia e acontecimentos que afetam Porto Velho. Cada matéria mantém um caminho claro até a evidência que a sustenta.</p>
+  <main>
+    <section class={css({ background: 'text', color: 'canvas', borderBottom: '1px solid', borderColor: 'text' })} aria-labelledby="edition-title">
+      <div class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: { base: '14', md: '20' }, display: 'grid', gridTemplateColumns: { base: '1fr', lg: '1.35fr 0.65fr' }, gap: { base: '10', lg: '16' }, alignItems: 'end' })}>
+        <div>
+          <p class={css({ m: '0 0 5', color: 'accent', fontFamily: 'mono', fontSize: 'xs', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase' })}>Edição de Porto Velho</p>
+          <h1 id="edition-title" class={css({ m: '0', maxW: '11ch', color: 'canvas', fontFamily: 'display', fontSize: 'clamp(3rem, 9vw, 7rem)', lineHeight: '0.88', fontWeight: 'black', letterSpacing: '-0.06em' })}>Notícia local. Fonte à vista.</h1>
+        </div>
+        <div class={css({ display: 'grid', gap: '5' })}>
+          <p class={css({ m: '0', color: 'surfaceMuted', fontFamily: 'var(--font-serif)', fontSize: 'lg', lineHeight: 'body' })}>Decisões públicas, serviços e acontecimentos que mudam a vida em Porto Velho — com um caminho claro até a evidência.</p>
+          <div class={css({ display: 'grid', gridTemplateColumns: '1fr 1fr', minH: '7rem', border: '1px solid', borderColor: 'canvas' })} aria-hidden="true">
+            <span class={css({ background: 'accent', borderRight: '1px solid', borderColor: 'text' })}></span>
+            <span class={css({ background: 'attention' })}></span>
+          </div>
+        </div>
+      </div>
     </section>
 
     {stories.length === 0 ? (
-      <section class="empty-edition" aria-labelledby="empty-title"><div class="empty-edition-main"><p class="chapeu">Acervo</p><h2 id="empty-title">Ainda não há matérias publicadas.</h2><p>A capa permanece vazia quando não existe conteúdo aceito para publicação.</p></div></section>
+      <section class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: '20' })} aria-labelledby="empty-title">
+        <p class="chapeu">Acervo</p>
+        <h2 id="empty-title" class={css({ fontFamily: 'display', fontSize: '3xl', lineHeight: 'heading', fontWeight: 'black' })}>Ainda não há matérias publicadas.</h2>
+        <p class={css({ maxW: '40rem', color: 'textMuted', fontFamily: 'var(--font-serif)', fontSize: 'lg' })}>A capa permanece vazia quando não existe conteúdo aceito para publicação.</p>
+      </section>
     ) : (
       <>
-        <section class="controls-section" aria-label="Filtrar matérias por território">
+        <section class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: '5', display: 'grid', gridTemplateColumns: { base: '1fr', md: '1fr auto' }, alignItems: 'center', gap: '4', borderBottom: '1px solid', borderColor: 'border' })} aria-label="Filtrar matérias por território">
           <div class="bairro-filter" id="bairro-filter" aria-label="Filtrar por território"></div>
-          <a href="/arquivo.html">Buscar no acervo completo →</a>
+          <a class={button({ visual: 'outline', size: 'sm' })} href="/arquivo.html">Buscar no acervo</a>
         </section>
 
-        <section class="front-lede" id="ultimas" data-news-section aria-label="Principais notícias">
-          {lead && <article class="lead-story" data-news-card data-category={lead.data.category} data-bairro={territory(lead)}>
-            <div class="card-header"><a class="badge-tag" href={`/editorias.html#editoria-${slugify(lead.data.category)}`}>{lead.data.category}</a><time datetime={lead.data.published_at}>{formatDayTime(lead.data.published_at)}</time></div>
-            <h2><a href={storyUrl(lead)}>{lead.data.title}</a></h2>
-            {lead.data.media_url && <figure class="lead-media"><a href={storyUrl(lead)}><img src={lead.data.media_url} alt={lead.data.media_alt ?? ''} width={lead.data.media_width ? Number(lead.data.media_width) : undefined} height={lead.data.media_height ? Number(lead.data.media_height) : undefined} /></a><figcaption>{lead.data.media_caption && <span>{lead.data.media_caption}</span>}{lead.data.media_credit && <span>{lead.data.media_credit}</span>}</figcaption></figure>}
-            <p class="lead-linha-fina">{lead.data.description}</p>
-            <div class="card-metadata"><span class="source-badge">Fonte: {lead.data.source_name}</span><button type="button" class="btn-provenance" data-provenance-button data-title={lead.data.title} data-source-name={lead.data.source_name} data-source-url={lead.data.source_url} data-source-hash={lead.data.source_digest}>Ver fonte</button></div>
-          </article>}
-          <aside class="lead-rail" aria-label="Destaques"><p class="module-label">Destaques</p>{secondary.map((story) => <article class="rail-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><p class="card-header"><a class="badge-tag" href={`/editorias.html#editoria-${slugify(story.data.category)}`}>{story.data.category}</a><time datetime={story.data.published_at}>{formatTime(story.data.published_at)}</time></p>{story.data.media_url && <figure class="card-media"><a href={storyUrl(story)}><img src={story.data.media_url} alt={story.data.media_alt ?? ''} loading="lazy" /></a></figure>}<h3><a href={storyUrl(story)}>{story.data.title}</a></h3><p>{story.data.chamada ?? story.data.description}</p></article>)}</aside>
+        <section id="ultimas" data-news-section data-surface="front-lede" aria-label="Principais notícias" class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: { base: '10', md: '14' }, display: 'grid', gridTemplateColumns: { base: '1fr', lg: 'minmax(0, 1.45fr) minmax(18rem, .55fr)' }, gap: { base: '8', lg: '12' } })}>
+          {lead && (
+            <article data-news-card data-category={lead.data.category} data-bairro={territory(lead)} class={css({ minW: '0' })}>
+              <div class={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4', mb: '5' })}>
+                <a class={badge({ tone: 'attention' })} href={`/editorias.html#editoria-${slugify(lead.data.category)}`}>{lead.data.category}</a>
+                <time class={css({ color: 'textMuted', fontFamily: 'mono', fontSize: 'xs', letterSpacing: '0.06em', textTransform: 'uppercase' })} datetime={lead.data.published_at}>{formatDayTime(lead.data.published_at)}</time>
+              </div>
+              <h2 class={css({ m: '0', maxW: '19ch', fontFamily: 'display', fontSize: 'clamp(2.25rem, 5vw, 4.75rem)', lineHeight: '0.98', fontWeight: 'black', letterSpacing: '-0.045em' })}><a class={css({ color: 'text', textDecoration: 'none', _hover: { color: 'info' } })} href={storyUrl(lead)}>{lead.data.title}</a></h2>
+              <p class={css({ mt: '5', mb: '0', maxW: '46rem', color: 'textMuted', fontFamily: 'var(--font-serif)', fontSize: { base: 'lg', md: 'xl' }, lineHeight: 'body' })}>{lead.data.description}</p>
+              {lead.data.media_url && (
+                <figure class={css({ m: '7 0 0', border: '1px solid', borderColor: 'text', background: 'surface' })}>
+                  <a href={storyUrl(lead)}><img class={css({ display: 'block', width: '100%', maxH: '34rem', objectFit: 'cover' })} src={lead.data.media_url} alt={lead.data.media_alt ?? ''} width={lead.data.media_width ? Number(lead.data.media_width) : undefined} height={lead.data.media_height ? Number(lead.data.media_height) : undefined} /></a>
+                  {(lead.data.media_caption || lead.data.media_credit) && <figcaption class={css({ display: 'flex', justifyContent: 'space-between', gap: '4', p: '3', color: 'textMuted', fontFamily: 'mono', fontSize: 'xs' })}>{lead.data.media_caption && <span>{lead.data.media_caption}</span>}{lead.data.media_credit && <span>{lead.data.media_credit}</span>}</figcaption>}
+                </figure>
+              )}
+              <div class={css({ mt: '5', pt: '4', borderTop: '1px solid', borderColor: 'border', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4', flexWrap: 'wrap' })}>
+                <span class="source-badge">Fonte: {lead.data.source_name}</span>
+                <button type="button" class={button({ visual: 'outline', size: 'sm' })} data-provenance-button data-title={lead.data.title} data-source-name={lead.data.source_name} data-source-url={lead.data.source_url} data-source-hash={lead.data.source_digest}>Ver fonte</button>
+              </div>
+            </article>
+          )}
+
+          <aside aria-label="Destaques" class={css({ borderTop: { base: '1px solid', lg: '0' }, borderLeft: { base: '0', lg: '1px solid' }, borderColor: 'border', pt: { base: '7', lg: '0' }, pl: { base: '0', lg: '8' } })}>
+            <p class="chapeu">Destaques</p>
+            <div class={css({ display: 'grid' })}>
+              {secondary.map((story) => (
+                <article data-news-card data-category={story.data.category} data-bairro={territory(story)} class={css({ py: '5', borderBottom: '1px solid', borderColor: 'border' })}>
+                  <div class={css({ display: 'flex', justifyContent: 'space-between', gap: '3', mb: '3' })}>
+                    <a class={badge({ tone: 'neutral' })} href={`/editorias.html#editoria-${slugify(story.data.category)}`}>{story.data.category}</a>
+                    <time class={css({ color: 'textMuted', fontFamily: 'mono', fontSize: 'xs' })} datetime={story.data.published_at}>{formatTime(story.data.published_at)}</time>
+                  </div>
+                  <h3 class={css({ m: '0', fontFamily: 'display', fontSize: 'xl', lineHeight: 'heading', fontWeight: 'black' })}><a class={css({ color: 'text', textDecoration: 'none', _hover: { color: 'info' } })} href={storyUrl(story)}>{story.data.title}</a></h3>
+                  <p class={css({ mt: '3', mb: '0', color: 'textMuted', fontFamily: 'var(--font-serif)', lineHeight: 'body' })}>{story.data.chamada ?? story.data.description}</p>
+                </article>
+              ))}
+            </div>
+          </aside>
         </section>
 
-        {latest.length > 0 && <section class="latest-line" data-news-section aria-labelledby="latest-line-title"><div class="latest-line-heading"><p class="chapeu">Últimas</p><h2 id="latest-line-title">O que entrou agora</h2></div><div class="latest-line-list">{latest.map((story) => <article class="latest-item" data-news-card data-category={story.data.category} data-bairro={territory(story)}><time datetime={story.data.published_at}>{formatTime(story.data.published_at)}</time><div><span>{story.data.category}</span><h3><a href={storyUrl(story)}>{story.data.title}</a></h3></div></article>)}</div></section>}
+        {latest.length > 0 && (
+          <section data-news-section class={css({ background: 'surfaceMuted', borderTop: '1px solid', borderBottom: '1px solid', borderColor: 'text' })} aria-labelledby="latest-line-title">
+            <div class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: { base: '8', md: '10' }, display: 'grid', gridTemplateColumns: { base: '1fr', md: '15rem 1fr' }, gap: '8' })}>
+              <div><p class="chapeu">Últimas</p><h2 id="latest-line-title" class={css({ m: '0', fontFamily: 'display', fontSize: '2xl', fontWeight: 'black', lineHeight: 'heading' })}>O que entrou agora</h2></div>
+              <div class={css({ display: 'grid', gridTemplateColumns: { base: '1fr', lg: '1fr 1fr' }, columnGap: '8' })}>
+                {latest.map((story) => (
+                  <article data-news-card data-category={story.data.category} data-bairro={territory(story)} class={css({ display: 'grid', gridTemplateColumns: '4.5rem 1fr', gap: '4', py: '4', borderBottom: '1px solid', borderColor: 'border' })}>
+                    <time class={css({ color: 'info', fontFamily: 'mono', fontSize: 'sm', fontWeight: 'bold' })} datetime={story.data.published_at}>{formatTime(story.data.published_at)}</time>
+                    <div><span class={css({ color: 'textMuted', fontFamily: 'mono', fontSize: 'xs', textTransform: 'uppercase' })}>{story.data.category}</span><h3 class={css({ m: '1 0 0', fontFamily: 'display', fontSize: 'md', lineHeight: 'heading', fontWeight: 'bold' })}><a class={css({ color: 'text', textDecoration: 'none' })} href={storyUrl(story)}>{story.data.title}</a></h3></div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
-        {temporal.length > 0 && <section class="temporal-desk" id="proximos" data-news-section aria-labelledby="temporal-title"><header class="temporal-desk-header"><div><p class="chapeu">O que vem agora</p><h2 id="temporal-title">Próximos marcos</h2></div><p>Só entram datas estruturadas e verificáveis; previsão incerta ou data incidental não vira agenda.</p></header><div class="temporal-columns">
-          {agenda.length > 0 && <section class="temporal-module" aria-labelledby="agenda-title"><p class="module-label">Hoje / próximos dias</p><h3 id="agenda-title">Agenda</h3><div class="temporal-list">{agenda.map((story) => <article class="temporal-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><time datetime={story.data.next_event_at}>{formatDayTime(story.data.next_event_at!)}</time><div><span>{story.data.next_event_kind}</span><h4><a href={storyUrl(story)}>{story.data.next_event_label}</a></h4><p>{story.data.title}</p><div class="temporal-links"><a href={storyUrl(story)}>Ver matéria →</a><a href={story.data.source_url} rel="noopener noreferrer">Fonte ↗</a></div></div></article>)}</div></section>}
-          {follow.length > 0 && <section class="temporal-module temporal-module-follow" aria-labelledby="follow-title"><p class="module-label">Histórias abertas</p><h3 id="follow-title">Acompanhe</h3><div class="temporal-list">{follow.map((story) => <article class="temporal-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><time datetime={story.data.next_event_at}>{formatDayTime(story.data.next_event_at!)}</time><div><span>próximo marco</span><h4><a href={storyUrl(story)}>{story.data.next_event_label}</a></h4><p>{story.data.title}</p><div class="temporal-links"><a href={storyUrl(story)}>Ver matéria →</a><a href={story.data.source_url} rel="noopener noreferrer">Fonte ↗</a></div></div></article>)}</div></section>}
-        </div></section>}
+        {temporal.length > 0 && (
+          <section id="proximos" data-news-section data-surface="temporal-desk" aria-labelledby="temporal-title" class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: { base: '12', md: '16' } })}>
+            <header class={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: '1fr 1fr' }, gap: '6', alignItems: 'end', pb: '6', borderBottom: '1px solid', borderColor: 'text' })}>
+              <div><p class="chapeu">O que vem agora</p><h2 id="temporal-title" class={css({ m: '0', fontFamily: 'display', fontSize: '3xl', fontWeight: 'black', lineHeight: 'heading' })}>Próximos marcos</h2></div>
+              <p class={css({ m: '0', color: 'textMuted', fontFamily: 'var(--font-serif)', lineHeight: 'body' })}>Datas estruturadas e verificáveis. Previsão incerta ou data incidental não vira agenda.</p>
+            </header>
+            <div class={css({ mt: '6', display: 'grid', gridTemplateColumns: { base: '1fr', lg: agenda.length && follow.length ? '1fr 1fr' : '1fr' }, gap: '5' })}>
+              {agenda.length > 0 && <section class={card({ tone: 'plain' })} aria-labelledby="agenda-title"><p class="chapeu">Hoje / próximos dias</p><h3 id="agenda-title" class={css({ fontFamily: 'display', fontSize: '2xl', fontWeight: 'black' })}>Agenda</h3><div class={css({ display: 'grid' })}>{agenda.map((story) => <article data-news-card data-category={story.data.category} data-bairro={territory(story)} class={css({ display: 'grid', gridTemplateColumns: { base: '1fr', sm: '7rem 1fr' }, gap: '4', py: '4', borderTop: '1px solid', borderColor: 'border' })}><time class={css({ color: 'info', fontFamily: 'mono', fontSize: 'sm', fontWeight: 'bold' })} datetime={story.data.next_event_at}>{formatDayTime(story.data.next_event_at!)}</time><div><span class={badge({ tone: 'info' })}>{story.data.next_event_kind}</span><h4 class={css({ mt: '3', mb: '2', fontFamily: 'display', fontSize: 'lg', lineHeight: 'heading' })}><a href={storyUrl(story)}>{story.data.next_event_label}</a></h4><p class={css({ m: '0', color: 'textMuted', fontFamily: 'var(--font-serif)' })}>{story.data.title}</p></div></article>)}</div></section>}
+              {follow.length > 0 && <section class={card({ tone: 'muted' })} aria-labelledby="follow-title"><p class="chapeu">Histórias abertas</p><h3 id="follow-title" class={css({ fontFamily: 'display', fontSize: '2xl', fontWeight: 'black' })}>Acompanhe</h3><div class={css({ display: 'grid' })}>{follow.map((story) => <article data-news-card data-category={story.data.category} data-bairro={territory(story)} class={css({ display: 'grid', gridTemplateColumns: { base: '1fr', sm: '7rem 1fr' }, gap: '4', py: '4', borderTop: '1px solid', borderColor: 'border' })}><time class={css({ color: 'attention', fontFamily: 'mono', fontSize: 'sm', fontWeight: 'bold' })} datetime={story.data.next_event_at}>{formatDayTime(story.data.next_event_at!)}</time><div><span class={badge({ tone: 'attention' })}>próximo marco</span><h4 class={css({ mt: '3', mb: '2', fontFamily: 'display', fontSize: 'lg', lineHeight: 'heading' })}><a href={storyUrl(story)}>{story.data.next_event_label}</a></h4><p class={css({ m: '0', color: 'textMuted', fontFamily: 'var(--font-serif)' })}>{story.data.title}</p></div></article>)}</div></section>}
+            </div>
+          </section>
+        )}
 
-        {service.length > 0 && <section class="service-desk" id="servico" data-news-section aria-labelledby="service-title"><header class="service-desk-header"><div><p class="chapeu">Utilidade pública</p><h2 id="service-title">Serviço</h2></div><p>Informação prática para agir, se organizar ou não perder prazo.</p></header><div class="service-grid">{service.map((story) => <article class="service-story" data-news-card data-category={story.data.category} data-bairro={territory(story)}><time datetime={story.data.published_at}>{formatDayMonth(story.data.published_at)}</time><h3><a href={storyUrl(story)}>{story.data.title}</a></h3><p>{story.data.chamada ?? story.data.description}</p><div class="service-links"><a class="service-read" href={storyUrl(story)}>Entenda o serviço →</a><a href={story.data.source_url} rel="noopener noreferrer">Fonte ↗</a></div></article>)}</div></section>}
+        {service.length > 0 && (
+          <section id="servico" data-news-section data-surface="service-desk" aria-labelledby="service-title" class={css({ background: 'accent', borderTop: '1px solid', borderBottom: '1px solid', borderColor: 'text' })}>
+            <div class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: { base: '10', md: '14' } })}>
+              <header class={css({ display: 'flex', justifyContent: 'space-between', gap: '6', alignItems: 'end', flexWrap: 'wrap', mb: '7' })}><div><p class={css({ m: '0 0 2', fontFamily: 'mono', fontSize: 'xs', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase' })}>Utilidade pública</p><h2 id="service-title" class={css({ m: '0', fontFamily: 'display', fontSize: '3xl', fontWeight: 'black' })}>Serviço</h2></div><p class={css({ m: '0', maxW: '32rem', fontFamily: 'var(--font-serif)' })}>Informação prática para agir, se organizar ou não perder prazo.</p></header>
+              <div class={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: '1fr 1fr', xl: 'repeat(4, 1fr)' }, borderTop: '1px solid', borderLeft: '1px solid', borderColor: 'text' })}>{service.map((story) => <article data-news-card data-category={story.data.category} data-bairro={territory(story)} class={css({ minH: '16rem', p: '5', display: 'grid', alignContent: 'space-between', gap: '5', background: 'canvas', borderRight: '1px solid', borderBottom: '1px solid', borderColor: 'text' })}><time class={css({ fontFamily: 'mono', fontSize: 'sm', fontWeight: 'bold' })} datetime={story.data.published_at}>{formatDayMonth(story.data.published_at)}</time><div><h3 class={css({ m: '0', fontFamily: 'display', fontSize: 'xl', lineHeight: 'heading', fontWeight: 'black' })}><a class={css({ color: 'text', textDecoration: 'none' })} href={storyUrl(story)}>{story.data.title}</a></h3><p class={css({ mt: '3', mb: '0', color: 'textMuted', fontFamily: 'var(--font-serif)' })}>{story.data.chamada ?? story.data.description}</p></div><a class={button({ visual: 'outline', size: 'sm' })} href={storyUrl(story)}>Entenda o serviço</a></article>)}</div>
+            </div>
+          </section>
+        )}
 
         {categories.filter((category) => category !== 'Serviços').map((category, index) => {
           const categoryStories = stories.filter((story) => story.data.category === category).slice(0, 6);
-          return <section class="editorial-section" id={`editoria-${slugify(category)}`} data-news-section aria-labelledby={`editoria-title-${index}`}><div class="section-heading"><div><p class="chapeu">Editoria</p><h2 id={`editoria-title-${index}`}>{category}</h2></div><div class="section-actions"><p class="section-note">{stories.filter((story) => story.data.category === category).length} no acervo</p><a href={`/editorias.html#editoria-${slugify(category)}`}>Ver editoria →</a></div></div><div class="news-grid news-grid-section">{categoryStories.map((story) => <article class="news-card news-card-brief" data-news-card data-category={story.data.category} data-bairro={territory(story)}><div class="card-header"><time datetime={story.data.published_at}>{formatDayTime(story.data.published_at)}</time></div>{story.data.media_url && <figure class="card-media"><a href={storyUrl(story)}><img src={story.data.media_url} alt={story.data.media_alt ?? ''} loading="lazy" /></a></figure>}<h3 class="card-title"><a href={storyUrl(story)}>{story.data.title}</a></h3><p class="card-excerpt">{story.data.chamada ?? story.data.description}</p><div class="card-metadata"><span class="source-badge">{story.data.source_name}</span><button type="button" class="btn-provenance" data-provenance-button data-title={story.data.title} data-source-name={story.data.source_name} data-source-url={story.data.source_url} data-source-hash={story.data.source_digest}>Ver fonte</button></div></article>)}</div></section>;
+          return <section id={`editoria-${slugify(category)}`} data-news-section aria-labelledby={`editoria-title-${index}`} class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: { base: '10', md: '14' }, borderBottom: '1px solid', borderColor: 'border' })}><div class={css({ display: 'flex', alignItems: 'end', justifyContent: 'space-between', gap: '6', flexWrap: 'wrap', mb: '6' })}><div><p class="chapeu">Editoria</p><h2 id={`editoria-title-${index}`} class={css({ m: '0', fontFamily: 'display', fontSize: '3xl', lineHeight: 'heading', fontWeight: 'black' })}>{category}</h2></div><a class={button({ visual: 'outline', size: 'sm' })} href={`/editorias.html#editoria-${slugify(category)}`}>Ver editoria · {stories.filter((story) => story.data.category === category).length}</a></div><div class={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: '1fr 1fr', xl: 'repeat(3, 1fr)' }, borderTop: '1px solid', borderLeft: '1px solid', borderColor: 'border' })}>{categoryStories.map((story) => <article data-news-card data-category={story.data.category} data-bairro={territory(story)} class={css({ minH: '17rem', p: '5', display: 'grid', alignContent: 'space-between', gap: '5', borderRight: '1px solid', borderBottom: '1px solid', borderColor: 'border', background: 'surface' })}><time class={css({ color: 'textMuted', fontFamily: 'mono', fontSize: 'xs' })} datetime={story.data.published_at}>{formatDayTime(story.data.published_at)}</time>{story.data.media_url && <figure class={css({ m: '0', aspectRatio: '16/9', overflow: 'hidden', border: '1px solid', borderColor: 'border' })}><a href={storyUrl(story)}><img class={css({ width: '100%', height: '100%', objectFit: 'cover' })} src={story.data.media_url} alt={story.data.media_alt ?? ''} loading="lazy" /></a></figure>}<div><h3 class={css({ m: '0', fontFamily: 'display', fontSize: 'xl', lineHeight: 'heading', fontWeight: 'black' })}><a class={css({ color: 'text', textDecoration: 'none' })} href={storyUrl(story)}>{story.data.title}</a></h3><p class={css({ mt: '3', mb: '0', color: 'textMuted', fontFamily: 'var(--font-serif)' })}>{story.data.chamada ?? story.data.description}</p></div><div class={css({ pt: '3', borderTop: '1px solid', borderColor: 'border', display: 'flex', justifyContent: 'space-between', gap: '3', alignItems: 'center' })}><span class="source-badge">{story.data.source_name}</span><button type="button" class="btn-provenance" data-provenance-button data-title={story.data.title} data-source-name={story.data.source_name} data-source-url={story.data.source_url} data-source-hash={story.data.source_digest}>Ver fonte</button></div></article>)}</div></section>;
         })}
-        <div class="archive-cta"><a href="/arquivo.html">Ver todo o arquivo de O Vigia →</a></div>
+
+        <div class={css({ maxW: 'content', mx: 'auto', px: { base: '5', md: '8' }, py: '10', display: 'flex', justifyContent: 'center' })}><a class={button({ visual: 'dark' })} href="/arquivo.html">Ver todo o arquivo de O Vigia</a></div>
         <p class="no-results" id="no-results" hidden>Nenhuma matéria encontrada com esses filtros.</p>
       </>
     )}
   </main>
+
   <ProvenanceModal />
   <script>
     let activeTerritory = 'Todos';
@@ -86,12 +161,25 @@ const navItems = [
         if (!card.hidden) visible += 1;
       });
       document.querySelectorAll<HTMLElement>('[data-news-section]').forEach((section) => { section.hidden = ![...section.querySelectorAll<HTMLElement>('[data-news-card]')].some((card) => !card.hidden); });
-      const empty = document.getElementById('no-results'); if (empty) empty.hidden = visible !== 0;
+      const empty = document.getElementById('no-results');
+      if (empty) empty.hidden = visible !== 0;
     };
     const container = document.getElementById('bairro-filter');
     if (container) {
       const values = ['Todos', ...new Set(cards().map((card) => card.dataset.bairro).filter((value): value is string => Boolean(value)))];
-      container.replaceChildren(...values.map((value, index) => { const button = document.createElement('button'); button.type = 'button'; button.className = `filter-chip ${index === 0 ? 'active' : ''}`; button.textContent = value; button.addEventListener('click', () => { container.querySelectorAll('.filter-chip').forEach((item) => item.classList.remove('active')); button.classList.add('active'); activeTerritory = value; filter(); }); return button; }));
+      container.replaceChildren(...values.map((value, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `filter-chip ${index === 0 ? 'active' : ''}`;
+        button.textContent = value;
+        button.addEventListener('click', () => {
+          container.querySelectorAll('.filter-chip').forEach((item) => item.classList.remove('active'));
+          button.classList.add('active');
+          activeTerritory = value;
+          filter();
+        });
+        return button;
+      }));
     }
   </script>
 </BaseLayout>

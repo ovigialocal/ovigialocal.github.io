@@ -171,7 +171,7 @@ New editorial terms must be defined with meaning, layer, authority and persisten
 
 ## UI authority boundary
 
-Shared foundations come from the pinned Cobogó core. O Vigia remains authoritative over newspaper identity, typography, composition, editorias, article semantics, service modules and trust copy. Do not recreate generic focus/reduced-motion contracts locally; do not push newspaper-specific organisms into Cobogó merely because this repo needs them.
+Shared foundations come from the **commit-pinned Cobogó Panda preset** imported as `cobogo/preset`. Do not vendor Cobogó CSS, copy its generic token table into this repository or recreate shared focus/reduced-motion contracts locally. O Vigia remains authoritative over newspaper identity, editorial typography, masthead, composition, editorias, article semantics, service modules and trust copy. Reusable foundation improvements belong upstream in Cobogó; newspaper-specific organisms stay here.
 
 Astro Components are the baseline presentation unit. Svelte or another hydrated framework requires a concrete stateful island or materially superior reusable Cobogó component; do not add framework runtime by default.
 

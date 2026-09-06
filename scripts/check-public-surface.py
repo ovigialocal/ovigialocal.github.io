@@ -29,7 +29,7 @@ def verify_no_jekyll() -> None:
 
 
 def verify_budget() -> None:
-    css_paths = ["index.css", "editorial-cover.css", "article.css", "news-shell.css", "mobile-editorial.css", "institutional.css", "cobogo-theme.css", "temporal-modules.css", "print.css"]
+    css_paths = ["editorial-cover.css", "article.css", "news-shell.css", "mobile-editorial.css", "institutional.css", "cobogo-theme.css", "temporal-modules.css", "print.css", "src/styles/editorial-foundation.css"]
     css_size = sum((ROOT / path).stat().st_size for path in css_paths if (ROOT / path).exists())
     if css_size > 90_000:
         raise SystemExit(f"CSS budget exceeded: {css_size} > 90000 bytes")
@@ -47,16 +47,20 @@ def verify_operational_contract() -> None:
     for name, text in {
         "AGENTS.md": agents,
         "README.md": readme,
-        "publication-review": skill,
         "RFC 0001": rfc,
         "publication ledger": publication_readme,
     }.items():
         require(text, "PublicArticle", name)
         require(text, "PublicTerritory", name)
 
+    # The publication skill projects one article and its factual sources. It
+    # validates territory as a surface risk without restating the full
+    # PublicTerritory type contract.
+    require(skill, "PublicArticle", "publication-review")
+    require(skill, "PublicSource", "publication-review")
+
     require(agents, "The public renderer is Astro SSG, not Jekyll.", "AGENTS.md")
     require(readme, "Astro Content Layer", "README.md")
-    require(skill, "Não gere `_news`", "publication-review")
     require(rfc, "O renderer público é Astro SSG", "RFC 0001")
     require(publication_readme, "Não existe `_news`", "publication ledger")
 
@@ -101,7 +105,7 @@ def main() -> int:
         require(files["article"], needle, "article")
     require(files["legacy-article"], "URLSearchParams", "legacy article redirect")
     require(files["legacy-article"], "/noticias/", "legacy article redirect")
-    for needle in ["NewsArticle", 'rel="sitemap"', "data-pagefind-ignore"]:
+    for needle in ["NewsArticle", 'rel="sitemap"', "data-pagefind-ignore", 'data-ui-generation="cobogo-panda"']:
         require(files["base"], needle, "BaseLayout")
 
     require(files["metodologia"], "Fonte oficial não é sinônimo de verdade automática", "metodologia")

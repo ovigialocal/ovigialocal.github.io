@@ -1,53 +1,40 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VENDOR = ROOT / "vendor" / "cobogo"
-INDEX = ROOT / "index.css"
-THEME = ROOT / "cobogo-theme.css"
-
-
-def git_blob_sha1(payload: bytes) -> str:
-    header = f"blob {len(payload)}\0".encode()
-    return hashlib.sha1(header + payload, usedforsecurity=False).hexdigest()
+PIN = "aa0c9bfcc09a6c327b143b033e18877f3f193ab5"
 
 
 def main() -> int:
-    pin = json.loads((VENDOR / "cobogo-core.pin.json").read_text(encoding="utf-8"))
-    core = (VENDOR / "cobogo-core.css").read_bytes()
-    index = INDEX.read_text(encoding="utf-8")
-    theme = THEME.read_text(encoding="utf-8")
+    package = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
+    panda = (ROOT / "panda.config.ts").read_text(encoding="utf-8")
+    postcss = (ROOT / "postcss.config.cjs").read_text(encoding="utf-8")
+    layout = (ROOT / "src/layouts/BaseLayout.astro").read_text(encoding="utf-8")
+    foundation = (ROOT / "src/styles/editorial-foundation.css").read_text(encoding="utf-8")
 
-    assert pin["repository"] == "https://github.com/franklinbaldo/cobogo"
-    assert pin["path"] == "src/styles/core.css"
-    assert git_blob_sha1(core) == pin["git_blob_sha1"], "vendored Cobogó core diverged from pinned blob"
+    assert package["dependencies"]["cobogo"] == f"github:franklinbaldo/cobogo#{PIN}"
+    assert package["devDependencies"]["@pandacss/dev"] == "1.12.0"
+    assert "cobogo/preset" in panda
+    assert "presets: [cobogo]" in panda
+    assert "outdir: 'styled-system'" in panda
+    assert "@pandacss/dev/postcss" in postcss
 
-    core_import = index.index("vendor/cobogo/cobogo-core.css")
-    theme_import = index.index("cobogo-theme.css")
-    first_local_rule = index.index("* { box-sizing")
-    assert core_import < theme_import < first_local_rule, "expected core → Vigia theme → local editorial CSS"
+    assert "../../styled-system/css" in layout
+    assert "../../styled-system/recipes" in layout
+    assert 'data-ui-generation="cobogo-panda"' in layout
 
-    assert ":focus-visible" not in index, "generic focus ownership must remain in Cobogó core"
-    assert "prefers-reduced-motion" not in index, "generic reduced-motion ownership must remain in Cobogó core"
+    assert not (ROOT / "vendor/cobogo/cobogo-core.css").exists(), "vendored Cobogó CSS must not return"
+    assert not (ROOT / "vendor/cobogo/cobogo-core.pin.json").exists(), "legacy vendor pin must not return"
+    assert not (ROOT / "index.css").exists(), "legacy generic CSS foundation must not return"
 
-    required_roles = (
-        "--cobogo-canvas",
-        "--cobogo-text",
-        "--cobogo-text-muted",
-        "--cobogo-border",
-        "--cobogo-accent",
-        "--cobogo-font-body",
-        "--cobogo-font-display",
-    )
-    missing = [role for role in required_roles if role not in theme]
-    assert not missing, f"Vigia theme must explicitly map shared roles: {missing}"
+    assert ":focus-visible" not in foundation, "generic focus ownership stays in Cobogó"
+    assert "prefers-reduced-motion" not in foundation, "generic motion ownership stays in Cobogó"
 
-    print(f"Cobogó core pin OK: {pin['commit']} / {pin['git_blob_sha1']}")
-    print("Layering OK: Cobogó core → Vigia theme → editorial CSS")
+    print(f"Cobogó Panda preset OK: {PIN}")
+    print("Boundary OK: shared preset/recipes → O Vigia editorial composition")
     return 0
 
 
