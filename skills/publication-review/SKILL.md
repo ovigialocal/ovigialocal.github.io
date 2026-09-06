@@ -3,7 +3,7 @@ name: publication-review
 description: Valida e executa a transação pública de uma candidata article-ready sem refazer a redação.
 compatibility: ">=1.0.0"
 metadata:
-  version: "1.9.2"
+  version: "1.10.0"
   owner_role: "publication-agent"
 ---
 
@@ -13,9 +13,9 @@ metadata:
 
 A autoridade pública **não é uma segunda redação**. O trabalho editorial substantivo já foi concluído pela Redação e pelos reviews independentes ligados ao digest.
 
-`publication-review` existe para responder uma pergunta menor: **esta oferta `article-ready` pode ser projetada e publicada corretamente, de forma idempotente e sem risco público específico introduzido pela transação?**
+`publication-review` existe para responder: **esta oferta `article-ready` pode ser projetada e publicada corretamente, de forma idempotente e sem risco público específico introduzido pela transação?**
 
-Não releia fontes para repetir `evidence-review`, não reexecute reader/framing e não produza uma nova avaliação estética do texto. Se o envelope é válido e não há defeito público novo, publique.
+Não releia fontes para repetir `evidence-review`, não reexecute reader/framing e não transforme preservação pendente em revisão editorial.
 
 ## Inputs
 
@@ -29,11 +29,12 @@ Não releia fontes para repetir `evidence-review`, não reexecute reader/framing
 
 1. Reconcilie candidate key, decision/PR/event existentes. Nunca duplique.
 2. Fixe o commit privado e valide o envelope com `okf-parser`.
-3. Confirme que o body/title/description/`chamada` projetados são exatamente os aprovados.
-4. Confirme que toda fonte factual material resolve para `PublicSource` e que sua projeção de provenance corresponde à observação da Redação.
-5. Faça somente checks de risco **específicos da superfície pública**: exposição de metadado privado, locator quebrado, território inválido, colisão/path, projeção incorreta ou diferença material entre ready e artigo público.
-6. Se não houver defeito material, `Accept` imediatamente. Preferência estilística não é revisão.
-7. Se houver defeito editorial que exigiria mudar o conteúdo aprovado, `Reject` por ficha; o site não edita a candidata.
+3. Confirme que body/title/description/`chamada` projetados são exatamente os aprovados.
+4. Confirme que toda fonte factual material resolve para `PublicSource` e que sua projeção corresponde à observação da Redação.
+5. Faça somente checks de risco específicos da superfície pública: exposição de metadado privado, locator quebrado, território inválido, colisão/path, projeção incorreta ou diferença material entre ready e artigo público.
+6. **Preservation pendente não é defeito público por si só.** Se a observação editorial é válida e a origem viva resolve, publique usando a origem viva e preserve o estado de durabilidade disponível.
+7. Se não houver defeito material, `Accept` imediatamente.
+8. Se houver defeito editorial que exigiria mudar o conteúdo aprovado, `Reject` por ficha; o site não edita a candidata.
 
 ## Candidate key e idempotência
 
@@ -57,19 +58,28 @@ publication-candidate-key: <repo>|<story_id>|<ready-digest>
 2. Copie literalmente body/title/description e `chamada` somente quando já existir na candidata; não crie nova chamada.
 3. Materialize `PublicArticle` com whitelist de metadados públicos e provenance editorial (`source_repository`, `source_commit`, `source_path`, `source_digest`).
 4. Para **cada** `source-observation` factual material, materialize/reutilize `PublicSource` com `source_ref` igual ao locator da observação.
-5. Quando a Redação confirmou snapshot, `PublicSource.source_url` pode apontar ao Wayback e `source_original_url` preserva a origem viva. Em fallback válido, use a origem viva. Nunca invente snapshot/equivalência.
-6. Grave todos os refs em `PublicArticle.source_refs`. Campos singulares `source_name/source_url/source_original_url` são apenas compatibilidade da primeira fonte exibível.
-7. Se a matéria usa território estruturado, o locator deve resolver para um `PublicTerritory` existente e factual; não invente território por conveniência de slug.
-8. Faça os checks públicos atuais de OKF/superfície/Astro/build.
-9. Integre a PR.
-10. Confirme Pages/URL no SHA integrado.
-11. Só então registre `publication-event` com candidate key, commit, blob/path, URL, timestamp e confirmação do deploy.
+5. Se a Redação confirmou snapshot equivalente, `PublicSource.source_url` pode apontar ao Wayback e `source_original_url` preserva a origem viva.
+6. Se preservation estiver pending/retryable ou ainda sem snapshot verificado, use a **origem viva observada** como `source_url`; não invente fallback, snapshot ou equivalência.
+7. Grave todos os refs em `PublicArticle.source_refs`. Campos singulares `source_name/source_url/source_original_url` são apenas compatibilidade da primeira fonte exibível.
+8. Se a matéria usa território estruturado, o locator deve resolver para um `PublicTerritory` existente e factual; não invente território por conveniência de slug.
+9. Faça os checks públicos atuais de OKF/superfície/Astro/build.
+10. Integre a PR.
+11. Confirme Pages/URL no SHA integrado.
+12. Só então registre `publication-event` com candidate key, commit, blob/path, URL, timestamp e confirmação do deploy.
 
 Se `accepted` já estiver em `main` sem event, retome o mesmo `public_path`; não reavalie nem publique uma segunda cópia.
 
+## Preservation after publication
+
+Preservação é assíncrona. Uma fonte pode ser publicada com origem viva observada enquanto o `archive-request` continua pending/retryable.
+
+Quando um snapshot chegar e a Redação confirmar equivalência, o `PublicSource` pode ser enriquecido com o Wayback **sem novo digest, novos gates ou nova publicação**, desde que o conteúdo jornalístico não seja alterado. Essa atualização é de durabilidade da provenance, não de mérito editorial.
+
+HTTP 429, `Retry-After`, 5xx transitório e falhas de infraestrutura nunca devem ser interpretados pelo site como prova de falha editorial ou como motivo automático de rejeição.
+
 ## Reject
 
-Rejeite apenas quando há defeito material que a autoridade pública não pode corrigir sem alterar a candidatura: envelope inválido, diferença de conteúdo, exposição indevida, provenance pública impossível de projetar com segurança ou outra falha real de publicação.
+Rejeite apenas quando há defeito material que a autoridade pública não pode corrigir sem alterar a candidatura: envelope inválido, diferença de conteúdo, exposição indevida, provenance pública factual impossível de projetar com segurança ou outra falha real de publicação.
 
 1. Persista decision `rejected`.
 2. Crie/reutilize exatamente uma `editorial-ficha(kind=publication-rejection)` na Redação, deduplicada pela candidate key.
@@ -86,6 +96,7 @@ Preservação de uma fonte não cobre outra. Profile, gate, self-review e ficha 
 
 ## Correções pós-publicação
 
+- enrichment de preservation sem mudança editorial: atualize o `PublicSource` idempotentemente;
 - renderer/metadado sem mudança editorial: corrija aqui;
 - mudança editorial material: ficha → Redação → novo digest/reviews/ready → nova publication-review;
 - retirada urgente pode ocorrer aqui com event `withdrawn` porque este repo controla disponibilidade.
@@ -94,6 +105,7 @@ Preservação de uma fonte não cobre outra. Profile, gate, self-review e ficha 
 
 - refazer os gates da Redação por ritual;
 - rejeitar por preferência estilística;
+- rejeitar apenas porque Wayback está pending/retryable;
 - publicar com envelope/digest inconsistente;
 - ignorar transação existente para a mesma key;
 - criar chamada ou editar conteúdo aprovado;
