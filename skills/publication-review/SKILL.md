@@ -3,7 +3,7 @@ name: publication-review
 description: Valida e executa a transação pública de uma candidata article-ready sem refazer a redação.
 compatibility: ">=1.0.0"
 metadata:
-  version: "1.9.1"
+  version: "1.9.2"
   owner_role: "publication-agent"
 ---
 
@@ -59,10 +59,11 @@ publication-candidate-key: <repo>|<story_id>|<ready-digest>
 4. Para **cada** `source-observation` factual material, materialize/reutilize `PublicSource` com `source_ref` igual ao locator da observação.
 5. Quando a Redação confirmou snapshot, `PublicSource.source_url` pode apontar ao Wayback e `source_original_url` preserva a origem viva. Em fallback válido, use a origem viva. Nunca invente snapshot/equivalência.
 6. Grave todos os refs em `PublicArticle.source_refs`. Campos singulares `source_name/source_url/source_original_url` são apenas compatibilidade da primeira fonte exibível.
-7. Faça os checks públicos atuais de OKF/superfície/Astro/build.
-8. Integre a PR.
-9. Confirme Pages/URL no SHA integrado.
-10. Só então registre `publication-event` com candidate key, commit, blob/path, URL, timestamp e confirmação do deploy.
+7. Se a matéria usa território estruturado, o locator deve resolver para um `PublicTerritory` existente e factual; não invente território por conveniência de slug.
+8. Faça os checks públicos atuais de OKF/superfície/Astro/build.
+9. Integre a PR.
+10. Confirme Pages/URL no SHA integrado.
+11. Só então registre `publication-event` com candidate key, commit, blob/path, URL, timestamp e confirmação do deploy.
 
 Se `accepted` já estiver em `main` sem event, retome o mesmo `public_path`; não reavalie nem publique uma segunda cópia.
 
