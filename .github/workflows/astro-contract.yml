@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'astro.config.mjs'
+      - 'lighthouserc.cjs'
       - 'package.json'
       - 'bun.lock'
       - 'tsconfig.json'
@@ -20,12 +21,14 @@ on:
       - 'scripts/check-astro-okf-contract.py'
       - 'scripts/check-editorial-vocabulary.py'
       - 'scripts/check-public-surface.py'
+      - 'scripts/check-seo-build.py'
       - '.github/workflows/deploy.yml'
       - '.github/workflows/astro-contract.yml'
   push:
     branches: [main]
     paths:
       - 'astro.config.mjs'
+      - 'lighthouserc.cjs'
       - 'package.json'
       - 'bun.lock'
       - 'tsconfig.json'
@@ -42,6 +45,7 @@ on:
       - 'scripts/check-astro-okf-contract.py'
       - 'scripts/check-editorial-vocabulary.py'
       - 'scripts/check-public-surface.py'
+      - 'scripts/check-seo-build.py'
       - '.github/workflows/deploy.yml'
       - '.github/workflows/astro-contract.yml'
   workflow_dispatch:
@@ -56,7 +60,7 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
 
@@ -86,3 +90,9 @@ jobs:
 
       - name: Build static Astro surface
         run: bun run build
+
+      - name: Verify generated SEO contract
+        run: bun run seo:check
+
+      - name: Lighthouse CI — five runs, median assertions
+        run: bun run lighthouse:ci
