@@ -8,10 +8,13 @@ category: "Serviços"
 published_at: "2026-09-01T16:36:00-04:00"
 source_repository: "franklinbaldo/ovigia-redacao"
 source_commit: "07b1c76e56b5bd19c75defca551903248766c87b"
-source_path: "knowledge/porto-velho/articles/2026/09/rondonia-seduc-amigo-voluntario-convocacao-2026-09-11/ready-v1.md"
+source_path: "private://article-ready/sha256:045a5db0600fc6630db0238ae166f31474b105eab874033dbf1a6eb47ec47a6a"
 source_digest: "sha256:045a5db0600fc6630db0238ae166f31474b105eab874033dbf1a6eb47ec47a6a"
-source_name: "Secretaria de Estado da Educação de Rondônia"
+source_refs:
+  - "seduc-amigo-voluntario-edital-10-2026"
+source_name: "Secretaria de Estado da Educação de Rondônia — Edital nº 10/2026/SEDUC-GPLAD"
 source_url: "https://rondonia.ro.gov.br/publicacao/edital-no-10-2026-seduc-gplad/"
+source_original_url: "https://rondonia.ro.gov.br/publicacao/edital-no-10-2026-seduc-gplad/"
 ---
 
 # Seduc convoca classificados do Amigo Voluntário; prazo vai até 11 de setembro
