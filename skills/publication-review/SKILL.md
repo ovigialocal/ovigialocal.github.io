@@ -3,7 +3,7 @@ name: publication-review
 description: Valida e executa a transação pública de uma candidata article-ready sem refazer a redação.
 compatibility: ">=1.0.0"
 metadata:
-  version: "1.10.0"
+  version: "1.11.0"
   owner_role: "publication-agent"
 ---
 
@@ -36,28 +36,38 @@ Não releia fontes para repetir `evidence-review`, não reexecute reader/framing
 7. Se não houver defeito material, `Accept` imediatamente.
 8. Se houver defeito editorial que exigiria mudar o conteúdo aprovado, `Reject` por ficha; o site não edita a candidata.
 
-## Candidate key e idempotência
+## Candidate key, privacidade e idempotência
 
-A identidade é:
-
-```text
-(source_repository, story_id, article_ready_source_digest)
-```
-
-Path e commit são locators, não identidade. Antes de criar branch/PR, procure decision integrada e PR aberta para a mesma key.
-
-Use branch determinística `publication/<story_token>/<digest_token>` e marker:
+A identidade pública da candidatura é:
 
 ```text
-publication-candidate-key: <repo>|<story_id>|<ready-digest>
+(source_repository, article_ready_source_digest)
 ```
+
+O digest canônico do `article-ready` já identifica os bytes oferecidos e não exige publicar o `story_id` privado. Path e commit são locators, não identidade; o commit privado pode ser fixado como provenance, mas identificadores e caminhos internos da Redação não devem atravessar a fronteira pública.
+
+Antes de criar branch/PR, procure decision integrada e PR aberta para a mesma key.
+
+Derive um `public_story_id` exclusivamente de conteúdo já público/aprovado, como título e localidade, sem copiar o `story_id` privado. Use branch determinística `publication/<public_story_token>/<digest_token>` e marker:
+
+```text
+publication-candidate-key: <repo>|<ready-digest>
+```
+
+**Não persista `story_id` privado, hipótese, draft, fonte humana, estratégia, segredo ou path interno da Redação no repo público.** Se o schema público exigir `source_path`, use o locator público opaco e determinístico:
+
+```text
+private://article-ready/<ready-digest>
+```
+
+Esse locator não pretende ser um path navegável: a provenance verificável permanece ancorada por `source_repository`, `source_commit` e `source_digest`. Nunca reconstrua nele o caminho ou o identificador privado.
 
 ## Accept
 
-1. Persista decision `accepted` com um único `public_path`.
+1. Persista decision `accepted` com um único `public_path` e um `public_story_id` derivado apenas do conteúdo publicável.
 2. Copie literalmente body/title/description e `chamada` somente quando já existir na candidata; não crie nova chamada.
-3. Materialize `PublicArticle` com whitelist de metadados públicos e provenance editorial (`source_repository`, `source_commit`, `source_path`, `source_digest`).
-4. Para **cada** `source-observation` factual material, materialize/reutilize `PublicSource` com `source_ref` igual ao locator da observação.
+3. Materialize `PublicArticle` com whitelist de metadados públicos e provenance editorial (`source_repository`, `source_commit`, `source_digest` e, quando obrigatório pelo schema, `source_path: private://article-ready/<ready-digest>`).
+4. Para **cada** `source-observation` factual material, materialize/reutilize `PublicSource` com `source_ref` público independente. Não copie o path privado da observação; derive o `source_ref` do publisher/recurso público ou de outro identificador sem estado editorial privado.
 5. Se a Redação confirmou snapshot equivalente, `PublicSource.source_url` pode apontar ao Wayback e `source_original_url` preserva a origem viva.
 6. Se preservation estiver pending/retryable ou ainda sem snapshot verificado, use a **origem viva observada** como `source_url`; não invente fallback, snapshot ou equivalência.
 7. Grave todos os refs em `PublicArticle.source_refs`. Campos singulares `source_name/source_url/source_original_url` são apenas compatibilidade da primeira fonte exibível.
@@ -82,7 +92,7 @@ HTTP 429, `Retry-After`, 5xx transitório e falhas de infraestrutura nunca devem
 Rejeite apenas quando há defeito material que a autoridade pública não pode corrigir sem alterar a candidatura: envelope inválido, diferença de conteúdo, exposição indevida, provenance pública factual impossível de projetar com segurança ou outra falha real de publicação.
 
 1. Persista decision `rejected`.
-2. Crie/reutilize exatamente uma `editorial-ficha(kind=publication-rejection)` na Redação, deduplicada pela candidate key.
+2. Crie/reutilize exatamente uma `editorial-ficha(kind=publication-rejection)` na Redação, deduplicada pela candidate key pública; não copie nela a key privada nem faça round-trip de identificador que precise ser exposto pelo site.
 3. Registre observação, relevância e critério de saída; não prescreva conclusão editorial.
 4. Não copie, reescreva ou “melhore” a matéria no site.
 
@@ -110,6 +120,7 @@ Preservação de uma fonte não cobre outra. Profile, gate, self-review e ficha 
 - ignorar transação existente para a mesma key;
 - criar chamada ou editar conteúdo aprovado;
 - expor frontmatter privado por cópia cega;
+- persistir `story_id` privado ou path interno da Redação no repositório público;
 - representar várias fontes por uma única provenance artificial;
 - inventar IDs, hashes, snapshots ou equivalência;
 - declarar publicado antes da confirmação real de Pages.
