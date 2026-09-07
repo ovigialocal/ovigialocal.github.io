@@ -1,6 +1,6 @@
 ---
 type: PublicSource
-source_ref: "knowledge/porto-velho/sources/service/2026-09-04-fhemeron-edital-268-prazos-revalidated.md"
+source_ref: "segep-fhemeron-edital-268-2026"
 name: "SEGEP/Fhemeron — Edital nº 268/2026 — terceira convocação"
 source_kind: "official-document"
 publisher: "Governo do Estado de Rondônia — SEGEP"
