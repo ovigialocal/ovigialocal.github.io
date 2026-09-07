@@ -59,6 +59,13 @@ def verify_operational_contract() -> None:
     require(skill, "PublicArticle", "publication-review")
     require(skill, "PublicSource", "publication-review")
 
+    # Privacy boundary: the public repository must not require internal
+    # newsroom identity or paths. The ready digest is the stable public key.
+    require(skill, "(source_repository, article_ready_source_digest)", "publication-review privacy")
+    require(skill, "Não persista `story_id` privado", "publication-review privacy")
+    require(skill, "private://article-ready/", "publication-review privacy")
+    forbid(skill, "(source_repository, story_id, article_ready_source_digest)", "publication-review privacy")
+
     require(agents, "The public renderer is Astro SSG, not Jekyll.", "AGENTS.md")
     require(readme, "Astro Content Layer", "README.md")
     require(rfc, "O renderer público é Astro SSG", "RFC 0001")
