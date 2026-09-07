@@ -1,6 +1,6 @@
 ---
 type: PublicSource
-source_ref: "knowledge/porto-velho/sources/service/2026-09-06-sine-vagas-revalidation.md"
+source_ref: "sine-vagas-porto-velho-2026-09-06"
 name: "Sine Municipal de Porto Velho — vagas disponíveis"
 source_kind: "official-service-page"
 publisher: "Prefeitura de Porto Velho"
