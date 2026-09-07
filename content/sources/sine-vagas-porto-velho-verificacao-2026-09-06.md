@@ -1,6 +1,6 @@
 ---
 type: PublicSource
-source_ref: "knowledge/porto-velho/sources/service/2026-09-06-sine-vagas-verificacao-editorial.md"
+source_ref: "sine-vagas-porto-velho-verificacao-2026-09-06"
 name: "Sine Municipal de Porto Velho — verificação editorial independente"
 source_kind: "official-service-page"
 publisher: "Prefeitura de Porto Velho"
