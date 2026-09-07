@@ -3,7 +3,7 @@ type: PublicArticle
 title: "Portal exibe R$ 30 milhões para emenda de motocicleta, mas documentos públicos consultados não permitem verificar o valor"
 description: "Registro de Porto Velho mostra R$ 30 milhões como previsto e repassado, execução financeira zerada e não traz plano de trabalho; após busca no Portal, orçamento e Câmara, O Vigia não localizou documento que fixe o valor correto."
 story_id: "emenda-0031-30-milhoes-verificacao-porto-velho-2026"
-locality: "Porto Velho"
+locality: "Porto Velho, RO"
 category: "Poder"
 published_at: "2026-09-07T11:55:00Z"
 source_repository: "franklinbaldo/ovigia-redacao"
