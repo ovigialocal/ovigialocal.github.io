@@ -1,19 +1,21 @@
 ---
 type: PublicArticle
 title: "A ata que a Seduc buscou depois de encerrar a licitação foi firmada sem disputa e suspensa pelo Tribunal de Contas do Amazonas"
-description: "O Vigia leu o registro federal da ARP 0068/2026-1: R$ 1,35 bilhão, inexigibilidade por fornecedor exclusivo, detida por uma fundação privada do Espírito Santo. E leu, no Diário do próprio Tribunal, a decisão que mandou suspendê-la — cinco meses antes de Rondônia abrir o processo de adesão."
+description: "O Vigia leu o registro federal da ARP 0068/2026-1: R$ 1,35 bilhão, inexigibilidade por fornecedor exclusivo, detida por uma fundação privada do Espírito Santo. E leu, no Diário e no sistema processual do próprio Tribunal, a decisão que mandou suspendê-la — cinco meses antes de Rondônia abrir o processo de adesão. O processo segue aberto e sem julgamento, e a detentora não respondeu à notificação."
 story_id: "seduc-ro-ata-amazonas-sem-licitacao-suspensa-2026"
 locality: "Rondônia"
 category: "Educação"
 published_at: "2026-09-16T19:40:00Z"
+updated_at: "2026-09-16T22:20:00Z"
 source_repository: "franklinbaldo/ovigia-redacao"
-source_commit: "fb2b1392aa4625f01efde5248cd95ad4ca3eeda5"
-source_path: "private://article-ready/sha256:12d1765b898f124a12d36c8757647e9f5b120358a33cbff0eb96f6fe80542c48"
-source_digest: "sha256:12d1765b898f124a12d36c8757647e9f5b120358a33cbff0eb96f6fe80542c48"
+source_commit: "c140dad0502aa468017621cd35838e2a0a079dee"
+source_path: "private://article-ready/sha256:a321a461095f5b2acb2683b61d5b1c238423b53f6e3f868f9849c82775eeaf96"
+source_digest: "sha256:a321a461095f5b2acb2683b61d5b1c238423b53f6e3f868f9849c82775eeaf96"
 source_refs:
   - "am-pncp-ata-0068-2026-csc-fundagres-20260916"
   - "am-tce-dm12-2026-cautelar-ata-0068-20260916"
   - "am-tce-doe-busca-negativa-cautelar-20260916"
+  - "am-tce-dec-consulta-processual-12405-2026-20260916"
   - "ma-pncp-ata-02-2025-ifma-acervo-20260916"
   - "ro-mpc-notificacao-003-2026-seduc-20260905"
   - "ro-diof-doe-busca-negativa-seduc-20260916"
@@ -32,7 +34,8 @@ O Vigia foi ao registro primário federal e ao Diário Oficial do Tribunal de Co
 - vale **R$ 1.348.300.206,00** e cobre os doze anos da educação básica;
 - **não passou por licitação**: foi firmada por inexigibilidade, com fundamento em fornecedor exclusivo;
 - é detida por uma **fundação privada sediada em Vitória (ES)**;
-- teve a vigência **suspensa por decisão do Tribunal de Contas do Amazonas em 4 de março de 2026** — cinco meses antes de Rondônia abrir o processo de adesão.
+- teve a vigência **suspensa por decisão do Tribunal de Contas do Amazonas em 4 de março de 2026** — cinco meses antes de Rondônia abrir o processo de adesão;
+- e esse processo, consultado em 16 de setembro no sistema do próprio Tribunal, **continua aberto e sem julgamento**.
 
 ## O que está registrado no PNCP
 
@@ -90,15 +93,51 @@ A decisão fixa a própria duração: "a medida cautelar será mantida até que 
 
 Uma cautelar pode ser revogada. Publicar que a ata "está suspensa" sem testar isso seria afirmar mais do que se sabe.
 
-O Vigia examinou o Diário Oficial Eletrônico do próprio Tribunal: **133 edições, de 2 de março a 16 de setembro de 2026, 8.546 páginas**, sem nenhuma falha de download ou de extração.
+O Vigia testou por duas vias independentes.
 
-O nome da fundação detentora aparece em **uma única edição de todo o período** — a de 4 de março, com a própria decisão cautelar. A expressão "agro socioambiental" aparece em duas: a de 4 de março e a de 2 de março, que traz o despacho de admissibilidade da representação. De 5 de março em diante, em 131 edições e mais de 8.200 páginas, **nenhuma ocorrência**.
-
-Ou seja: **a Redação não localizou, na superfície oficial do próprio Tribunal, decisão posterior que revogue, modifique ou dê por cumprida a cautelar.** A última manifestação pública daquela Corte sobre o assunto continua sendo a ordem de suspensão de 4 de março.
-
-Isso não é o mesmo que afirmar que a medida está hoje em vigor. Nem todo ato processual vai ao Diário: despachos, juntadas e manifestações no Processo 12405/2026 podem ter corrido sem publicação. O que está estabelecido é que a liberação da ata não foi publicada.
+**A primeira, o Diário Oficial Eletrônico do próprio Tribunal:** 133 edições, de 2 de março a 16 de setembro de 2026, **8.546 páginas**, sem nenhuma falha de download ou de extração. O nome da fundação detentora aparece em **uma única edição de todo o período** — a de 4 de março, com a própria decisão cautelar. De 5 de março em diante, em 131 edições e mais de 8.200 páginas, **nenhuma ocorrência**.
 
 *(Nota de método: a busca por "0068/2026" não serve sozinha — casa com números de processo como "10068/2026". Duas ocorrências assim, em edições de março, foram verificadas página a página e descartadas antes de qualquer conclusão.)*
+
+**A segunda, o sistema de consulta processual do Tribunal.** Em 16 de setembro, o Processo 12405/2026 consta como:
+
+| | |
+| --- | --- |
+| Situação | **ABERTO** |
+| Julgado | **não** — o registro de julgamento está vazio |
+| Relator | Fabian Barbosa |
+| Competência | Tribunal Pleno |
+| Último movimento | **29 de julho de 2026** |
+
+São 23 movimentos registrados. E há um detalhe que importa mais do que o rótulo: **desde 31 de março o processo não volta ao gabinete do relator**. Toda a tramitação posterior é interna à Diretoria de Controle Externo de Licitações e Contratos, a área técnica. É no gabinete que sairia uma decisão revogando a cautelar.
+
+As duas superfícies convergem: **não há, nos registros oficiais consultados, revogação da suspensão**. A última manifestação da Corte sobre o assunto continua sendo a ordem de 4 de março.
+
+A ressalva permanece, e é honesta: a consulta pública mostra estado, tramitação e comunicações, não o inteiro teor das peças. Uma cautelar pode, em tese, ser revogada por nova decisão monocrática sem julgamento do processo. O que torna isso improvável aqui não é um campo isolado, mas a convergência — processo aberto, sem julgamento, sem retorno ao relator há quase seis meses, e nenhuma publicação no Diário.
+
+### A detentora foi notificada e, segundo o Tribunal, não respondeu
+
+O sistema registra três notificações no processo:
+
+| notificado | notificação | data | resposta |
+| --- | --- | --- | --- |
+| Secretária de Educação do Amazonas | NOT-122/2026-DILCON | 6/4/2026 | Respondida |
+| Centro de Serviços Compartilhados | NOT-123/2026-DILCON | 6/4/2026 | Respondida |
+| **Fundagres Inovar** | **OF-286/2026-GTE-MPU** | **5/3/2026** | **Pendente** |
+
+A fundação foi notificada no dia seguinte à cautelar, com prazo de 15 dias para se manifestar como terceira interessada. **Seis meses depois, a resposta consta como pendente.**
+
+É o que o sistema registra — não um juízo. O Vigia não afirma que a fundação se recusou a responder, nem trata o silêncio como confirmação de coisa alguma. Mas é o registro do contraditório que o próprio Tribunal abriu a ela.
+
+### Não foi só o controle interno que questionou
+
+O processo tem um segundo, vinculado a ele: o **12416/2026**, autuado em 3 de março, um dia depois do primeiro, com o mesmo relator.
+
+A representação dessa vez não é do Tribunal. É de uma **empresa privada** — a JASP Comércio de Equipamentos de Informática Ltda — e pede apuração de "possíveis irregularidades acerca da contratação por inexigibilidade licitatória de uma fundação privada para o fornecimento de sistema integrado de ensino para alunos e professores do ensino fundamental e médio do Estado".
+
+A mesma contratação direta, portanto, foi questionada por **duas vias independentes e quase simultâneas**: o controle externo do próprio Tribunal, em 2 de março, e um particular, em 3 de março.
+
+O Vigia **não apurou** se a JASP concorreria pelo objeto — o ramo declarado dela é comércio de equipamentos de informática — e não a trata como concorrente. O fato verificável é que alguém de fora da administração levou a inexigibilidade ao Tribunal.
 
 ## Por que isso alcança a adesão de Rondônia
 
