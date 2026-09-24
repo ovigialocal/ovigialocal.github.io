@@ -1,16 +1,16 @@
 ---
 type: PublicArticle
 title: "A ata que a Seduc buscou depois de encerrar a licitação foi firmada sem disputa e suspensa pelo Tribunal de Contas do Amazonas"
-description: "O Vigia leu o registro federal da ARP 0068/2026-1: R$ 1,35 bilhão, inexigibilidade por fornecedor exclusivo, detida por uma fundação privada do Espírito Santo. E leu, no Diário e no sistema processual do próprio Tribunal, a decisão que mandou suspendê-la — cinco meses antes de Rondônia abrir o processo de adesão. O processo segue aberto e sem julgamento, e a detentora não respondeu à notificação."
+description: "O Vigia leu o registro federal da ARP 0068/2026-1: R$ 1,35 bilhão, inexigibilidade por fornecedor exclusivo, detida por uma fundação privada do Espírito Santo. E leu, no Diário e no sistema processual do próprio Tribunal, a decisão que mandou suspendê-la — cinco meses antes de Rondônia abrir o processo de adesão. O processo segue sem julgamento e, em 21 de setembro, saiu da área técnica para o Ministério Público de Contas; a detentora não respondeu à notificação."
 story_id: "seduc-ro-ata-amazonas-sem-licitacao-suspensa-2026"
 locality: "Rondônia"
 category: "Educação"
 published_at: "2026-09-16T19:40:00Z"
-updated_at: "2026-09-16T22:20:00Z"
+updated_at: "2026-09-24T13:44:32Z"
 source_repository: "franklinbaldo/ovigia-redacao"
-source_commit: "c140dad0502aa468017621cd35838e2a0a079dee"
-source_path: "private://article-ready/sha256:a321a461095f5b2acb2683b61d5b1c238423b53f6e3f868f9849c82775eeaf96"
-source_digest: "sha256:a321a461095f5b2acb2683b61d5b1c238423b53f6e3f868f9849c82775eeaf96"
+source_commit: "850c03f16c642a13f7960b0c4576900f14da4a1d"
+source_path: "private://article-ready/sha256:eab3eb363284abe00f886f3f0a162be80284376e136508c2ac662dfcc0b4e7f0"
+source_digest: "sha256:eab3eb363284abe00f886f3f0a162be80284376e136508c2ac662dfcc0b4e7f0"
 source_refs:
   - "am-pncp-ata-0068-2026-csc-fundagres-20260916"
   - "am-tce-dm12-2026-cautelar-ata-0068-20260916"
@@ -19,6 +19,8 @@ source_refs:
   - "ma-pncp-ata-02-2025-ifma-acervo-20260916"
   - "ro-mpc-notificacao-003-2026-seduc-20260905"
   - "ro-diof-doe-busca-negativa-seduc-20260916"
+  - "am-tce-dec-consulta-processual-12405-12416-2026-20260924"
+  - "am-ro-doe-busca-negativa-extensao-20260924"
 source_name: "PNCP — Ata de Registro de Preços nº 0068/2026-1 (CSC/AM)"
 source_url: "https://pncp.gov.br/app/atas/03930106000182/2026/51/1"
 ---
@@ -35,7 +37,11 @@ O Vigia foi ao registro primário federal e ao Diário Oficial do Tribunal de Co
 - **não passou por licitação**: foi firmada por inexigibilidade, com fundamento em fornecedor exclusivo;
 - é detida por uma **fundação privada sediada em Vitória (ES)**;
 - teve a vigência **suspensa por decisão do Tribunal de Contas do Amazonas em 4 de março de 2026** — cinco meses antes de Rondônia abrir o processo de adesão;
-- e esse processo, consultado em 16 de setembro no sistema do próprio Tribunal, **continua aberto e sem julgamento**.
+- e esse processo, consultado em 24 de setembro no sistema do próprio Tribunal, **continua sem julgamento** — mas, em 21 de setembro, **saiu da área técnica e foi enviado ao Ministério Público de Contas**, uma etapa anterior ao julgamento.
+
+Nas superfícies oficiais consultadas até 23 de setembro, **a suspensão não foi revogada**. E Rondônia **não tem ato publicado de adesão nem contrato** derivado da ata.
+
+*Atualizado em 24 de setembro de 2026: nova consulta aos dois processos no TCE-AM; buscas no Diário do TCE-AM, no Diário Oficial de Rondônia e no PNCP estendidas até 23 de setembro, sem revogação da cautelar e sem ato de adesão de Rondônia. Duas correções: a versão anterior dizia que o sistema do Tribunal registrava três notificações no processo — o registro consultado agora tem oito, e isso não altera o que se diz sobre a detentora; e datava de 4 de março a representação da SECEX, que foi autuada em 2 de março — a cautelar é que é de 4 de março.*
 
 ## O que está registrado no PNCP
 
@@ -73,7 +79,7 @@ Nos autos, porém, **há** um documento de exclusividade: a página do e-Compras
 
 ## A suspensão, lida no Diário do próprio Tribunal
 
-Em 4 de março de 2026, a **Secretaria Geral de Controle Externo (SECEX) do Tribunal de Contas do Amazonas** representou contra a Secretaria de Educação do Estado. No mesmo dia, o conselheiro relator Fabian Barbosa concedeu medida cautelar.
+Em 2 de março de 2026, a **Secretaria Geral de Controle Externo (SECEX) do Tribunal de Contas do Amazonas** representou contra a Secretaria de Educação do Estado. Em 4 de março, o conselheiro relator Fabian Barbosa concedeu medida cautelar.
 
 A **Decisão Monocrática nº 12/2026-GCFABIAN**, no Processo 12405/2026, foi publicada na edição nº 3738 do Diário Oficial Eletrônico do TCE-AM, de 4 de março de 2026. O Vigia leu o inteiro teor, páginas 112 a 116. O dispositivo determina:
 
@@ -95,11 +101,11 @@ Uma cautelar pode ser revogada. Publicar que a ata "está suspensa" sem testar i
 
 O Vigia testou por duas vias independentes.
 
-**A primeira, o Diário Oficial Eletrônico do próprio Tribunal:** 133 edições, de 2 de março a 16 de setembro de 2026, **8.546 páginas**, sem nenhuma falha de download ou de extração. O nome da fundação detentora aparece em **uma única edição de todo o período** — a de 4 de março, com a própria decisão cautelar. De 5 de março em diante, em 131 edições e mais de 8.200 páginas, **nenhuma ocorrência**.
+**A primeira, o Diário Oficial Eletrônico do próprio Tribunal:** 138 edições, de 2 de março a 23 de setembro de 2026, **8.715 páginas**, sem nenhuma falha de download ou de extração. O nome da fundação detentora aparece em **uma única edição de todo o período** — a de 4 de março, com a própria decisão cautelar. De 5 de março em diante, em 136 edições, **nenhuma ocorrência**.
 
 *(Nota de método: a busca por "0068/2026" não serve sozinha — casa com números de processo como "10068/2026". Duas ocorrências assim, em edições de março, foram verificadas página a página e descartadas antes de qualquer conclusão.)*
 
-**A segunda, o sistema de consulta processual do Tribunal.** Em 16 de setembro, o Processo 12405/2026 consta como:
+**A segunda, o sistema de consulta processual do Tribunal.** Em 24 de setembro, o Processo 12405/2026 consta como:
 
 | | |
 | --- | --- |
@@ -107,25 +113,35 @@ O Vigia testou por duas vias independentes.
 | Julgado | **não** — o registro de julgamento está vazio |
 | Relator | Fabian Barbosa |
 | Competência | Tribunal Pleno |
-| Último movimento | **29 de julho de 2026** |
+| Último movimento | **21 de setembro de 2026** — saída da área técnica para o Ministério Público de Contas |
 
-São 23 movimentos registrados. E há um detalhe que importa mais do que o rótulo: **desde 31 de março o processo não volta ao gabinete do relator**. Toda a tramitação posterior é interna à Diretoria de Controle Externo de Licitações e Contratos, a área técnica. É no gabinete que sairia uma decisão revogando a cautelar.
+São 25 movimentos registrados. De 31 de março a 29 de julho, toda a tramitação foi interna à Diretoria de Controle Externo de Licitações e Contratos (DILCON), a área técnica — e ali ficou sem movimentação registrada de 29 de julho até 21 de setembro.
+
+Em **21 de setembro**, o processo saiu da DILCON para a **Diretoria do Ministério Público de Contas** e, no mesmo dia, para a **8ª Procuradoria de Contas**, que o recebeu em 22 de setembro. O próprio registro do processo indica como procuradora de contas Fernanda Cantanhede.
+
+O que isso significa no rito: nos acórdãos que o TCE-AM publica, o pronunciamento do Ministério Público de Contas aparece depois da manifestação da unidade técnica e antes do voto do relator. É, portanto, uma etapa anterior ao julgamento — **não é o julgamento, e não mexe na cautelar**. Pela ordem que aparece nos acórdãos, depois do pronunciamento do MPC o processo volta ao relator, que o leva ao Tribunal Pleno; o processo pode ainda receber novas diligências no caminho. O Tribunal não informa prazo — e a ata vence em 26 de fevereiro de 2027. O Vigia **não sabe o que a área técnica concluiu**: o sistema público mostra a movimentação, não o conteúdo das peças.
+
+E o processo **continua sem voltar ao gabinete do relator desde 31 de março**. É no gabinete que sairia uma decisão revogando a cautelar.
 
 As duas superfícies convergem: **não há, nos registros oficiais consultados, revogação da suspensão**. A última manifestação da Corte sobre o assunto continua sendo a ordem de 4 de março.
 
-A ressalva permanece, e é honesta: a consulta pública mostra estado, tramitação e comunicações, não o inteiro teor das peças. Uma cautelar pode, em tese, ser revogada por nova decisão monocrática sem julgamento do processo. O que torna isso improvável aqui não é um campo isolado, mas a convergência — processo aberto, sem julgamento, sem retorno ao relator há quase seis meses, e nenhuma publicação no Diário.
+A ressalva permanece, e é honesta: a consulta pública mostra estado, tramitação e comunicações, não o inteiro teor das peças. Uma cautelar pode, em tese, ser revogada por nova decisão monocrática sem julgamento do processo. O que torna isso improvável aqui não é um campo isolado, mas a convergência — processo sem julgamento, sem retorno ao relator há quase seis meses, e nenhuma publicação no Diário.
 
 ### A detentora foi notificada e, segundo o Tribunal, não respondeu
 
-O sistema registra três notificações no processo:
+O sistema registra oito comunicações no processo. Três — duas à própria SECEX e uma à Secretaria de Educação, de 3 e 4 de março — estão marcadas com resposta "não é necessária". As outras cinco:
 
 | notificado | notificação | data | resposta |
 | --- | --- | --- | --- |
+| Centro de Serviços Compartilhados | OF-284/2026-GTE-MPU | 4/3/2026 | Respondida |
+| Secretaria de Educação do Amazonas | OF-285/2026-GTE-MPU | 4/3/2026 | Respondida |
+| **Fundagres Inovar** | **OF-286/2026-GTE-MPU** | **5/3/2026** | **Pendente** |
 | Secretária de Educação do Amazonas | NOT-122/2026-DILCON | 6/4/2026 | Respondida |
 | Centro de Serviços Compartilhados | NOT-123/2026-DILCON | 6/4/2026 | Respondida |
-| **Fundagres Inovar** | **OF-286/2026-GTE-MPU** | **5/3/2026** | **Pendente** |
 
-A fundação foi notificada no dia seguinte à cautelar, com prazo de 15 dias para se manifestar como terceira interessada. **Seis meses depois, a resposta consta como pendente.**
+*Correção: a versão anterior desta matéria dizia que o sistema registrava três notificações — as duas de abril e a da Fundagres. O registro consultado em 24 de setembro tem oito, incluindo os ofícios de 4 de março ao CSC e à Secretaria, ambos respondidos. O Vigia não tem como saber se o sistema já as exibia em 16 de setembro; de todo modo, a contagem estava errada diante do registro atual. A correção não muda o dado sobre a detentora: ela continua sendo, neste processo, a única notificada com resposta pendente.*
+
+A fundação foi notificada no dia seguinte à cautelar, com prazo de 15 dias para se manifestar como terceira interessada. **Quase sete meses depois, a resposta consta como pendente.**
 
 É o que o sistema registra — não um juízo. O Vigia não afirma que a fundação se recusou a responder, nem trata o silêncio como confirmação de coisa alguma. Mas é o registro do contraditório que o próprio Tribunal abriu a ela.
 
@@ -138,6 +154,10 @@ A representação dessa vez não é do Tribunal. É de uma **empresa privada** �
 A mesma contratação direta, portanto, foi questionada por **duas vias independentes e quase simultâneas**: o controle externo do próprio Tribunal, em 2 de março, e um particular, em 3 de março.
 
 O Vigia **não apurou** se a JASP concorreria pelo objeto — o ramo declarado dela é comércio de equipamentos de informática — e não a trata como concorrente. O fato verificável é que alguém de fora da administração levou a inexigibilidade ao Tribunal.
+
+O Vigia consultou também esse segundo processo. Ele ficou no gabinete do relator de 3 de março a 10 de junho, quando foi à área técnica; desde então, **os dois processos tramitam juntos**, com movimentos registrados no mesmo minuto — inclusive o envio ao Ministério Público de Contas em 21 de setembro. A Fundagres não figura como parte nele.
+
+Nesse processo, a área técnica notificou em 1º de julho a Secretária de Educação do Amazonas, Arlete Ferreira Mendonça, e a vice-presidente do Centro de Serviços Compartilhados, Andrea Lasmar de Mendonça Ramos. As duas notificações constam como pendentes. No processo aberto pela SECEX, as notificações à Secretária e ao Centro de Serviços Compartilhados constam como respondidas. Como os dois processos tramitam vinculados, o registro não permite saber se a pendência no segundo reflete ausência de manifestação ou apenas uma resposta dada no processo principal. É o que o sistema registra; O Vigia não investigou se houve manifestação por outra via.
 
 ## Por que isso alcança a adesão de Rondônia
 
@@ -152,7 +172,7 @@ Vale registrar o que a lei **permite**: o art. 82, § 6º prevê que "o sistema 
 
 Há ainda a aritmética do saldo. O próprio Amazonas, gerenciador da ata, contratou dela o Contrato nº 8/2026, de 4 de março de 2026, no valor de **R$ 379.138.320,00**. Sobre R$ 1,348 bilhão registrados, isso é cerca de 28%. A capacidade registrada e não contratada pelo gerenciador — da ordem de **R$ 969 milhões** — é o espaço em que cabem adesões de órgãos de fora, como a de Rondônia.
 
-Esse espaço, até agora, está vazio. Consultado o índice de contratos do PNCP pelo CNPJ da detentora, em 16 de setembro, **há um único contrato em todo o país**: o do próprio Amazonas. Nenhum outro órgão ou entidade, de qualquer Estado ou município, tem contrato publicado derivado dessa ata. Se a adesão de Rondônia se concretizar, a Seduc será **o primeiro órgão de fora** a contratar por ela.
+Esse espaço, até agora, está vazio. Consultado o índice de contratos do PNCP pelo CNPJ da detentora, em 16 e de novo em 24 de setembro, **há um único contrato em todo o país**: o do próprio Amazonas. Nenhum outro órgão ou entidade, de qualquer Estado ou município, tem contrato publicado derivado dessa ata. Se a adesão de Rondônia se concretizar, a Seduc será **o primeiro órgão de fora** a contratar por ela.
 
 *(A ressalva vale: o índice pode ter atraso de publicação, e um processo de adesão em andamento em outro ente não apareceria nessa consulta — só apareceria o contrato assinado.)*
 
@@ -176,13 +196,15 @@ E há um segundo dado que o registro federal entrega. O Ministério Público de 
 
 ## O que Rondônia ainda não fez — e ainda não disse
 
-É preciso ser exato sobre o estágio: **Rondônia não aderiu à ata**. O Processo SEI/RO nº 0029.043942/2026-10, aberto em 13 de agosto, é preparatório — liberação de saldo com vistas à adesão. Os R$ 120.195.947,76 são cotação estimada, não contrato, não empenho, não despesa realizada.
+É preciso ser exato sobre o estágio: **até 23 de setembro, Rondônia não aderiu à ata** — não há ato publicado nem contrato. O Processo SEI/RO nº 0029.043942/2026-10, aberto em 13 de agosto, é preparatório — liberação de saldo com vistas à adesão. Os R$ 120.195.947,76 são cotação estimada, não contrato, não empenho, não despesa realizada.
 
-Na apuração anterior, O Vigia examinou 25 edições do Diário Oficial do Estado de Rondônia entre 11 de agosto e 15 de setembro — 11.675 páginas — e não localizou nenhum ato publicado de adesão, homologação, ratificação ou contratação relativo a essa ata. Isso não prova abandono: atos preparatórios não exigem publicação.
+O Vigia examinou 31 edições do Diário Oficial do Estado de Rondônia entre 11 de agosto e 23 de setembro — 14.432 páginas — e não localizou nenhum ato publicado de adesão, homologação, ratificação ou contratação da Seduc relativo a essa ata. O instrumento funciona: só entre 16 e 23 de setembro, ele encontrou avisos de adesão a outras atas publicados pela Secretaria de Finanças, pela Sesau, pelo Detran, pela Sepog e pela Controladoria-Geral do Estado, entre outros. Nenhum é da Seduc. Isso não prova abandono: atos preparatórios não exigem publicação.
+
+No PNCP, em 24 de setembro, o índice de contratos continua mostrando **um único contrato** com a detentora derivado da ata: o do próprio Amazonas.
 
 O que continua sem resposta pública é por que a Secretaria encerrou, em 11 de agosto, a mesma licitação própria que dois meses antes informara ao TCE-RO ter retomado, com parecer favorável da Procuradoria-Geral do Estado pela via competitiva ordinária — e por que buscou, dois dias depois, uma ata formada sem competição.
 
-O Vigia preparou pedido de acesso à informação à Seduc de Rondônia sobre o encerramento e sobre o novo processo. Um segundo pedido, específico sobre esta ata, foi preparado nesta apuração: se a Secretaria sabia da cautelar do TCE-AM ao abrir o processo, qual consulta prévia foi feita ao Centro de Serviços Compartilhados e como pretende demonstrar a compatibilidade dos preços registrados com o mercado. As respostas, quando vierem, serão publicadas como atualização.
+O Vigia preparou pedido de acesso à informação à Seduc de Rondônia sobre o encerramento e sobre o novo processo. Um segundo pedido, específico sobre esta ata, foi preparado: se a Secretaria sabia da cautelar do TCE-AM ao abrir o processo, qual consulta prévia foi feita ao Centro de Serviços Compartilhados e como pretende demonstrar a compatibilidade dos preços registrados com o mercado. Até a data desta atualização, os dois pedidos estão prontos, mas ainda não foram protocolados. Quando houver resposta, ela será publicada como atualização.
 
 ## Um detalhe de calendário
 
